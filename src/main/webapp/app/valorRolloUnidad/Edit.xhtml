@@ -19,7 +19,7 @@
                         <h:outputText id="valorRolloUnidadId" value="#{valorRolloUnidadController.selected.valorRolloUnidadId}" />
 
                         <p:outputLabel value="Unidad" for="valorRolloUnidadIdUnidad" />
-                        <p:selectOneMenu id="valorRolloUnidadIdUnidad" value="#{valorRolloUnidadController.selected.valorRolloUnidadIdUnidad}" required="true" requiredMessage="#{bundle.EditValorRolloUnidadRequiredMessage_valorRolloUnidadIdUnidad}" converter="unidadNegocioConverter">
+                        <p:selectOneMenu id="valorRolloUnidadIdUnidad" value="#{valorRolloUnidadController.selected.valorRolloUnidadIdUnidad}" required="true" requiredMessage="#{bundle.EditValorRolloUnidadRequiredMessage_valorRolloUnidadIdUnidad}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{unidadNegocioController.items}"
                                            var="valorRolloUnidadIdUnidadItem"

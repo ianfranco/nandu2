@@ -1,12 +1,13 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.TipoCombustible;
 import com.areatecnica.sigf.controllers.TipoCombustibleFacade;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.annotation.PostConstruct;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 
 @Named(value = "tipoCombustibleController")
@@ -57,6 +58,13 @@ public class TipoCombustibleController extends AbstractController<TipoCombustibl
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("CompraCombustible_items", this.getSelected().getCompraCombustibleList());
         }
         return "/compraCombustible/index";
+    }
+
+    @Override
+    public TipoCombustible prepareCreate(ActionEvent event) {
+        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+        this.getSelected().setTipoCombustibleFechaIngreso(new Date());
+        return this.getSelected();
     }
 
 }

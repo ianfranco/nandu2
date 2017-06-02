@@ -834,6 +834,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 this.egresosList.add(egreso);
             }
         }
+
         this.guiaDao = new IGuiaDaoImpl();
         this.list = this.guiaDao.findByProcesoFechaRecaudacion(procesoRecaudacion, fechaRecaudacion);
         JsfUtil.addSuccessMessage("Cantidad de Guías Registradas: " + this.list.size());
@@ -867,10 +868,16 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             }
 
         } else {
+            LinkedHashMap auxLink = new LinkedHashMap();
+            
+            for (Egreso eg : this.egresosList) {
+                this.totals.put(eg.getEgresoNombreEgreso(), 0);
+                this.resultsTotals.add("0");
+                this.resultsHeader.add(eg.getEgresoNombreEgreso());
+                auxLink.put(eg.getEgresoNombreEgreso(), 0);
+            }
 
-            this.listOfMaps.add(new LinkedHashMap());
-            this.resultsTotals.add("");
-            this.resultsHeader.add("");
+            this.listOfMaps.add(auxLink);
         }
 
         this.setModel(new DigitacionGuiaDataModel(list));
@@ -900,9 +907,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 egresoRecaudacion.setEgresoRecaudacionTotalEgreso(0);
 
                 this.egresosResumenList.add(egresoRecaudacion);
-                this.totals.put(eg.getEgresoNombreEgreso(), 0);
+
             }
 
+            this.listOfMaps.add(new LinkedHashMap());
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
             this.resumenRecaudacionFacade.create(this.resumenRecaudacion);
 
@@ -981,7 +989,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     }
 
     public void printResumen() {
-        if (this.estadoProceso) {
+        if (!this.estadoProceso) {
             JsfUtil.addSuccessMessage("Proceso Cerrado");
             this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.TRUE);
         } else {
@@ -989,6 +997,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
         }
 
+        
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
         this.resumenRecaudacionFacade.edit(resumenRecaudacion);

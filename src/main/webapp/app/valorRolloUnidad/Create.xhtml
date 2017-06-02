@@ -16,7 +16,7 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="Unidad" for="valorRolloUnidadIdUnidad" />
-                        <p:selectOneMenu id="valorRolloUnidadIdUnidad" value="#{valorRolloUnidadController.selected.valorRolloUnidadIdUnidad}" required="true" requiredMessage="#{bundle.CreateValorRolloUnidadRequiredMessage_valorRolloUnidadIdUnidad}" converter="unidadNegocioConverter">
+                        <p:selectOneMenu id="valorRolloUnidadIdUnidad" value="#{valorRolloUnidadController.selected.valorRolloUnidadIdUnidad}" required="true" requiredMessage="#{bundle.CreateValorRolloUnidadRequiredMessage_valorRolloUnidadIdUnidad}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{unidadNegocioController.items}"
                                            var="valorRolloUnidadIdUnidadItem"

@@ -28,7 +28,7 @@
                         </p:selectOneMenu>
 
                         <h:outputLabel value="Valor" for="precioCombustibleValor" />
-                        <p:inputText id="precioCombustibleValor" value="#{precioCombustibleController.selected.precioCombustibleValor}" />
+                        <p:inputNumber id="precioCombustibleValor" value="#{precioCombustibleController.selected.precioCombustibleValor}" symbol="$ "/>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{precioCombustibleController.save}" value="#{bundle.Save}" update="display,:PrecioCombustibleListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PrecioCombustibleEditDialog'));">

@@ -1,9 +1,8 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
-import com.areatecnica.sigf.beans.TerminalController;
 import com.areatecnica.sigf.entities.Surtidor;
 import com.areatecnica.sigf.controllers.SurtidorFacade;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -82,4 +81,11 @@ public class SurtidorController extends AbstractController<Surtidor> {
         return "/numeralSurtidor/index";
     }
 
+    @Override
+    public Surtidor prepareCreate(ActionEvent event) {
+        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+        this.getSelected().setSurtidorFechaIngreso(new Date());
+        return this.getSelected();
+    }
+    
 }
