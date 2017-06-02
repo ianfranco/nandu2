@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:panel header="Traspaso de Boletos a Cajas">
+            <h:panelGroup id="display">
+                <h:form id="CompraBoletoCreateForm">
+                    <p:focus context="inventarioCajaIdCaja"/>
+                    <p:panelGrid columns="2"  style="width: 100%;">                        
+                        <p:outputLabel value="Fecha" for="compraBoletoFecha" />
+                        <p:outputLabel id="compraBoletoFecha" value="#{traspasoBoletoCajaController.selected.inventarioCajaFechaIngreso}"  >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <p:outputLabel value="Caja" for="inventarioCajaIdCaja" />
+                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="#{bundle.EditInventarioCajaRequiredMessage_inventarioCajaIdCaja}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{cajaTerminalController.items}"
+                                           var="inventarioCajaIdCajaItem"
+                                           itemValue="#{inventarioCajaIdCajaItem}"
+                                           itemLabel="#{inventarioCajaIdCajaItem.cajaRecaudacionNombreCaja}"
+                                           />
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value=""/>
+                        <h:panelGrid columns="3" id="detalleTraspasoPanel" >
+                            <p:outputLabel style="margin-left: 5px;" value="Tipo Boleto" for="idBoleto" />                            
+                            <p:outputLabel style="margin-left: 5px;" value="Inventario" for="inventarioCajaIdInventarioInterno"/>
+                            <p:outputLabel style="margin-left: 5px;" value="Agregar" for="addButton"/>
+
+                            <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{traspasoBoletoCajaController.boletoItem}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
+                                <f:selectItem itemLabel="Seleccionar"/>                                
+                                <f:selectItems value="#{boletoController.items}"
+                                               var="boletoItem"
+                                               itemValue="#{boletoItem}"
+                                               itemLabel="#{boletoItem.boletoNombre}"
+                                               />
+                                <p:ajax event="valueChange" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdInventarioInterno}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{traspasoBoletoCajaController.inventarioInternoList}"
+                                               var="inventarioCajaIdInventarioInternoItem"
+                                               itemValue="#{inventarioCajaIdInventarioInternoItem}"
+                                               itemLabel="#{inventarioCajaIdInventarioInternoItem.inventarioInternoIdentificador}#{inventarioCajaIdInventarioInternoItem.inventarioInternoSerie}"
+                                               />
+
+                            </p:selectOneMenu>
+
+                            <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno">
+
+                            </p:commandButton>                        
+                        </h:panelGrid>
+                    </p:panelGrid>
+                </h:form>
+
+                <h:panelGroup>
+                    <h:form id="DetalleCompraBoletoCreateForm">
+                        <p:panelGrid style="width: 100%;margin-top: 5px;"  columns="1">                            
+                            <p:dataTable id="datalist"
+                                         value="#{traspasoBoletoCajaController.inventarioCajaList}" 
+                                         widgetVar="datalist"
+                                         var="item"
+                                         rowKey="#{item.inventarioCajaId}"                                 
+                                         rowIndexVar="rowIndex"
+                                         emptyMessage="No se han encontrado registros" 
+                                         style="width: 100%"
+                                         tableStyle="table-layout: auto">
+
+                                <f:facet name="header">
+                                    Detalle Traspaso
+                                </f:facet>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="N°"/>
+                                    </f:facet>
+                                    <p:outputLabel value="#{rowIndex+1}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Tipo Boleto"/>
+                                    </f:facet>
+                                    <p:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Identificador"/>
+                                    </f:facet>
+                                    <p:outputLabel value="#{item.inventarioCajaIdentificador}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Serie"/>
+                                    </f:facet>
+                                    <p:outputLabel value="#{item.inventarioCajaSerie}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Caja"/>
+                                    </f:facet>
+                                    <p:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombreCaja}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <f:facet name="footer">
+                                <p:commandButton actionListener="#{traspasoBoletoCajaController.saveNew}" value="#{bundle.Save}" update="display, datalist, :growl" >
+                                    <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                                <p:commandButton value="#{bundle.Cancel}" update="display" process="@this" immediate="true" resetValues="true"/>
+                            </f:facet>
+                        </p:panelGrid>
+                        <ui:include src="/confirmation.xhtml"/>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGroup>
+        </p:panel>
+    </ui:composition>    
+</html>

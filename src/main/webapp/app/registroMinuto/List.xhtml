@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:coco="http://xmlns.jcp.org/jsf/composite/ui">
+
+    <h:form id="RegistroMinutoListForm" class="form-height">
+
+        <p:contextMenu id="RegistroMinutoDataTableContextMenu" for="datalist:datalist">  
+            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('RegistroMinutoListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('RegistroMinutoListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('RegistroMinutoListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('RegistroMinutoListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+        </p:contextMenu>
+
+        <coco:datatable id="datalist"
+                        value="#{registroMinutoController.lazyList}"
+                        rowKey="#{item.registroMinutoId}"
+                        selection="#{registroMinutoController.selected}"
+                        filtered="#{registroMinutoController.filtered}"
+                        rowselect=":RegistroMinutoListForm:datalist:datalist:createButton,:RegistroMinutoListForm:datalist:datalist:viewButton,:RegistroMinutoListForm:datalist:datalist:editButton,:RegistroMinutoListForm:datalist:datalist:deleteButton,:RegistroMinutoListForm:RegistroMinutoDataTableContextMenu"
+                        rowDblselect="document.getElementById('RegistroMinutoListForm:datalist:datalist:editButton').click()"
+                        contextMenu=":RegistroMinutoListForm:datalist:datalist:createButton :RegistroMinutoListForm:datalist:datalist:viewButton :RegistroMinutoListForm:datalist:datalist:editButton :RegistroMinutoListForm:datalist:datalist:deleteButton"
+                        selectListener="#{registroMinutoController.resetParents()}">
+
+            <p:ajax event="colResize" listener="#{registroMinutoController.onResize}"/>
+
+            <p:column sortBy="#{item.registroMinutoId}" filterBy="#{item.registroMinutoId}">
+                <f:facet name="header">
+                    <h:outputText value="#"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoId}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoDesdeIdBus.busId}" filterBy="#{item.registroMinutoDesdeIdBus.busId}">
+                <f:facet name="header">
+                    <h:outputText value="Desde"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoDesdeIdBus.busId}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoHastaIdBus.busId}" filterBy="#{item.registroMinutoHastaIdBus.busId}">
+                <f:facet name="header">
+                    <h:outputText value="Hasta"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoHastaIdBus.busId}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoFechaMinuto}" filterBy="#{item.registroMinutoFechaMinuto}">
+                <f:facet name="header">
+                    <h:outputText value="Fecha"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoFechaMinuto}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoMonto}" filterBy="#{item.registroMinutoMonto}">
+                <f:facet name="header">
+                    <h:outputText value="N° Minutos"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoMonto}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoIdValorMinuto.valorMinutoId}" filterBy="#{item.registroMinutoIdValorMinuto.valorMinutoId}">
+                <f:facet name="header">
+                    <h:outputText value="Valor Minuto"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoIdValorMinuto.valorMinutoValor}"/>
+            </p:column>
+
+            <p:column sortBy="#{item.registroMinutoFechaIngreso}" filterBy="#{item.registroMinutoFechaIngreso}">
+                <f:facet name="header">
+                    <h:outputText value="#{bundle.ListRegistroMinutoTitle_registroMinutoFechaIngreso}"/>
+                </f:facet>
+                <h:outputText value="#{item.registroMinutoFechaIngreso}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                </h:outputText>
+            </p:column>
+
+            <f:facet name="{buttons}">
+                <div class="footer-left">
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{registroMinutoController.prepareCreate}" update=":RegistroMinutoCreateForm" oncomplete="PF('RegistroMinutoCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":RegistroMinutoViewForm" oncomplete="PF('RegistroMinutoViewDialog').show()" disabled="#{empty registroMinutoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":RegistroMinutoEditForm" oncomplete="PF('RegistroMinutoEditDialog').show()" disabled="#{empty registroMinutoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{registroMinutoController.delete}" update=":growl,datalist" disabled="#{empty registroMinutoController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>
+                </div>
+            </f:facet>
+
+        </coco:datatable>
+
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>
