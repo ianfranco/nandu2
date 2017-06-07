@@ -1,14 +1,19 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.GuiaController;
-import com.areatecnica.sigf.beans.InventarioCajaController;
-import com.areatecnica.sigf.beans.*;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.controllers.VentaBoletoFacade;
+import com.areatecnica.sigf.dao.ICajaRecaudacionDao;
+import com.areatecnica.sigf.dao.IGuiaDao;
 import com.areatecnica.sigf.dao.IInventarioCajaDao;
+import com.areatecnica.sigf.dao.IVentaBoletoDao;
+import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
+import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
+import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -26,10 +31,18 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     private GuiaController ventaBoletoIdGuiaController;
     @Inject
     private InventarioCajaController ventaBoletoIdInventarioCajaController;
-    
-    private Boleto boletoItem; 
+
+    private Boleto boletoItem;
+    private List<VentaBoleto> items;
     private List<InventarioCaja> inventarioCajaList;
-    private IInventarioCajaDao iInventarioCajaDao;
+    private List<CajaRecaudacion> cajaRecaudacionList;
+    private IInventarioCajaDao inventarioCajaDao;
+    private ICajaRecaudacionDao cajaRecaudacionDao;
+    private IGuiaDao guiaDao;
+    private IVentaBoletoDao ventaBoletoDao;
+    private Date fechaVentaBoleto;
+    private CajaRecaudacion cajaRecaudacion;
+    private VentaBoletoRecaudacionDataModel model;
 
     /**
      * Initialize the concrete VentaBoleto controller bean. The
@@ -39,7 +52,11 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     @Override
     public void init() {
         super.setFacade(ejbFacade);
-        this.iInventarioCajaDao = new IInventarioCajaDaoImpl();
+        this.inventarioCajaDao = new IInventarioCajaDaoImpl();
+
+        this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
+        this.setCajaRecaudacionList((List<CajaRecaudacion>) this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser()));
+        this.setFechaVentaBoleto(new Date());
     }
 
     public VentaBoletoRecaudacionController() {
@@ -76,6 +93,76 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     }
 
     /**
+     * @return the items
+     */
+    public List<VentaBoleto> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<VentaBoleto> items) {
+        this.items = items;
+    }
+
+    /**
+     * @return the cajaRecaudacionList
+     */
+    public List<CajaRecaudacion> getCajaRecaudacionList() {
+        return cajaRecaudacionList;
+    }
+
+    /**
+     * @param cajaRecaudacionList the cajaRecaudacionList to set
+     */
+    public void setCajaRecaudacionList(List<CajaRecaudacion> cajaRecaudacionList) {
+        this.cajaRecaudacionList = cajaRecaudacionList;
+    }
+
+    /**
+     * @return the fechaVentaBoleto
+     */
+    public Date getFechaVentaBoleto() {
+        return fechaVentaBoleto;
+    }
+
+    /**
+     * @param fechaVentaBoleto the fechaVentaBoleto to set
+     */
+    public void setFechaVentaBoleto(Date fechaVentaBoleto) {
+        this.fechaVentaBoleto = fechaVentaBoleto;
+    }
+
+    /**
+     * @return the cajaRecaudacion
+     */
+    public CajaRecaudacion getCajaRecaudacion() {
+        return cajaRecaudacion;
+    }
+
+    /**
+     * @param cajaRecaudacion the cajaRecaudacion to set
+     */
+    public void setCajaRecaudacion(CajaRecaudacion cajaRecaudacion) {
+        this.cajaRecaudacion = cajaRecaudacion;
+    }
+
+    /**
+     * @return the model
+     */
+    public VentaBoletoRecaudacionDataModel getModel() {
+        return model;
+    }
+
+    /**
+     * @param model the model to set
+     */
+    public void setModel(VentaBoletoRecaudacionDataModel model) {
+        this.model = model;
+    }
+
+    /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
@@ -106,9 +193,15 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
             ventaBoletoIdInventarioCajaController.setSelected(this.getSelected().getVentaBoletoIdInventarioCaja());
         }
     }
-    
+
     public void handleBoletoChange(ActionEvent event) {
         //POR MODIFICAR
         //this.setInventarioCajaList((List<InventarioCaja>) this.iInventarioCajaDao.findByBoletoEstado(this.getBoletoItem(), Boolean.FALSE));        
+    }
+
+    public void load() {
+        this.ventaBoletoDao = new IVentaBoletoDaoImpl();
+        this.setItems((List<VentaBoleto>) this.ventaBoletoDao.findByCajaDate(getCajaRecaudacion(), getFechaVentaBoleto()));
+        this.setModel(new VentaBoletoRecaudacionDataModel(getItems()));
     }
 }
