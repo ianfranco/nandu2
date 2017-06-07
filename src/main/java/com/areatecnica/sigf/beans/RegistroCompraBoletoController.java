@@ -213,7 +213,7 @@ public class RegistroCompraBoletoController extends AbstractController<CompraBol
 
     public void findFolio() {
         this.compraBoletoDao = new ICompraBoletoDaoImpl();
-        CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.getSelected().getCompraBoletoFolioFactura());
+        CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.getSelected().getCompraBoletoFolioFactura(), this.getUserCount());
         if (compraBoleto != null) {
             JsfUtil.addErrorMessage("La factura N° " + this.getSelected().getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
         }

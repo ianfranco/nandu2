@@ -3,12 +3,16 @@ package com.areatecnica.sigf.beans;
 import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.controllers.CompraBoletoFacade;
+import com.areatecnica.sigf.dao.ICompraBoletoDao;
+import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
+import org.primefaces.model.LazyDataModel;
 
 @Named(value = "compraBoletoController")
 @ViewScoped
@@ -16,6 +20,9 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
 
     @Inject
     private CompraBoletoFacade ejbFacade;
+    
+    private List<CompraBoleto> items;
+    private ICompraBoletoDao compraBoletoDao;
 
     /**
      * Initialize the concrete CompraBoleto controller bean. The
@@ -25,6 +32,7 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
     @Override
     public void init() {
         super.setFacade(ejbFacade);
+        load();
     }
 
     public CompraBoletoController() {
@@ -52,5 +60,26 @@ public class CompraBoletoController extends AbstractController<CompraBoleto> {
         this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());        
         return this.getSelected();
     }
+
+    /**
+     * @return the items
+     */
+    public List<CompraBoleto> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<CompraBoleto> items) {
+        this.items = items;
+    }
+
+    private void load(){
+        this.compraBoletoDao = new ICompraBoletoDaoImpl();
+        this.setItems((List<CompraBoleto>) this.compraBoletoDao.findAllBy(this.getUserCount()));
+    }
+    
+    
 
 }

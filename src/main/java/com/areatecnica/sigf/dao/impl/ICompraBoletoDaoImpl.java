@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.ICompraBoletoDao;
 import com.areatecnica.sigf.entities.CompraBoleto;
+import com.areatecnica.sigf.entities.Cuenta;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -22,18 +23,27 @@ public class ICompraBoletoDaoImpl extends GenericDAOImpl<CompraBoleto> implement
     }
 
     @Override
-    public List<CompraBoleto> findByFecha(Date fecha) {
+    public List<CompraBoleto> findByFecha(Date fecha, Cuenta cuenta) {
         try {
-            return this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFecha").setParameter("compraBoletoFecha", fecha).getResultList();
+            return this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFecha").setParameter("compraBoletoIdCuenta", cuenta).setParameter("compraBoletoFecha", fecha).getResultList();
         } catch (NoResultException ne) {
             return null;
         }
     }
 
     @Override
-    public CompraBoleto findByFolioFactura(int folio) {
+    public CompraBoleto findByFolioFactura(int folio, Cuenta cuenta) {
         try {
-            return (CompraBoleto) this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFolioFactura").setParameter("compraBoletoFolioFactura", folio).getSingleResult();
+            return (CompraBoleto) this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFolioFactura").setParameter("compraBoletoIdCuenta", cuenta).setParameter("compraBoletoFolioFactura", folio).getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<CompraBoleto> findAllBy(Cuenta cuenta) {
+        try {
+            return this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoIdCuenta").setParameter("compraBoletoIdCuenta", cuenta).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

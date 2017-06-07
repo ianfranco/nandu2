@@ -108,6 +108,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     }
     
     public void handleBoletoChange(ActionEvent event) {
-        this.setInventarioCajaList((List<InventarioCaja>) this.iInventarioCajaDao.findByBoletoEstado(this.getBoletoItem(), Boolean.FALSE));        
+        //POR MODIFICAR
+        //this.setInventarioCajaList((List<InventarioCaja>) this.iInventarioCajaDao.findByBoletoEstado(this.getBoletoItem(), Boolean.FALSE));        
     }
 }
