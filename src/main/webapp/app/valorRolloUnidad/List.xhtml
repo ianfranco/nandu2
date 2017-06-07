@@ -73,18 +73,18 @@
             </p:column>
 
 
-            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioId}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioId}">
+            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="Unidad"/>
                 </f:facet>
                 <h:outputText value="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}"/>
             </p:column>
 
-            <p:column sortBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" filterBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}">
+            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}">
                 <f:facet name="header">
                     <h:outputText value="Operador"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                <h:outputText value="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
             </p:column>
 
             <f:facet name="{buttons}">

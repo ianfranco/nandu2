@@ -33,7 +33,7 @@ public class ICompraBoletoDaoImpl extends GenericDAOImpl<CompraBoleto> implement
     @Override
     public CompraBoleto findByFolioFactura(int folio) {
         try {
-            return (CompraBoleto) this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFecha").setParameter("compraBoletoFecha", folio).getSingleResult();
+            return (CompraBoleto) this.entityManager.createNamedQuery("CompraBoleto.findByCompraBoletoFolioFactura").setParameter("compraBoletoFolioFactura", folio).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }

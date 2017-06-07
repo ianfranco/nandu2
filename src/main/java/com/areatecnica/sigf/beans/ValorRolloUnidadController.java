@@ -4,6 +4,7 @@ import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.beans.UnidadNegocioController;
 import com.areatecnica.sigf.entities.ValorRolloUnidad;
 import com.areatecnica.sigf.controllers.ValorRolloUnidadFacade;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -52,4 +53,13 @@ public class ValorRolloUnidadController extends AbstractController<ValorRolloUni
             valorRolloUnidadIdUnidadController.setSelected(this.getSelected().getValorRolloUnidadIdUnidad());
         }
     }
+
+    @Override
+    public ValorRolloUnidad prepareCreate(ActionEvent event) {
+        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+        this.getSelected().setValorRolloUnidadFechaIngreso(new Date());
+        return this.getSelected();
+    }
+    
+    
 }
