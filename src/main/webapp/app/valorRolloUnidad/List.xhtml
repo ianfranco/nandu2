@@ -61,7 +61,7 @@
                 <f:facet name="header">
                     <h:outputText value="Valor Compra"/>
                 </f:facet>
-                <h:outputText value="#{item.valorRolloUnidadCompra}"/>
+                <p:outputLabel value="#{item.valorRolloUnidadCompra}"/>
             </p:column>
 
 
@@ -69,22 +69,21 @@
                 <f:facet name="header">
                     <h:outputText value="Valor Venta"/>
                 </f:facet>
-                <h:outputText value="#{item.valorRolloUnidadVenta}"/>
+                <p:outputLabel value="#{item.valorRolloUnidadVenta}"/>
             </p:column>
 
-
-            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioId}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioId}">
+            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="Unidad"/>
                 </f:facet>
-                <h:outputText value="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}"/>
+                <p:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}"/>
             </p:column>
 
-            <p:column sortBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" filterBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}">
+            <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}">
                 <f:facet name="header">
                     <h:outputText value="Operador"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                <p:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
             </p:column>
 
             <f:facet name="{buttons}">

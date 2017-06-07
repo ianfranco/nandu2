@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
+ * findByInventarioCajaBoletoEstado
  *
  * @author ianfr
  */
@@ -36,12 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "inventario_caja", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "InventarioCaja.findAll", query = "SELECT i FROM InventarioCaja i")
-    , @NamedQuery(name = "InventarioCaja.findByInventarioCajaId", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaId = :inventarioCajaId")
-    , @NamedQuery(name = "InventarioCaja.findByInventarioCajaEstado", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado")
-    , @NamedQuery(name = "InventarioCaja.findByInventarioCajaSerie", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaSerie = :inventarioCajaSerie")
-    , @NamedQuery(name = "InventarioCaja.findByInventarioCajaIdentificador", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaIdentificador = :inventarioCajaIdentificador")
-    , @NamedQuery(name = "InventarioCaja.findByInventarioCajaFechaIngreso", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaFechaIngreso = :inventarioCajaFechaIngreso")})
+    @NamedQuery(name = "InventarioCaja.findAll", query = "SELECT i FROM InventarioCaja i"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaId", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaId = :inventarioCajaId"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaEstado", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaBoletoEstadoCaja", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado AND i.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto AND i.inventarioCajaIdCaja =:inventarioCajaIdCaja"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaSerie", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaSerie = :inventarioCajaSerie"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaIdentificador", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaIdentificador = :inventarioCajaIdentificador"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaFechaIngreso", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaFechaIngreso = :inventarioCajaFechaIngreso")})
 public class InventarioCaja implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -181,5 +183,5 @@ public class InventarioCaja implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.InventarioCaja[ inventarioCajaId=" + inventarioCajaId + " ]";
     }
-    
+
 }

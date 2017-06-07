@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.CompraBoleto;
+import com.areatecnica.sigf.entities.Cuenta;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import java.util.List;
  */
 public interface ICompraBoletoDao<T> extends IGenericDAO<T> {
     
-    public List<CompraBoleto> findByFecha(Date fecha);
+    public List<CompraBoleto> findByFecha(Date fecha, Cuenta cuenta);
     
-    public CompraBoleto findByFolioFactura(int folio);
+    public List<CompraBoleto> findAllBy(Cuenta cuenta);
+    
+    public CompraBoleto findByFolioFactura(int folio, Cuenta cuenta);
 }

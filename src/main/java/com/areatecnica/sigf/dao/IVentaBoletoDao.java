@@ -5,19 +5,17 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.InventarioCaja;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author ianfr
  */
-public interface IInventarioCajaDao<T> extends IGenericDAO<T>{
+public interface IVentaBoletoDao<T> extends IGenericDAO<T> {
     
-    public List<InventarioCaja> findByBoletoEstado(CajaRecaudacion cajaRecaudacion, Boleto boleto, Boolean estado);
-    
-    public List<InventarioCaja> findByEstado(Boolean estado);
+    public List<VentaBoleto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
     
 }

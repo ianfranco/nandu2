@@ -5,6 +5,8 @@ import com.areatecnica.sigf.beans.util.JsfUtil;
 import com.areatecnica.sigf.entities.CompraBoleto;
 import com.areatecnica.sigf.controllers.CompraBoletoFacade;
 import com.areatecnica.sigf.controllers.InventarioInternoFacade;
+import com.areatecnica.sigf.dao.ICompraBoletoDao;
+import com.areatecnica.sigf.dao.impl.ICompraBoletoDaoImpl;
 import com.areatecnica.sigf.entities.DetalleCompraBoleto;
 import com.areatecnica.sigf.entities.InventarioInterno;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public class RegistroCompraBoletoController extends AbstractController<CompraBol
 
     private DetalleCompraBoleto detalleCompraBoleto;
     private List<DetalleCompraBoleto> itemsDetalleCompraBoleto;
+    private ICompraBoletoDao compraBoletoDao;
 
     private enum PersistAction {
         CREATE,
@@ -53,22 +56,24 @@ public class RegistroCompraBoletoController extends AbstractController<CompraBol
             this.setSelected(new CompraBoleto());
             this.getSelected().setCompraBoletoFecha(new Date());
         }
+
+        if (this.detalleCompraBoleto == null) {
+            this.detalleCompraBoleto = new DetalleCompraBoleto();
+        }
     }
 
     public RegistroCompraBoletoController() {
         // Inform the Abstract parent controller of the concrete CompraBoleto Entity
         super(CompraBoleto.class);
-        super.prepareCreate(null); 
+        this.setSelected(super.prepareCreate(null));
+        this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());
         super.setFacade(ejbFacade);
-        
-        if (this.detalleCompraBoleto == null) {
-            this.detalleCompraBoleto = new DetalleCompraBoleto();
-        }
-        
-        if (this.getSelected() == null) {
-            this.setSelected(new CompraBoleto());
-            this.getSelected().setCompraBoletoFecha(new Date());
-        }
+
+        this.detalleCompraBoleto = new DetalleCompraBoleto();
+        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+        this.getSelected().setCompraBoletoFecha(new Date());
+        this.getSelected().setCompraBoletoTotal(0);
+        this.getSelected().setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
     }
 
     /**
@@ -136,6 +141,15 @@ public class RegistroCompraBoletoController extends AbstractController<CompraBol
     public void saveNew(ActionEvent event) {
         String msg = ResourceBundle.getBundle("/Bundle").getString(CompraBoleto.class.getSimpleName() + "Created");
         persist(PersistAction.CREATE, msg);
+
+        this.setSelected(super.prepareCreate(null));
+        this.getSelected().setCompraBoletoIdCuenta(this.getUserCount());
+        this.detalleCompraBoleto = new DetalleCompraBoleto();
+        this.detalleCompraBoleto.setDetalleCompraBoletoIdCompraBoleto(this.getSelected());
+        this.getSelected().setCompraBoletoFecha(new Date());
+        this.getSelected().setCompraBoletoTotal(0);
+        this.getSelected().setDetalleCompraBoletoList(new ArrayList<DetalleCompraBoleto>());
+
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
@@ -197,6 +211,12 @@ public class RegistroCompraBoletoController extends AbstractController<CompraBol
         }
     }
 
-    
+    public void findFolio() {
+        this.compraBoletoDao = new ICompraBoletoDaoImpl();
+        CompraBoleto compraBoleto = this.compraBoletoDao.findByFolioFactura(this.getSelected().getCompraBoletoFolioFactura(), this.getUserCount());
+        if (compraBoleto != null) {
+            JsfUtil.addErrorMessage("La factura N° " + this.getSelected().getCompraBoletoFolioFactura() + " ya se encuentra ingresada");
+        }
+    }
 
 }

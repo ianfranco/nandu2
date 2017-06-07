@@ -35,11 +35,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "compra_boleto", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CompraBoleto.findAll", query = "SELECT c FROM CompraBoleto c")
-    , @NamedQuery(name = "CompraBoleto.findByCompraBoletoId", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoId = :compraBoletoId")
-    , @NamedQuery(name = "CompraBoleto.findByCompraBoletoFolioFactura", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoFolioFactura = :compraBoletoFolioFactura")
-    , @NamedQuery(name = "CompraBoleto.findByCompraBoletoTotal", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoTotal = :compraBoletoTotal")
-    , @NamedQuery(name = "CompraBoleto.findByCompraBoletoFecha", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoFecha = :compraBoletoFecha")})
+    @NamedQuery(name = "CompraBoleto.findAll", query = "SELECT c FROM CompraBoleto c"),
+    @NamedQuery(name = "CompraBoleto.findByCompraBoletoId", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoId = :compraBoletoId"),
+    @NamedQuery(name = "CompraBoleto.findByCompraBoletoIdCuenta", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoIdCuenta = :compraBoletoIdCuenta ORDER BY c.compraBoletoFecha DESC"),
+    @NamedQuery(name = "CompraBoleto.findByCompraBoletoFolioFactura", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoFolioFactura = :compraBoletoFolioFactura AND c.compraBoletoIdCuenta = :compraBoletoIdCuenta"),
+    @NamedQuery(name = "CompraBoleto.findByCompraBoletoTotal", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoTotal = :compraBoletoTotal"),
+    @NamedQuery(name = "CompraBoleto.findByCompraBoletoFecha", query = "SELECT c FROM CompraBoleto c WHERE c.compraBoletoFecha = :compraBoletoFecha AND c.compraBoletoIdCuenta = :compraBoletoIdCuenta")})
 public class CompraBoleto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -154,5 +155,5 @@ public class CompraBoleto implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.CompraBoleto[ compraBoletoId=" + compraBoletoId + " ]";
     }
-    
+
 }

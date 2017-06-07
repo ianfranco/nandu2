@@ -54,37 +54,37 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioId}"/>
+                <p:outputLabel value="#{item.unidadNegocioId}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioNumero}" filterBy="#{item.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="N°"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioNumero}"/>
+                <p:outputLabel value="#{item.unidadNegocioNumero}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioFolio}" filterBy="#{item.unidadNegocioFolio}">
                 <f:facet name="header">
                     <h:outputText value="Folio"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioFolio}"/>
+                <p:outputLabel value="#{item.unidadNegocioFolio}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteId}" filterBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteId}">
                 <f:facet name="header">
                     <h:outputText value="Operador"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                <p:outputLabel value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioFechaIngreso}" filterBy="#{item.unidadNegocioFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <h:outputText value="#{item.unidadNegocioFechaIngreso}">
+                <p:outputLabel value="#{item.unidadNegocioFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </h:outputText>
+                </p:outputLabel>
             </p:column>
 
 
