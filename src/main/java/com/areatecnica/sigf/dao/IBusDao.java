@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
@@ -21,4 +22,6 @@ public interface IBusDao<T> extends IGenericDAO<T> {
     public List<Bus> findByUnidad(UnidadNegocio unidadNegocio);
     
     public List<Bus> findByProceso(ProcesoRecaudacion procesoRecaudacion);
+    
+    public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio);
 }

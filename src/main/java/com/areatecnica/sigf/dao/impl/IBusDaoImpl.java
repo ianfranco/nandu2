@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
@@ -46,4 +47,12 @@ public class IBusDaoImpl extends GenericDAOImpl<Bus> implements IBusDao<Bus> {
         }
     }
 
+    @Override
+    public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio) {
+        try {
+            return this.entityManager.createNamedQuery("Bus.findByGrupoServicio").setParameter("busIdGrupoServicio", grupoServicio).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 }

@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+ * 
  *
  * @author ianfr
  */
@@ -39,25 +40,27 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "guia", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Guia.findAll", query = "SELECT g FROM Guia g")
-    , @NamedQuery(name = "Guia.findByGuiaId", query = "SELECT g FROM Guia g WHERE g.guiaId = :guiaId")
-    , @NamedQuery(name = "Guia.findByCajaRecaudacionProcesoBus", query = "SELECT g FROM Guia g WHERE g.guiaIdCajaTerminal = :guiaIdCajaTerminal AND g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion")
-    , @NamedQuery(name = "Guia.findByProcesoFechaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND g.guiaRecaudacion = :guiaRecaudacion ORDER BY g.guiaIdBus.busNumero ASC, g.guiaFecha ASC")
-    , @NamedQuery(name = "Guia.findByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha = :guiaFecha  ORDER BY g.guiaTurno DESC")
-    , @NamedQuery(name = "Guia.findByCuentaFolio", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFolio = :guiaFolio")
-    , @NamedQuery(name = "Guia.findByGuiaFolio", query = "SELECT g FROM Guia g WHERE g.guiaFolio = :guiaFolio")
-    , @NamedQuery(name = "Guia.findByGuiaFecha", query = "SELECT g FROM Guia g WHERE g.guiaFecha = :guiaFecha")
-    , @NamedQuery(name = "Guia.findByGuiaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaRecaudacion = :guiaRecaudacion")
-    , @NamedQuery(name = "Guia.findByGuiaTotalIngresos", query = "SELECT g FROM Guia g WHERE g.guiaTotalIngresos = :guiaTotalIngresos")
-    , @NamedQuery(name = "Guia.findByGuiaTotalEgresos", query = "SELECT g FROM Guia g WHERE g.guiaTotalEgresos = :guiaTotalEgresos")
-    , @NamedQuery(name = "Guia.findByGuiaViajeEspecial", query = "SELECT g FROM Guia g WHERE g.guiaViajeEspecial = :guiaViajeEspecial")
-    , @NamedQuery(name = "Guia.findByGuiaOtrosIngresos", query = "SELECT g FROM Guia g WHERE g.guiaOtrosIngresos = :guiaOtrosIngresos")
-    , @NamedQuery(name = "Guia.findByGuiaSaldo", query = "SELECT g FROM Guia g WHERE g.guiaSaldo = :guiaSaldo")
-    , @NamedQuery(name = "Guia.findByGuiaNumeroVueltas", query = "SELECT g FROM Guia g WHERE g.guiaNumeroVueltas = :guiaNumeroVueltas")
-    , @NamedQuery(name = "Guia.findByGuiaTurno", query = "SELECT g FROM Guia g WHERE g.guiaTurno = :guiaTurno")
-    , @NamedQuery(name = "Guia.findByGuiaObservacion", query = "SELECT g FROM Guia g WHERE g.guiaObservacion = :guiaObservacion")
-    , @NamedQuery(name = "Guia.findByGuiaRecaudada", query = "SELECT g FROM Guia g WHERE g.guiaRecaudada = :guiaRecaudada")
-    , @NamedQuery(name = "Guia.findByGuiaFechaIngreso", query = "SELECT g FROM Guia g WHERE g.guiaFechaIngreso = :guiaFechaIngreso")})
+    @NamedQuery(name = "Guia.findAll", query = "SELECT g FROM Guia g"),
+    @NamedQuery(name = "Guia.findByGuiaId", query = "SELECT g FROM Guia g WHERE g.guiaId = :guiaId"),
+    @NamedQuery(name = "Guia.findByCajaRecaudacionProcesoBus", query = "SELECT g FROM Guia g WHERE g.guiaIdCajaTerminal = :guiaIdCajaTerminal AND g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion"),
+    @NamedQuery(name = "Guia.findByProcesoFechaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND g.guiaRecaudacion = :guiaRecaudacion ORDER BY g.guiaIdBus.busNumero ASC, g.guiaFecha ASC"),
+    @NamedQuery(name = "Guia.findByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha = :guiaFecha  ORDER BY g.guiaTurno DESC"),
+    @NamedQuery(name = "Guia.findByCuentaFolio", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFolio = :guiaFolio"),
+    @NamedQuery(name = "Guia.findByCuentaFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFecha = :guiaFecha"),
+    @NamedQuery(name = "Guia.findLastGuiaByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha < :guiaFecha ORDER BY g.guiaFecha DESC"),
+    @NamedQuery(name = "Guia.findByGuiaFolio", query = "SELECT g FROM Guia g WHERE g.guiaFolio = :guiaFolio"),
+    @NamedQuery(name = "Guia.findByGuiaFecha", query = "SELECT g FROM Guia g WHERE g.guiaFecha = :guiaFecha"),
+    @NamedQuery(name = "Guia.findByGuiaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaRecaudacion = :guiaRecaudacion"),
+    @NamedQuery(name = "Guia.findByGuiaTotalIngresos", query = "SELECT g FROM Guia g WHERE g.guiaTotalIngresos = :guiaTotalIngresos"),
+    @NamedQuery(name = "Guia.findByGuiaTotalEgresos", query = "SELECT g FROM Guia g WHERE g.guiaTotalEgresos = :guiaTotalEgresos"),
+    @NamedQuery(name = "Guia.findByGuiaViajeEspecial", query = "SELECT g FROM Guia g WHERE g.guiaViajeEspecial = :guiaViajeEspecial"),
+    @NamedQuery(name = "Guia.findByGuiaOtrosIngresos", query = "SELECT g FROM Guia g WHERE g.guiaOtrosIngresos = :guiaOtrosIngresos"),
+    @NamedQuery(name = "Guia.findByGuiaSaldo", query = "SELECT g FROM Guia g WHERE g.guiaSaldo = :guiaSaldo"),
+    @NamedQuery(name = "Guia.findByGuiaNumeroVueltas", query = "SELECT g FROM Guia g WHERE g.guiaNumeroVueltas = :guiaNumeroVueltas"),
+    @NamedQuery(name = "Guia.findByGuiaTurno", query = "SELECT g FROM Guia g WHERE g.guiaTurno = :guiaTurno"),
+    @NamedQuery(name = "Guia.findByGuiaObservacion", query = "SELECT g FROM Guia g WHERE g.guiaObservacion = :guiaObservacion"),
+    @NamedQuery(name = "Guia.findByGuiaRecaudada", query = "SELECT g FROM Guia g WHERE g.guiaRecaudada = :guiaRecaudada"),
+    @NamedQuery(name = "Guia.findByGuiaFechaIngreso", query = "SELECT g FROM Guia g WHERE g.guiaFechaIngreso = :guiaFechaIngreso")})
 public class Guia implements Serializable {
 
     private static final long serialVersionUID = 1L;

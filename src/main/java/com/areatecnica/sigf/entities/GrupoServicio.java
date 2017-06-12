@@ -36,10 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "grupo_servicio", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "GrupoServicio.findAll", query = "SELECT g FROM GrupoServicio g")
-    , @NamedQuery(name = "GrupoServicio.findByGrupoServicioId", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioId = :grupoServicioId")
-    , @NamedQuery(name = "GrupoServicio.findByGrupoServicioIdentificador", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioIdentificador = :grupoServicioIdentificador")
-    , @NamedQuery(name = "GrupoServicio.findByGrupoServicioFechaIngreso", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioFechaIngreso = :grupoServicioFechaIngreso")})
+    @NamedQuery(name = "GrupoServicio.findAll", query = "SELECT g FROM GrupoServicio g"),
+    @NamedQuery(name = "GrupoServicio.findByGrupoServicioId", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioId = :grupoServicioId"),
+    @NamedQuery(name = "GrupoServicio.findByTerminal", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioIdTerminal = :grupoServicioIdTerminal AND g.grupoServicioAccesoInspector = true"),
+    @NamedQuery(name = "GrupoServicio.findByGrupoServicioIdentificador", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioIdentificador = :grupoServicioIdentificador"),
+    @NamedQuery(name = "GrupoServicio.findByGrupoServicioFechaIngreso", query = "SELECT g FROM GrupoServicio g WHERE g.grupoServicioFechaIngreso = :grupoServicioFechaIngreso")})
 public class GrupoServicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,6 +56,10 @@ public class GrupoServicio implements Serializable {
     private String grupoServicioIdentificador;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "grupo_servicio_acceso_inspector")
+    private boolean grupoServicioAccesoInspector;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "grupo_servicio_fecha_ingreso")
     @Temporal(TemporalType.TIMESTAMP)
     private Date grupoServicioFechaIngreso;
@@ -63,6 +68,9 @@ public class GrupoServicio implements Serializable {
     @JoinColumn(name = "grupo_servicio_id_cuenta", referencedColumnName = "cuenta_id")
     @ManyToOne(optional = false)
     private Cuenta grupoServicioIdCuenta;
+    @JoinColumn(name = "grupo_servicio_id_terminal", referencedColumnName = "terminal_id")
+    @ManyToOne(optional = false)
+    private Terminal grupoServicioIdTerminal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdGrupoServicio")
     private List<Servicio> servicioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tarifaGrupoServicioIdGrupo")
@@ -75,9 +83,10 @@ public class GrupoServicio implements Serializable {
         this.grupoServicioId = grupoServicioId;
     }
 
-    public GrupoServicio(Integer grupoServicioId, String grupoServicioIdentificador, Date grupoServicioFechaIngreso) {
+    public GrupoServicio(Integer grupoServicioId, String grupoServicioIdentificador, Boolean grupoServicioAccesoInspector, Date grupoServicioFechaIngreso) {
         this.grupoServicioId = grupoServicioId;
         this.grupoServicioIdentificador = grupoServicioIdentificador;
+        this.grupoServicioAccesoInspector = grupoServicioAccesoInspector;
         this.grupoServicioFechaIngreso = grupoServicioFechaIngreso;
     }
 
@@ -95,6 +104,22 @@ public class GrupoServicio implements Serializable {
 
     public void setGrupoServicioIdentificador(String grupoServicioIdentificador) {
         this.grupoServicioIdentificador = grupoServicioIdentificador;
+    }
+
+    public boolean getGrupoServicioAccesoInspector() {
+        return grupoServicioAccesoInspector;
+    }
+
+    public void setGrupoServicioAccesoInspector(boolean grupoServicioAccesoInspector) {
+        this.grupoServicioAccesoInspector = grupoServicioAccesoInspector;
+    }
+
+    public Terminal getGrupoServicioIdTerminal() {
+        return grupoServicioIdTerminal;
+    }
+
+    public void setGrupoServicioIdTerminal(Terminal grupoServicioIdTerminal) {
+        this.grupoServicioIdTerminal = grupoServicioIdTerminal;
     }
 
     public Date getGrupoServicioFechaIngreso() {
@@ -164,5 +189,5 @@ public class GrupoServicio implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.GrupoServicio[ grupoServicioId=" + grupoServicioId + " ]";
     }
-    
+
 }

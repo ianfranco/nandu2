@@ -5,17 +5,16 @@
  */
 package com.areatecnica.sigf.dao;
 
-import com.areatecnica.sigf.entities.CajaRecaudacion;
-import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.GrupoServicio;
+import com.areatecnica.sigf.entities.Terminal;
 import java.util.List;
 
 /**
  *
  * @author ianfr
  */
-public interface ICajaRecaudacionDao<T> extends IGenericDAO<T> {
-
-    public List<CajaRecaudacion> findAllByUser(Usuario usuario);
+public interface IGrupoServicioDao<T> extends IGenericDAO<T> {
     
-    public CajaRecaudacion findById(int id);
+    public List<GrupoServicio> findByTerminal(Terminal terminal);
+    
 }

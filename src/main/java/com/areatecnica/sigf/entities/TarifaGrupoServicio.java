@@ -24,6 +24,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
+ * 
  *
  * @author ianfr
  */
@@ -31,12 +32,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "tarifa_grupo_servicio", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TarifaGrupoServicio.findAll", query = "SELECT t FROM TarifaGrupoServicio t")
-    , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioId", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioId = :tarifaGrupoServicioId")
-    , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioValor", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioValor = :tarifaGrupoServicioValor")
-    , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioFecha", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioFecha = :tarifaGrupoServicioFecha")
-    , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioActiva", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioActiva = :tarifaGrupoServicioActiva")
-    , @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioFechaIngreso", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioFechaIngreso = :tarifaGrupoServicioFechaIngreso")})
+    @NamedQuery(name = "TarifaGrupoServicio.findAll", query = "SELECT t FROM TarifaGrupoServicio t"),
+    @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioId", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioId = :tarifaGrupoServicioId"),
+    @NamedQuery(name = "TarifaGrupoServicio.findAllByGrupoServicio", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioIdGrupo = :tarifaGrupoServicioIdGrupo AND t.tarifaGrupoServicioActiva = 1 ORDER BY t.tarifaGrupoServicioValor DESC"),
+    @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioValor", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioValor = :tarifaGrupoServicioValor"),
+    @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioFecha", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioFecha = :tarifaGrupoServicioFecha"),
+    @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioActiva", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioActiva = :tarifaGrupoServicioActiva"),
+    @NamedQuery(name = "TarifaGrupoServicio.findByTarifaGrupoServicioFechaIngreso", query = "SELECT t FROM TarifaGrupoServicio t WHERE t.tarifaGrupoServicioFechaIngreso = :tarifaGrupoServicioFechaIngreso")})
 public class TarifaGrupoServicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -165,5 +167,5 @@ public class TarifaGrupoServicio implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.TarifaGrupoServicio[ tarifaGrupoServicioId=" + tarifaGrupoServicioId + " ]";
     }
-    
+
 }

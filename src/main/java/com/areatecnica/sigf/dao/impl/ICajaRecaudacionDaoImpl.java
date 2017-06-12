@@ -21,7 +21,7 @@ public class ICajaRecaudacionDaoImpl extends GenericDAOImpl<CajaRecaudacion> imp
     public List<CajaRecaudacion> findAllByUser(Usuario usuario) {
         try {
             return this.entityManager.createNamedQuery("CajaRecaudacion.findByCajaRecaudacionIdUsuario").setParameter("cajaRecaudacionIdUsuario", usuario).getResultList();
-        } catch (NoResultException ne) {            
+        } catch (NoResultException ne) {
             return null;
         }
     }
@@ -35,6 +35,15 @@ public class ICajaRecaudacionDaoImpl extends GenericDAOImpl<CajaRecaudacion> imp
     @Override
     public CajaRecaudacion update(CajaRecaudacion t) {
         return this.entityManager.merge(t);
+    }
+
+    @Override
+    public CajaRecaudacion findById(int id) {
+        try {
+            return (CajaRecaudacion) this.entityManager.createNamedQuery("CajaRecaudacion.findByCajaRecaudacionId").setParameter("cajaRecaudacionId", id).getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
     }
 
 }

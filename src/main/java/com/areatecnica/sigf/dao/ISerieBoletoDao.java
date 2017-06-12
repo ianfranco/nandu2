@@ -15,8 +15,8 @@ import java.util.List;
  * @author ianfr
  */
 public interface ISerieBoletoDao<T> extends IGenericDAO<T> {
-    
+
     public List<SerieBoletoGuia> findByGuia(Guia guia);
-    
+
     public SerieBoletoGuia findByGuiaBoleto(Guia guia, Boleto boleto);
 }

@@ -1,11 +1,31 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
-import com.areatecnica.sigf.beans.TrabajadorController;
-import com.areatecnica.sigf.beans.BusController;
+import com.areatecnica.sigf.beans.util.JsfUtil;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.controllers.GuiaFacade;
+import com.areatecnica.sigf.dao.IBusDao;
+import com.areatecnica.sigf.dao.ICajaRecaudacionDao;
+import com.areatecnica.sigf.dao.IEstadoGuiaDao;
+import com.areatecnica.sigf.dao.IGrupoServicioDao;
+import com.areatecnica.sigf.dao.IGuiaDao;
+import com.areatecnica.sigf.dao.ISerieBoletoDao;
+import com.areatecnica.sigf.dao.ITarifaGrupoServicioDao;
+import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
+import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.IEstadoGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.IGrupoServicioDaoImpl;
+import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
+import com.areatecnica.sigf.dao.impl.ITarifaGrupoServicioDaoImpl;
+import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.GrupoServicio;
+import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+import com.areatecnica.sigf.entities.SerieBoletoGuia;
+import com.areatecnica.sigf.entities.TarifaGrupoServicio;
+import com.areatecnica.sigf.models.SerieBoletoGuiaDataModel;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -28,6 +48,25 @@ public class GuiaFirstController extends AbstractController<Guia> {
     @Inject
     private TrabajadorController guiaIdTrabajadorController;
 
+    private List<Guia> items;
+    private List<Bus> busesList;
+    private List<SerieBoletoGuia> boletoGuiaList;
+    private List<GrupoServicio> grupoServicioList;
+    private SerieBoletoGuiaDataModel model;
+    private IGuiaDao guiaDao;
+    private IBusDao busDao;
+    private ISerieBoletoDao serieBoletoGuiaDao;
+    private IGrupoServicioDao grupoServicioDao;
+    private ITarifaGrupoServicioDao tarifaGrupoServicioDao;
+    private ICajaRecaudacionDao cajaRecaudacionDao;
+    private IEstadoGuiaDao estadoGuiaDao;
+    private Guia selected;
+    private GrupoServicio grupoServicio;
+    private Date fecha;
+    private String formatFecha;
+
+    private final static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+
     /**
      * Initialize the concrete Guia controller bean. The AbstractController
      * requires the EJB Facade object for most operations.
@@ -36,11 +75,143 @@ public class GuiaFirstController extends AbstractController<Guia> {
     @Override
     public void init() {
         super.setFacade(ejbFacade);
+        this.setFecha(new Date());
+        this.guiaDao = new IGuiaDaoImpl();
+        this.setItems((List<Guia>) this.guiaDao.findByCuentaFecha(this.getUserCount(), this.getFecha()));
+        this.grupoServicioDao = new IGrupoServicioDaoImpl();
+        this.setGrupoServicioList((List<GrupoServicio>) this.grupoServicioDao.findByTerminal(this.getCurrentUser().getUsuarioIdTerminal()));
+        //this.setBusesList(busesProceso(this.procesoRecaudacion));
     }
 
     public GuiaFirstController() {
         // Inform the Abstract parent controller of the concrete Guia Entity
         super(Guia.class);
+    }
+
+    /**
+     * @return the items
+     */
+    public List<Guia> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<Guia> items) {
+        this.items = items;
+    }
+
+    /**
+     * @return the busesList
+     */
+    public List<Bus> getBusesList() {
+        return busesList;
+    }
+
+    /**
+     * @param busesList the busesList to set
+     */
+    public void setBusesList(List<Bus> busesList) {
+        this.busesList = busesList;
+    }
+
+    /**
+     * @return the selected
+     */
+    public Guia getSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected the selected to set
+     */
+    public void setSelected(Guia selected) {
+        this.selected = selected;
+    }
+
+    /**
+     * @return the boletoGuiaList
+     */
+    public List<SerieBoletoGuia> getBoletoGuiaList() {
+        return boletoGuiaList;
+    }
+
+    /**
+     * @param boletoGuiaList the boletoGuiaList to set
+     */
+    public void setBoletoGuiaList(List<SerieBoletoGuia> boletoGuiaList) {
+        this.boletoGuiaList = boletoGuiaList;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    /**
+     * @return the formatFecha
+     */
+    public String getFormatFecha() {
+        return format.format(fecha);
+    }
+
+    /**
+     * @param formatFecha the formatFecha to set
+     */
+    public void setFormatFecha(String formatFecha) {
+        this.formatFecha = formatFecha;
+    }
+
+    /**
+     * @return the grupoServicioList
+     */
+    public List<GrupoServicio> getGrupoServicioList() {
+        return grupoServicioList;
+    }
+
+    /**
+     * @param grupoServicioList the grupoServicioList to set
+     */
+    public void setGrupoServicioList(List<GrupoServicio> grupoServicioList) {
+        this.grupoServicioList = grupoServicioList;
+    }
+
+    /**
+     * @return the grupoServicio
+     */
+    public GrupoServicio getGrupoServicio() {
+        return grupoServicio;
+    }
+
+    /**
+     * @param grupoServicio the grupoServicio to set
+     */
+    public void setGrupoServicio(GrupoServicio grupoServicio) {
+        this.grupoServicio = grupoServicio;
+    }
+
+    /**
+     * @return the model
+     */
+    public SerieBoletoGuiaDataModel getModel() {
+        return model;
+    }
+
+    /**
+     * @param model the model to set
+     */
+    public void setModel(SerieBoletoGuiaDataModel model) {
+        this.model = model;
     }
 
     /**
@@ -153,6 +324,87 @@ public class GuiaFirstController extends AbstractController<Guia> {
             FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("EgresoGuia_items", this.getSelected().getEgresoGuiaList());
         }
         return "/egresoGuia/index";
+    }
+
+    @Override
+    public Guia prepareCreate(ActionEvent event) {
+        
+        this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
+        this.estadoGuiaDao = new IEstadoGuiaDaoImpl();
+        this.selected = new Guia();
+        this.selected.setGuiaFecha(fecha);
+        
+        this.getSelected().setGuiaIdCuenta(this.getUserCount());                
+        this.getSelected().setGuiaFechaIngreso(new Date());
+        this.getSelected().setGuiaTotalIngresos(0);
+        this.getSelected().setGuiaTotalEgresos(0);
+        this.getSelected().setGuiaSaldo(0);
+        this.getSelected().setGuiaIdCajaTerminal(this.cajaRecaudacionDao.findById(1));
+        this.getSelected().setGuiaIdEstado(this.estadoGuiaDao.findById(1));
+        this.getSelected().setGuiaRecaudada(Boolean.TRUE);
+        this.getSelected().setGuiaNumeroVueltas(0);
+        this.getSelected().setGuiaTurno(0);
+        
+        return this.getSelected();
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        if(this.getSelected()!=null){
+            this.getSelected().setSerieBoletoGuiaList(boletoGuiaList);
+            this.ejbFacade.create(this.getSelected());
+        }
+    }
+
+    public void load() {
+        this.tarifaGrupoServicioDao = new ITarifaGrupoServicioDaoImpl();
+        this.busDao = new IBusDaoImpl();
+        this.busesList = this.busDao.findByGrupoServicio(this.grupoServicio);
+    }
+
+    public void findFolio() {
+        if (this.getSelected() != null) {
+            Guia auxGuia = this.guiaDao.findByCuentaFolio(this.getUserCount(), this.getSelected().getGuiaFolio());
+
+            if (auxGuia != null) {
+                JsfUtil.addErrorMessage("La Guía se encuentra ingresada");
+                JsfUtil.isValidationFailed();
+                this.getSelected().setGuiaFolio(0);
+            }
+        }
+    }
+
+    public void handleBusChange(ActionEvent event) {
+        if (this.getSelected().getGuiaIdBus() != null) {
+
+            Guia auxGuia = this.guiaDao.findLastGuiaByBusFecha(this.getSelected().getGuiaIdBus(), this.getSelected().getGuiaFecha());
+
+            if (auxGuia != null) {
+                this.getSelected().setGuiaTurno(auxGuia.getGuiaTurno() + 1);
+                JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha \nSe actualizó el N° de Turno a " + this.getSelected().getGuiaTurno());
+            } else {
+                this.getSelected().setGuiaTurno(1);
+                JsfUtil.addExclamationMessage("No se han encontrado Guías para el Bus seleccionado, de completar la información de los boletos");
+                
+                List<TarifaGrupoServicio> auxList = this.tarifaGrupoServicioDao.findAllByCuenta();
+                System.err.println("TAMAÑO DE LISTA DE TARIFAS:"+auxList.size());
+                this.boletoGuiaList = new ArrayList<>();
+                for(TarifaGrupoServicio t:auxList){
+                    SerieBoletoGuia s = new SerieBoletoGuia();
+                    s.setSerieBoletoGuiaIdGuia(this.getSelected());
+                    s.setSerieBoletoGuiaIdBoleto(t.getTarifaGrupoServicioIdBoleto());
+                    this.boletoGuiaList.add(s);
+                    System.err.println("BOLETO: "+s.getSerieBoletoGuiaIdBoleto().getBoletoNombre());
+                }
+                
+                this.setModel(new SerieBoletoGuiaDataModel(boletoGuiaList));
+            }
+        }
+    }
+
+    private List<Bus> busesProceso(ProcesoRecaudacion procesoRecaudacion) {
+        this.busDao = new IBusDaoImpl();
+        return this.busDao.findByProceso(procesoRecaudacion);
     }
 
 }

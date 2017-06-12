@@ -21,9 +21,14 @@ public interface IGuiaDao<T> extends IGenericDAO<T> {
     
     public Guia findByCuentaFolio(Cuenta cuenta, int folio);
     
+    public Guia findLastGuiaByBusFecha(Bus bus, Date fecha);
+    
     public List<Guia> findByCajaRecaudacionProcesoBus(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion);
     
     public List<Guia> findByProcesoFechaRecaudacion(ProcesoRecaudacion procesoRecaudacion, Date fechaRecaudacion);
     
     public List<Guia> findByBusFecha(Bus bus, Date fecha);
+    
+    public List<Guia> findByCuentaFecha(Cuenta cuenta, Date fecha);
+    
 }

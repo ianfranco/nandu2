@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * 
+ *
  *
  * @author ianfr
  */
@@ -37,13 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "caja_recaudacion", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionId", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionId = :cajaRecaudacionId")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionIdUsuario", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdUsuario = :cajaRecaudacionIdUsuario")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombreCaja", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombreCaja = :cajaRecaudacionNombreCaja")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionTieneEgresos", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionTieneEgresos = :cajaRecaudacionTieneEgresos")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionActiva", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = :cajaRecaudacionActiva")
-    , @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionFechaIngreso", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionFechaIngreso = :cajaRecaudacionFechaIngreso")})
+    @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionId", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionId = :cajaRecaudacionId"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionIdUsuario", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdUsuario = :cajaRecaudacionIdUsuario"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombreCaja", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombreCaja = :cajaRecaudacionNombreCaja"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionTieneEgresos", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionTieneEgresos = :cajaRecaudacionTieneEgresos"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionActiva", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = :cajaRecaudacionActiva"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionFechaIngreso", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionFechaIngreso = :cajaRecaudacionFechaIngreso")})
 public class CajaRecaudacion implements Serializable {
 
     private static final long serialVersionUID = 1L;

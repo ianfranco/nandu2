@@ -38,7 +38,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return null;
         }
     }
-    
+
     @Override
     public Guia findByCuentaFolio(Cuenta cuenta, int folio) {
         try {
@@ -52,6 +52,24 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     public List<Guia> findByBusFecha(Bus bus, Date fecha) {
         try {
             return this.entityManager.createNamedQuery("Guia.findByBusFecha").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Guia> findByCuentaFecha(Cuenta cuenta, Date fecha) {
+        try {
+            return this.entityManager.createNamedQuery("Guia.findByCuentaFecha").setParameter("guiaIdCuenta", cuenta).setParameter("guiaFecha", fecha).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public Guia findLastGuiaByBusFecha(Bus bus, Date fecha) {
+        try {
+            return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }

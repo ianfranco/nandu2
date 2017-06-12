@@ -88,6 +88,12 @@ public class SerieBoletoGuia implements Serializable {
     private Guia serieBoletoGuiaIdGuia;
 
     public SerieBoletoGuia() {
+        this.serieBoletoGuiaCantidad = 0;
+        this.serieBoletoGuiaEsNuevo = Boolean.TRUE;
+        this.serieBoletoGuiaFechaIngreso = new Date();
+        this.serieBoletoGuiaNumeroVuelta = 1;
+        this.serieBoletoGuiaTotal = 0;
+        this.serieBoletoGuiaValor = 0;
     }
 
     public SerieBoletoGuia(Integer serieBoletoGuiaId) {
