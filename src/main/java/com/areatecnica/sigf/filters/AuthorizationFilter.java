@@ -44,6 +44,7 @@ public class AuthorizationFilter implements Filter {
         } else // user didn't log in but asking for a page that is not allowed so take user to login page
         {
             res.sendRedirect(req.getContextPath() + "/login.xhtml");  // Anonymous user. Redirect to login page
+            System.err.println("CONTEXT :"+req.getContextPath());
             req.removeAttribute("staff");
         }
     }

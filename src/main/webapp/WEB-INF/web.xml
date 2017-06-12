@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>SessionTimeoutFilter</filter-name>
+        <filter-class>com.areatecnica.sigf.filters.SessionTimeoutFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SessionTimeoutFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>Push Servlet</servlet-name>
         <servlet-class>org.primefaces.push.PushServlet</servlet-class>
@@ -17,10 +29,6 @@
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>com.areatecnica.sigf.filters.AuthorizationFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>AuthorizationFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
     <context-param>
         <param-name>primefaces.THEME</param-name>
         <param-value>omega</param-value>
@@ -50,7 +58,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            1
         </session-timeout>
     </session-config>
     <welcome-file-list>
@@ -104,18 +112,15 @@
     <mime-mapping>
         <extension>less</extension>
         <mime-type>text/css</mime-type>
-    </mime-mapping>   
-    <!-- Mime Type --> 
-    
+    </mime-mapping>
+    <!-- Mime Type -->
     <!-- Error Page -->
-    <error-page>  
-        <error-code>404</error-code>  
-        <location>/errorPage/404.xhtml</location>  
+    <error-page>
+        <error-code>404</error-code>
+        <location>/errorPage/404.xhtml</location>
     </error-page>
-    
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
         <location>/errorPage/404.xhtml</location>
     </error-page>
-    
 </web-app>

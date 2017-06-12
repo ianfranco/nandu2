@@ -36,6 +36,7 @@ public final class CountPage implements java.io.Serializable {
     private int boletoCount;
     private int busCount;
     private int busServicioCount;
+    private int cargandoCount;
     private int cajaCompensacionCount;
     private int cajaRecaudacionCount;
     private int cajaProcesoCount;
@@ -218,7 +219,7 @@ public final class CountPage implements java.io.Serializable {
 
                     try {
                         Field field = getClass().getDeclaredField(tabla + "Count");
-                        if (field.getName().contains("Count")) {
+                        if (field.getName().contains("Count") && !field.getName().equals("cargando")) {
                             field.setInt(this, entityManager.createQuery("SELECT c FROM " + tabla.substring(0, 1).toUpperCase() + tabla.substring(1) + " c").getResultList().size());
                         }
                     } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
@@ -489,6 +490,20 @@ public final class CountPage implements java.io.Serializable {
      */
     public void setCalleServicioCount(int calleServicioCount) {
         this.calleServicioCount = calleServicioCount;
+    }
+
+    /**
+     * @return the cargandoCount
+     */
+    public int getCargandoCount() {
+        return cargandoCount;
+    }
+
+    /**
+     * @param cargandoCount the cargandoCount to set
+     */
+    public void setCargandoCount(int cargandoCount) {
+        this.cargandoCount = cargandoCount;
     }
 
     /**
