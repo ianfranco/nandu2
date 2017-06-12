@@ -117,12 +117,7 @@
             <groupId>org.apache.xmlbeans</groupId>
             <artifactId>xmlbeans</artifactId>
             <version>2.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.googlecode.wicked-charts</groupId>
-            <artifactId>wicked-charts-showcase-options</artifactId>
-            <version>1.6.0</version>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
