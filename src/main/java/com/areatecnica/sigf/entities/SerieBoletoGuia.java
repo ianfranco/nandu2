@@ -31,16 +31,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "serie_boleto_guia", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "SerieBoletoGuia.findAll", query = "SELECT s FROM SerieBoletoGuia s")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaId", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaId = :serieBoletoGuiaId")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaNumeroVuelta", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaNumeroVuelta = :serieBoletoGuiaNumeroVuelta")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaValor", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaValor = :serieBoletoGuiaValor")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaInicio", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaInicio = :serieBoletoGuiaInicio")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTermino", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTermino = :serieBoletoGuiaTermino")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaCantidad", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaCantidad = :serieBoletoGuiaCantidad")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTotal", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTotal = :serieBoletoGuiaTotal")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaEsNuevo", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaEsNuevo = :serieBoletoGuiaEsNuevo")
-    , @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaFechaIngreso", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaFechaIngreso = :serieBoletoGuiaFechaIngreso")})
+    @NamedQuery(name = "SerieBoletoGuia.findAll", query = "SELECT s FROM SerieBoletoGuia s"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaId", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaId = :serieBoletoGuiaId"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaNumeroVuelta", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaNumeroVuelta = :serieBoletoGuiaNumeroVuelta"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaValor", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaValor = :serieBoletoGuiaValor"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaInicio", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaInicio = :serieBoletoGuiaInicio"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTermino", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTermino = :serieBoletoGuiaTermino"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaCantidad", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaCantidad = :serieBoletoGuiaCantidad"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTotal", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTotal = :serieBoletoGuiaTotal"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaEsNuevo", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaEsNuevo = :serieBoletoGuiaEsNuevo"),
+    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaFechaIngreso", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaFechaIngreso = :serieBoletoGuiaFechaIngreso")})
 public class SerieBoletoGuia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +60,7 @@ public class SerieBoletoGuia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "serie_boleto_guia_inicio")
-    private int serieBoletoGuiaInicio;
+    private String serieBoletoGuiaInicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "serie_boleto_guia_termino")
@@ -100,7 +100,7 @@ public class SerieBoletoGuia implements Serializable {
         this.serieBoletoGuiaId = serieBoletoGuiaId;
     }
 
-    public SerieBoletoGuia(Integer serieBoletoGuiaId, int serieBoletoGuiaNumeroVuelta, int serieBoletoGuiaValor, int serieBoletoGuiaInicio, int serieBoletoGuiaTermino, int serieBoletoGuiaCantidad, int serieBoletoGuiaTotal, Date serieBoletoGuiaFechaIngreso) {
+    public SerieBoletoGuia(Integer serieBoletoGuiaId, int serieBoletoGuiaNumeroVuelta, int serieBoletoGuiaValor, String serieBoletoGuiaInicio, int serieBoletoGuiaTermino, int serieBoletoGuiaCantidad, int serieBoletoGuiaTotal, Date serieBoletoGuiaFechaIngreso) {
         this.serieBoletoGuiaId = serieBoletoGuiaId;
         this.serieBoletoGuiaNumeroVuelta = serieBoletoGuiaNumeroVuelta;
         this.serieBoletoGuiaValor = serieBoletoGuiaValor;
@@ -135,11 +135,11 @@ public class SerieBoletoGuia implements Serializable {
         this.serieBoletoGuiaValor = serieBoletoGuiaValor;
     }
 
-    public int getSerieBoletoGuiaInicio() {
+    public String getSerieBoletoGuiaInicio() {
         return serieBoletoGuiaInicio;
     }
 
-    public void setSerieBoletoGuiaInicio(int serieBoletoGuiaInicio) {
+    public void setSerieBoletoGuiaInicio(String serieBoletoGuiaInicio) {
         this.serieBoletoGuiaInicio = serieBoletoGuiaInicio;
     }
 
@@ -223,5 +223,5 @@ public class SerieBoletoGuia implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.SerieBoletoGuia[ serieBoletoGuiaId=" + serieBoletoGuiaId + " ]";
     }
-    
+
 }

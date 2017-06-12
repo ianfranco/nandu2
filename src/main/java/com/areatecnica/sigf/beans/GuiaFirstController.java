@@ -354,6 +354,8 @@ public class GuiaFirstController extends AbstractController<Guia> {
             this.getSelected().setSerieBoletoGuiaList(boletoGuiaList);
             this.ejbFacade.create(this.getSelected());
         }
+        this.boletoGuiaList = null;
+        this.setSelected(prepareCreate(event));
     }
 
     public void load() {

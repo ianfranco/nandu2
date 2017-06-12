@@ -93,7 +93,7 @@
                                  rowKey="#{item.guiaId}"
                                  emptyMessage="No se han encontrado registros"
                                  rowIndexVar="rowIndex"
-                                 style="width: 600px;padding-top: 10px;">
+                                 style="width: 600px;padding-top: 10px;padding-bottom: 10px;">
 
                         <f:facet name="header">
                             Series de Boletos
@@ -124,14 +124,14 @@
                             <f:facet name="header">
                                 <h:outputText value="Fin"/>
                             </f:facet>
-                            <p:inputNumber value="#{item.serieBoletoGuiaInicio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                            <p:inputNumber value="#{item.serieBoletoGuiaTermino}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)"/>
                         </p:column>
                     </p:dataTable>
 
-                    <p:panelGrid columns="4" style="padding-top: 10px;">
+                    <p:panelGrid columns="4" style="width: 100%">
                         <h:outputLabel/>
                         <h:outputLabel/>
-                        <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl" styleClass="btn btn-primary">
+                        <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl, GuiaCreateDlg" styleClass="btn btn-primary" resetValues="true">
                             <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary"/>
