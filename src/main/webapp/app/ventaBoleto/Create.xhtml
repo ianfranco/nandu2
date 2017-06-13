@@ -15,13 +15,16 @@
                 <h:panelGroup id="display" rendered="#{ventaBoletoRecaudacionController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="Guía" for="ventaBoletoIdGuia" />
-                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia}" required="true" requiredMessage="#{bundle.CreateVentaBoletoRequiredMessage_ventaBoletoIdGuia}" converter="omnifaces.SelectItemsConverter">
+                        <p:outputLabel value="N° Boleta" for="numeroBoleta" />
+                        <p:inputText id="numeroBoleta" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoNumeroBoleta}" title="#{bundle.CreateVentaBoletoTitle_ventaBoletoValorVentaBoleto}" required="true" requiredMessage="Debe ingresar el N° de Boleta"/>
+                        
+                        <p:outputLabel value="N° Bus" for="ventaBoletoIdGuia" />
+                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdBus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{guiaController.items}"
-                                           var="ventaBoletoIdGuiaItem"
-                                           itemValue="#{ventaBoletoIdGuiaItem}"
-                                           itemLabel="#{ventaBoletoIdGuiaItem.guiaId.toString()}"
+                            <f:selectItems value="#{ventaBoletoRecaudacionController.busesList}"
+                                           var="busItem"
+                                           itemValue="#{busItem}"
+                                           itemLabel="#{busItem.busNumero}"
                                            />
 
                         </p:selectOneMenu>

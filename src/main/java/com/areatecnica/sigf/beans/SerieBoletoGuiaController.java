@@ -17,7 +17,7 @@ public class SerieBoletoGuiaController extends AbstractController<SerieBoletoGui
     @Inject
     private SerieBoletoGuiaFacade ejbFacade;
     @Inject
-    private BoletoController serieBoletoGuiaIdBoletoController;
+    private VentaBoletoController serieBoletoGuiaIdVentaBoletoController;
     @Inject
     private GuiaController serieBoletoGuiaIdGuiaController;
 
@@ -40,7 +40,7 @@ public class SerieBoletoGuiaController extends AbstractController<SerieBoletoGui
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        serieBoletoGuiaIdBoletoController.setSelected(null);
+        serieBoletoGuiaIdVentaBoletoController.setSelected(null);
         serieBoletoGuiaIdGuiaController.setSelected(null);
     }
 
@@ -50,9 +50,9 @@ public class SerieBoletoGuiaController extends AbstractController<SerieBoletoGui
      *
      * @param event Event object for the widget that triggered an action
      */
-    public void prepareSerieBoletoGuiaIdBoleto(ActionEvent event) {
-        if (this.getSelected() != null && serieBoletoGuiaIdBoletoController.getSelected() == null) {
-            serieBoletoGuiaIdBoletoController.setSelected(this.getSelected().getSerieBoletoGuiaIdBoleto());
+    public void prepareSerieBoletoGuiaIdVentaBoleto(ActionEvent event) {
+        if (this.getSelected() != null && serieBoletoGuiaIdVentaBoletoController.getSelected() == null) {
+            serieBoletoGuiaIdVentaBoletoController.setSelected(this.getSelected().getSerieBoletoGuiaIdVentaBoleto());
         }
     }
 

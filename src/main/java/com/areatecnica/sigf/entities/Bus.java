@@ -111,6 +111,8 @@ public class Bus implements Serializable {
     private List<CargoBus> cargoBusList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "despachoIdBus")
     private List<Despacho> despachoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdBus")
+    private List<VentaBoleto> ventaBoletoList;
     @JoinColumn(name = "bus_id_empresa", referencedColumnName = "empresa_id")
     @ManyToOne(optional = false)
     private Empresa busIdEmpresa;
@@ -303,6 +305,15 @@ public class Bus implements Serializable {
 
     public void setDespachoList(List<Despacho> despachoList) {
         this.despachoList = despachoList;
+    }
+    
+    @XmlTransient
+    public List<VentaBoleto> getVentaBoletoList() {
+        return ventaBoletoList;
+    }
+
+    public void setVentaBoletoList(List<VentaBoleto> ventaBoletoList) {
+        this.ventaBoletoList = ventaBoletoList;
     }
 
     public Empresa getBusIdEmpresa() {

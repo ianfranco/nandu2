@@ -33,19 +33,6 @@ public class BoletoController extends AbstractController<Boleto> {
         super(Boleto.class);
     }
 
-    /**
-     * Sets the "items" attribute with a collection of SerieBoletoGuia entities
-     * that are retrieved from Boleto?cap_first and returns the navigation
-     * outcome.
-     *
-     * @return navigation outcome for SerieBoletoGuia page
-     */
-    public String navigateSerieBoletoGuiaList() {
-        if (this.getSelected() != null) {
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("SerieBoletoGuia_items", this.getSelected().getSerieBoletoGuiaList());
-        }
-        return "/serieBoletoGuia/index";
-    }
 
     /**
      * Sets the "items" attribute with a collection of InventarioInterno

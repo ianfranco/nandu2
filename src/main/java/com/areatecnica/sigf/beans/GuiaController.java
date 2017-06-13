@@ -65,20 +65,7 @@ public class GuiaController extends AbstractController<Guia> {
         }
         return "/serieBoletoGuia/index";
     }
-
-    /**
-     * Sets the "items" attribute with a collection of VentaBoleto entities that
-     * are retrieved from Guia?cap_first and returns the navigation outcome.
-     *
-     * @return navigation outcome for VentaBoleto page
-     */
-    public String navigateVentaBoletoList() {
-        if (this.getSelected() != null) {
-            FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("VentaBoleto_items", this.getSelected().getVentaBoletoList());
-        }
-        return "/ventaBoleto/index";
-    }
-
+    
     /**
      * Sets the "items" attribute with a collection of VentaCombustible entities
      * that are retrieved from Guia?cap_first and returns the navigation

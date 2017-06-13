@@ -8,6 +8,7 @@ package com.areatecnica.sigf.dao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Cuenta;
+import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import java.util.Date;
@@ -30,5 +31,7 @@ public interface IGuiaDao<T> extends IGenericDAO<T> {
     public List<Guia> findByBusFecha(Bus bus, Date fecha);
     
     public List<Guia> findByCuentaFecha(Cuenta cuenta, Date fecha);
+    
+    public List<Guia> findByFechaGrupoServicio(GrupoServicio grupoServicio, Date fecha);
     
 }

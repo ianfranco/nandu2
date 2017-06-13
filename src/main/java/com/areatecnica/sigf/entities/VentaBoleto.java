@@ -7,7 +7,9 @@ package com.areatecnica.sigf.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,11 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +37,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoIdGuia.guiaFecha = :guiaFecha ORDER BY v.ventaBoletoIdGuia.guiaIdBus.busNumero ASC"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdBus", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdBusEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoUtilizado = 0"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultBus", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus.busId = 1"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoFecha  = :ventaBoletoFecha ORDER BY v.ventaBoletoIdBus.busNumero ASC"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoValorVentaBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValorVentaBoleto = :ventaBoletoValorVentaBoleto"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoRecaudado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoRecaudado = :ventaBoletoRecaudado"),
@@ -53,6 +60,11 @@ public class VentaBoleto implements Serializable {
     private int ventaBoletoNumeroBoleta;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "venta_boleto_fecha")
+    @Temporal(TemporalType.DATE)
+    private Date ventaBoletoFecha;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "venta_boleto_valor_venta_boleto")
     private int ventaBoletoValorVentaBoleto;
     @Basic(optional = false)
@@ -66,9 +78,11 @@ public class VentaBoleto implements Serializable {
     @Column(name = "venta_boleto_fecha_ingreso")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ventaBoletoFechaIngreso;
-    @JoinColumn(name = "venta_boleto_id_guia", referencedColumnName = "guia_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serieBoletoGuiaIdVentaBoleto")
+    private List<SerieBoletoGuia> serieBoletoGuiaList;
+    @JoinColumn(name = "venta_boleto_id_bus", referencedColumnName = "bus_id")
     @ManyToOne(optional = false)
-    private Guia ventaBoletoIdGuia;
+    private Bus ventaBoletoIdBus;
     @JoinColumn(name = "venta_boleto_id_inventario_caja", referencedColumnName = "inventario_caja_id")
     @ManyToOne(optional = false)
     private InventarioCaja ventaBoletoIdInventarioCaja;
@@ -80,8 +94,9 @@ public class VentaBoleto implements Serializable {
         this.ventaBoletoId = ventaBoletoId;
     }
 
-    public VentaBoleto(Integer ventaBoletoId, int ventaBoletoNumeroBoleta, int ventaBoletoValorVentaBoleto, boolean ventaBoletoRecaudado, Date ventaBoletoFechaIngreso) {
+    public VentaBoleto(Integer ventaBoletoId, Date ventaBoletoFecha, int ventaBoletoNumeroBoleta, int ventaBoletoValorVentaBoleto, boolean ventaBoletoRecaudado, Date ventaBoletoFechaIngreso) {
         this.ventaBoletoId = ventaBoletoId;
+        this.ventaBoletoFecha = ventaBoletoFecha;
         this.ventaBoletoNumeroBoleta = ventaBoletoNumeroBoleta;
         this.ventaBoletoValorVentaBoleto = ventaBoletoValorVentaBoleto;
         this.ventaBoletoRecaudado = ventaBoletoRecaudado;
@@ -96,8 +111,16 @@ public class VentaBoleto implements Serializable {
         this.ventaBoletoId = ventaBoletoId;
     }
 
+    public Date getVentaBoletoFecha() {
+        return ventaBoletoFecha;
+    }
+
     public int getVentaBoletoNumeroBoleta() {
         return ventaBoletoNumeroBoleta;
+    }
+
+    public void setVentaBoletoFecha(Date ventaBoletoFecha) {
+        this.ventaBoletoFecha = ventaBoletoFecha;
     }
 
     public void setVentaBoletoNumeroBoleta(int ventaBoletoNumeroBoleta) {
@@ -136,12 +159,21 @@ public class VentaBoleto implements Serializable {
         this.ventaBoletoFechaIngreso = ventaBoletoFechaIngreso;
     }
 
-    public Guia getVentaBoletoIdGuia() {
-        return ventaBoletoIdGuia;
+    @XmlTransient
+    public List<SerieBoletoGuia> getSerieBoletoGuiaList() {
+        return serieBoletoGuiaList;
     }
 
-    public void setVentaBoletoIdGuia(Guia ventaBoletoIdGuia) {
-        this.ventaBoletoIdGuia = ventaBoletoIdGuia;
+    public void setSerieBoletoGuiaList(List<SerieBoletoGuia> serieBoletoGuiaList) {
+        this.serieBoletoGuiaList = serieBoletoGuiaList;
+    }
+
+    public Bus getVentaBoletoIdBus() {
+        return ventaBoletoIdBus;
+    }
+
+    public void setVentaBoletoIdBus(Bus ventaBoletoIdBus) {
+        this.ventaBoletoIdBus = ventaBoletoIdBus;
     }
 
     public InventarioCaja getVentaBoletoIdInventarioCaja() {
@@ -174,7 +206,7 @@ public class VentaBoleto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.VentaBoleto[ ventaBoletoId=" + ventaBoletoId + " ]";
+        return "com.areatecnica.entities.VentaBoleto[ ventaBoletoId=" + ventaBoletoId + " ]";
     }
 
 }

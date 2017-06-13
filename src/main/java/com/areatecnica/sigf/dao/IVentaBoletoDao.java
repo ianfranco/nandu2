@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.dao;
 
+import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import java.util.Date;
@@ -18,4 +19,9 @@ public interface IVentaBoletoDao<T> extends IGenericDAO<T> {
     
     public List<VentaBoleto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta);
     
+    public List<VentaBoleto> findByBus(Bus bus);
+    
+    public List<VentaBoleto> findByBusEstado(Bus bus);
+    
+    public List<VentaBoleto> findByDefaultBus();
 }

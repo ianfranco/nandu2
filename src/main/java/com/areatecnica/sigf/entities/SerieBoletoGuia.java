@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaId", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaId = :serieBoletoGuiaId"),
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaNumeroVuelta", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaNumeroVuelta = :serieBoletoGuiaNumeroVuelta"),
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaValor", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaValor = :serieBoletoGuiaValor"),
-    @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaInicio", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaInicio = :serieBoletoGuiaInicio"),
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTermino", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTermino = :serieBoletoGuiaTermino"),
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaCantidad", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaCantidad = :serieBoletoGuiaCantidad"),
     @NamedQuery(name = "SerieBoletoGuia.findBySerieBoletoGuiaTotal", query = "SELECT s FROM SerieBoletoGuia s WHERE s.serieBoletoGuiaTotal = :serieBoletoGuiaTotal"),
@@ -60,7 +59,7 @@ public class SerieBoletoGuia implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "serie_boleto_guia_inicio")
-    private String serieBoletoGuiaInicio;
+    private int serieBoletoGuiaInicio;
     @Basic(optional = false)
     @NotNull
     @Column(name = "serie_boleto_guia_termino")
@@ -80,27 +79,21 @@ public class SerieBoletoGuia implements Serializable {
     @Column(name = "serie_boleto_guia_fecha_ingreso")
     @Temporal(TemporalType.TIMESTAMP)
     private Date serieBoletoGuiaFechaIngreso;
-    @JoinColumn(name = "serie_boleto_guia_id_boleto", referencedColumnName = "boleto_id")
-    @ManyToOne(optional = false)
-    private Boleto serieBoletoGuiaIdBoleto;
     @JoinColumn(name = "serie_boleto_guia_id_guia", referencedColumnName = "guia_id")
     @ManyToOne(optional = false)
     private Guia serieBoletoGuiaIdGuia;
+    @JoinColumn(name = "serie_boleto_guia_id_venta_boleto", referencedColumnName = "venta_boleto_id")
+    @ManyToOne(optional = false)
+    private VentaBoleto serieBoletoGuiaIdVentaBoleto;
 
     public SerieBoletoGuia() {
-        this.serieBoletoGuiaCantidad = 0;
-        this.serieBoletoGuiaEsNuevo = Boolean.TRUE;
-        this.serieBoletoGuiaFechaIngreso = new Date();
-        this.serieBoletoGuiaNumeroVuelta = 1;
-        this.serieBoletoGuiaTotal = 0;
-        this.serieBoletoGuiaValor = 0;
     }
 
     public SerieBoletoGuia(Integer serieBoletoGuiaId) {
         this.serieBoletoGuiaId = serieBoletoGuiaId;
     }
 
-    public SerieBoletoGuia(Integer serieBoletoGuiaId, int serieBoletoGuiaNumeroVuelta, int serieBoletoGuiaValor, String serieBoletoGuiaInicio, int serieBoletoGuiaTermino, int serieBoletoGuiaCantidad, int serieBoletoGuiaTotal, Date serieBoletoGuiaFechaIngreso) {
+    public SerieBoletoGuia(Integer serieBoletoGuiaId, int serieBoletoGuiaNumeroVuelta, int serieBoletoGuiaValor, int serieBoletoGuiaInicio, int serieBoletoGuiaTermino, int serieBoletoGuiaCantidad, int serieBoletoGuiaTotal, Date serieBoletoGuiaFechaIngreso) {
         this.serieBoletoGuiaId = serieBoletoGuiaId;
         this.serieBoletoGuiaNumeroVuelta = serieBoletoGuiaNumeroVuelta;
         this.serieBoletoGuiaValor = serieBoletoGuiaValor;
@@ -134,12 +127,12 @@ public class SerieBoletoGuia implements Serializable {
     public void setSerieBoletoGuiaValor(int serieBoletoGuiaValor) {
         this.serieBoletoGuiaValor = serieBoletoGuiaValor;
     }
-
-    public String getSerieBoletoGuiaInicio() {
+    
+    public int getSerieBoletoGuiaInicio() {
         return serieBoletoGuiaInicio;
     }
 
-    public void setSerieBoletoGuiaInicio(String serieBoletoGuiaInicio) {
+    public void setSerieBoletoGuiaInicio(int serieBoletoGuiaInicio) {
         this.serieBoletoGuiaInicio = serieBoletoGuiaInicio;
     }
 
@@ -183,20 +176,20 @@ public class SerieBoletoGuia implements Serializable {
         this.serieBoletoGuiaFechaIngreso = serieBoletoGuiaFechaIngreso;
     }
 
-    public Boleto getSerieBoletoGuiaIdBoleto() {
-        return serieBoletoGuiaIdBoleto;
-    }
-
-    public void setSerieBoletoGuiaIdBoleto(Boleto serieBoletoGuiaIdBoleto) {
-        this.serieBoletoGuiaIdBoleto = serieBoletoGuiaIdBoleto;
-    }
-
     public Guia getSerieBoletoGuiaIdGuia() {
         return serieBoletoGuiaIdGuia;
     }
 
     public void setSerieBoletoGuiaIdGuia(Guia serieBoletoGuiaIdGuia) {
         this.serieBoletoGuiaIdGuia = serieBoletoGuiaIdGuia;
+    }
+
+    public VentaBoleto getSerieBoletoGuiaIdVentaBoleto() {
+        return serieBoletoGuiaIdVentaBoleto;
+    }
+
+    public void setSerieBoletoGuiaIdVentaBoleto(VentaBoleto serieBoletoGuiaIdVentaBoleto) {
+        this.serieBoletoGuiaIdVentaBoleto = serieBoletoGuiaIdVentaBoleto;
     }
 
     @Override
@@ -221,7 +214,7 @@ public class SerieBoletoGuia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.areatecnica.sigf.entities.SerieBoletoGuia[ serieBoletoGuiaId=" + serieBoletoGuiaId + " ]";
+        return "com.areatecnica.entities.SerieBoletoGuia[ serieBoletoGuiaId=" + serieBoletoGuiaId + " ]";
     }
-
+    
 }

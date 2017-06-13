@@ -6,9 +6,7 @@
 package com.areatecnica.sigf.filters;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -38,7 +36,7 @@ public class SessionTimeoutFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException,
     ServletException {
-
+        System.err.println("SI HACE ALGO EL FILTRO");
         if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;

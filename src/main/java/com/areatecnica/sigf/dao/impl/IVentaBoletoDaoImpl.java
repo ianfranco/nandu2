@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IVentaBoletoDao;
+import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import java.util.Date;
@@ -23,7 +24,34 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
         try {
             return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdCajaDate").
                     setParameter("cajaProcesoIdCaja", cajaRecaudacion).
-                    setParameter("guiaFecha", fechaVenta).getResultList();
+                    setParameter("ventaBoletoFecha", fechaVenta).getResultList();
+        } catch (NoResultException ne) {            
+            return null;
+        }
+    }
+
+    @Override
+    public List<VentaBoleto> findByBus(Bus bus) {
+        try {
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdBus").setParameter("ventaBoletoIdBus", bus).getResultList();
+        } catch (NoResultException ne) {            
+            return null;
+        }
+    }
+    
+    @Override
+    public List<VentaBoleto> findByBusEstado(Bus bus) {
+        try {
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdBusEstado").setParameter("ventaBoletoIdBus", bus).getResultList();
+        } catch (NoResultException ne) {            
+            return null;
+        }
+    }
+
+    @Override
+    public List<VentaBoleto> findByDefaultBus() {
+        try {
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoDefaultBus").getResultList();
         } catch (NoResultException ne) {            
             return null;
         }

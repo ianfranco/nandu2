@@ -115,7 +115,7 @@
                 </p:column>
 
                 <f:facet name="footer">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{guiaFirstController.prepareCreate}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{guiaFirstController.prepareCreate}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaFirstController.grupoServicio}"/>
                     <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty guiaFirstController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
                     <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaFirstController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>

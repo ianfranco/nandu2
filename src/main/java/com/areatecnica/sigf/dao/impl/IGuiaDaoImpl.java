@@ -9,6 +9,7 @@ import com.areatecnica.sigf.dao.IGuiaDao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Cuenta;
+import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import java.util.Date;
@@ -70,6 +71,15 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     public Guia findLastGuiaByBusFecha(Bus bus, Date fecha) {
         try {
             return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Guia> findByFechaGrupoServicio(GrupoServicio grupoServicio, Date fecha) {
+        try {
+            return this.entityManager.createNamedQuery("Guia.findByFechaGrupoServicio").setParameter("grupoServicioId", grupoServicio).setParameter("guiaFecha", fecha).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

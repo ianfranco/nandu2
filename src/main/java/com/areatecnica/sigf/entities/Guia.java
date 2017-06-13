@@ -47,7 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Guia.findByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha = :guiaFecha  ORDER BY g.guiaTurno DESC"),
     @NamedQuery(name = "Guia.findByCuentaFolio", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFolio = :guiaFolio"),
     @NamedQuery(name = "Guia.findByCuentaFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFecha = :guiaFecha"),
-    @NamedQuery(name = "Guia.findLastGuiaByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha < :guiaFecha ORDER BY g.guiaFecha DESC"),
+    @NamedQuery(name = "Guia.findByFechaGrupoServicio", query = "SELECT g FROM Guia g WHERE g.guiaFecha = :guiaFecha AND g.guiaIdBus.busIdGrupoServicio = :grupoServicioId"),
+    @NamedQuery(name = "Guia.findLastGuiaByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha <= :guiaFecha ORDER BY g.guiaFecha DESC"),
     @NamedQuery(name = "Guia.findByGuiaFolio", query = "SELECT g FROM Guia g WHERE g.guiaFolio = :guiaFolio"),
     @NamedQuery(name = "Guia.findByGuiaFecha", query = "SELECT g FROM Guia g WHERE g.guiaFecha = :guiaFecha"),
     @NamedQuery(name = "Guia.findByGuiaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaRecaudacion = :guiaRecaudacion"),
@@ -108,9 +109,7 @@ public class Guia implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date guiaFechaIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serieBoletoGuiaIdGuia")
-    private List<SerieBoletoGuia> serieBoletoGuiaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdGuia")
-    private List<VentaBoleto> ventaBoletoList;
+    private List<SerieBoletoGuia> serieBoletoGuiaList;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaCombustibleIdGuia")
     private List<VentaCombustible> ventaCombustibleList;
     @JoinColumn(name = "guia_id_bus", referencedColumnName = "bus_id")
@@ -267,15 +266,6 @@ public class Guia implements Serializable {
 
     public void setSerieBoletoGuiaList(List<SerieBoletoGuia> serieBoletoGuiaList) {
         this.serieBoletoGuiaList = serieBoletoGuiaList;
-    }
-
-    @XmlTransient
-    public List<VentaBoleto> getVentaBoletoList() {
-        return ventaBoletoList;
-    }
-
-    public void setVentaBoletoList(List<VentaBoleto> ventaBoletoList) {
-        this.ventaBoletoList = ventaBoletoList;
     }
 
     @XmlTransient

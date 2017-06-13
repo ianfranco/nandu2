@@ -1,20 +1,30 @@
 package com.areatecnica.sigf.beans;
 
+import com.areatecnica.sigf.beans.util.JsfUtil;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.controllers.VentaBoletoFacade;
+import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.dao.ICajaRecaudacionDao;
 import com.areatecnica.sigf.dao.IGuiaDao;
 import com.areatecnica.sigf.dao.IInventarioCajaDao;
 import com.areatecnica.sigf.dao.IVentaBoletoDao;
+import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.Bus;
+import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.InventarioCaja;
+import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -28,7 +38,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     @Inject
     private VentaBoletoFacade ejbFacade;
     @Inject
-    private GuiaController ventaBoletoIdGuiaController;
+    private BusController ventaBoletoIdBusController;
     @Inject
     private InventarioCajaController ventaBoletoIdInventarioCajaController;
 
@@ -36,10 +46,13 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     private List<VentaBoleto> items;
     private List<InventarioCaja> inventarioCajaList;
     private List<CajaRecaudacion> cajaRecaudacionList;
+    private List<Bus> busesList;
+    private Map<Integer, ProcesoRecaudacion> procesosMap;
     private IInventarioCajaDao inventarioCajaDao;
     private ICajaRecaudacionDao cajaRecaudacionDao;
     private IGuiaDao guiaDao;
     private IVentaBoletoDao ventaBoletoDao;
+    private IBusDao busDao;
     private Date fechaVentaBoleto;
     private CajaRecaudacion cajaRecaudacion;
     private VentaBoletoRecaudacionDataModel model;
@@ -57,6 +70,21 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.setCajaRecaudacionList((List<CajaRecaudacion>) this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser()));
         this.setFechaVentaBoleto(new Date());
+
+        List<CajaRecaudacion> cajaList = this.getCurrentUser().getCajaRecaudacionList();
+        this.setProcesosMap((Map<Integer, ProcesoRecaudacion>) new HashMap());
+        for (CajaRecaudacion c : cajaList) {
+            for (CajaProceso caja : c.getCajaProcesoList()) {
+                this.getProcesosMap().put(caja.getCajaProcesoIdProceso().getProcesoRecaudacionId(), caja.getCajaProcesoIdProceso());
+            }
+        }
+        this.setBusesList(new ArrayList<>());
+
+        for (Map.Entry<Integer, ProcesoRecaudacion> entry : getProcesosMap().entrySet()) {
+            ProcesoRecaudacion proceso = (ProcesoRecaudacion) entry.getValue();
+            this.getBusesList().addAll(proceso.getBusList());
+        }
+
     }
 
     public VentaBoletoRecaudacionController() {
@@ -163,10 +191,38 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     }
 
     /**
+     * @return the busesList
+     */
+    public List<Bus> getBusesList() {
+        return busesList;
+    }
+
+    /**
+     * @param busesList the busesList to set
+     */
+    public void setBusesList(List<Bus> busesList) {
+        this.busesList = busesList;
+    }
+
+    /**
+     * @return the procesosMap
+     */
+    public Map<Integer, ProcesoRecaudacion> getProcesosMap() {
+        return procesosMap;
+    }
+
+    /**
+     * @param procesosMap the procesosMap to set
+     */
+    public void setProcesosMap(Map<Integer, ProcesoRecaudacion> procesosMap) {
+        this.procesosMap = procesosMap;
+    }
+
+    /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        ventaBoletoIdGuiaController.setSelected(null);
+        ventaBoletoIdBusController.setSelected(null);
         ventaBoletoIdInventarioCajaController.setSelected(null);
     }
 
@@ -177,8 +233,8 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
      * @param event Event object for the widget that triggered an action
      */
     public void prepareVentaBoletoIdGuia(ActionEvent event) {
-        if (this.getSelected() != null && ventaBoletoIdGuiaController.getSelected() == null) {
-            ventaBoletoIdGuiaController.setSelected(this.getSelected().getVentaBoletoIdGuia());
+        if (this.getSelected() != null && ventaBoletoIdBusController.getSelected() == null) {
+            ventaBoletoIdBusController.setSelected(this.getSelected().getVentaBoletoIdBus());
         }
     }
 
@@ -194,9 +250,26 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         }
     }
 
+    @Override
+    public VentaBoleto prepareCreate(ActionEvent event) {
+        super.prepareCreate(event);
+        this.getSelected().setVentaBoletoFechaIngreso(new Date());
+        this.getSelected().setVentaBoletoFecha(new Date());
+        this.getSelected().setVentaBoletoUtilizado(Boolean.FALSE);
+
+        return this.getSelected();
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+        this.ejbFacade.create(this.getSelected());
+        this.items.add(this.getSelected());
+        JsfUtil.addSuccessMessage("Se ha registrado una venta de boleto (" + this.getSelected().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre() + ") al Bus N°: " + this.getSelected().getVentaBoletoIdBus().getBusNumero());
+    }
+
     public void handleBoletoChange(ActionEvent event) {
         //POR MODIFICAR
-        //this.setInventarioCajaList((List<InventarioCaja>) this.iInventarioCajaDao.findByBoletoEstado(this.getBoletoItem(), Boolean.FALSE));        
+        this.setInventarioCajaList((List<InventarioCaja>) this.inventarioCajaDao.findByBoletoEstado(this.cajaRecaudacion, this.getBoletoItem(), Boolean.FALSE));
     }
 
     public void load() {

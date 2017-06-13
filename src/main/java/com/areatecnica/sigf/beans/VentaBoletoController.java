@@ -1,7 +1,5 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
-import com.areatecnica.sigf.beans.GuiaController;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.controllers.VentaBoletoFacade;
 import javax.inject.Named;
@@ -17,7 +15,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     @Inject
     private VentaBoletoFacade ejbFacade;
     @Inject
-    private GuiaController ventaBoletoIdGuiaController;
+    private BusController ventaBoletoIdBusController;
     @Inject
     private InventarioCajaController ventaBoletoIdInventarioCajaController;
 
@@ -40,7 +38,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        ventaBoletoIdGuiaController.setSelected(null);
+        ventaBoletoIdBusController.setSelected(null);
         ventaBoletoIdInventarioCajaController.setSelected(null);
     }
 
@@ -50,9 +48,9 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
      *
      * @param event Event object for the widget that triggered an action
      */
-    public void prepareVentaBoletoIdGuia(ActionEvent event) {
-        if (this.getSelected() != null && ventaBoletoIdGuiaController.getSelected() == null) {
-            ventaBoletoIdGuiaController.setSelected(this.getSelected().getVentaBoletoIdGuia());
+    public void prepareVentaBoletoIdBus(ActionEvent event) {
+        if (this.getSelected() != null && ventaBoletoIdBusController.getSelected() == null) {
+            ventaBoletoIdBusController.setSelected(this.getSelected().getVentaBoletoIdBus());
         }
     }
 

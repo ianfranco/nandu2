@@ -110,31 +110,46 @@
                             <f:facet name="header">
                                 <h:outputText value="Boleto"/>
                             </f:facet>
-                            <p:outputLabel value="#{item.serieBoletoGuiaIdBoleto.boletoNombre}"/>
+                            <p:outputLabel value="#{item.serieBoletoGuiaIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
                         </p:column>
 
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Serie"/>
                             </f:facet>
-                            <p:inputText value="#{item.serieBoletoGuiaInicio}" onfocus="this.setSelectionRange(0, this.value.length)" />
+                            <p:outputLabel value="#{item.serieBoletoGuiaIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdentificador}-#{item.serieBoletoGuiaIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaSerie}" />
                         </p:column>
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Fin"/>
+                                <h:outputText value="Inicio"/>
                             </f:facet>
-                            <p:inputNumber value="#{item.serieBoletoGuiaTermino}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)"/>
+                            <p:outputLabel value="#{item.serieBoletoGuiaInicio}"/>
                         </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Termino"/>
+                            </f:facet>
+                            <p:inputNumber value="#{item.serieBoletoGuiaTermino}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" size="10"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value=""/>
+                            </f:facet>
+                            <p:commandButton value="Cerrar" disabled="#{!guiaFirstController.ventaBoletoBusList.contains(item.serieBoletoGuiaIdVentaBoleto.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto)}"/>
+                        </p:column>
+
                     </p:dataTable>
 
-                    <p:panelGrid columns="4" style="width: 100%">
-                        <h:outputLabel/>
-                        <h:outputLabel/>
-                        <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl, GuiaCreateDlg" styleClass="btn btn-primary" resetValues="true">
-                            <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
-                        </p:commandButton>
-                        <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary"/>
+                    <p:panelGrid columns="1" style="width: 100%;text-align: right;">
+                        <h:panelGroup>
+                            <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl, GuiaCreateDlg" styleClass="btn btn-primary" resetValues="true" style="width: 25%">
+                                <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary" style="width: 25%"/>
+                        </h:panelGroup>
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

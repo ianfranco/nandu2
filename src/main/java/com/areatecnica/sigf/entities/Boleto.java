@@ -65,9 +65,7 @@ public class Boleto implements Serializable {
     private Date boletoFechaIngreso;
     @JoinColumn(name = "boleto_id_cuenta", referencedColumnName = "cuenta_id")
     @ManyToOne(optional = false)
-    private Cuenta boletoIdCuenta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "serieBoletoGuiaIdBoleto")
-    private List<SerieBoletoGuia> serieBoletoGuiaList;
+    private Cuenta boletoIdCuenta;    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioInternoIdBoleto")
     private List<InventarioInterno> inventarioInternoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdBoleto")
@@ -128,16 +126,7 @@ public class Boleto implements Serializable {
     public void setBoletoIdCuenta(Cuenta boletoIdCuenta) {
         this.boletoIdCuenta = boletoIdCuenta;
     }
-
-    @XmlTransient
-    public List<SerieBoletoGuia> getSerieBoletoGuiaList() {
-        return serieBoletoGuiaList;
-    }
-
-    public void setSerieBoletoGuiaList(List<SerieBoletoGuia> serieBoletoGuiaList) {
-        this.serieBoletoGuiaList = serieBoletoGuiaList;
-    }
-
+    
     @XmlTransient
     public List<InventarioInterno> getInventarioInternoList() {
         return inventarioInternoList;
