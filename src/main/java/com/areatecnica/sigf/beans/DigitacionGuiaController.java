@@ -896,7 +896,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 this.egresosResumenList.add(egresoRecaudacion);
 
             }
-
+            //prueba
             this.listOfMaps.add(new LinkedHashMap());
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
             this.resumenRecaudacionFacade.create(this.resumenRecaudacion);
