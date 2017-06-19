@@ -70,7 +70,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     @Override
     public Guia findLastGuiaByBusFecha(Bus bus, Date fecha) {
         try {
-            return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
+            return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setHint("org.hibernate.cacheMode", "IGNORE").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }

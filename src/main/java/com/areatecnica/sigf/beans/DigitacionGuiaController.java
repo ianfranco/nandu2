@@ -485,7 +485,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         }
         return "/serieBoletoGuia/index";
     }
-    
+
     /**
      * Sets the "items" attribute with a collection of VentaCombustible entities
      * that are retrieved from Guia?cap_first and returns the navigation
@@ -630,8 +630,8 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         this.setSelected(prepareCreate(event));
         this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
 
-        this.resumenRecaudacion.setEgresoRecaudacionList(egresosResumenList);
-        this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);
+        /*this.resumenRecaudacion.setEgresoRecaudacionList(egresosResumenList);
+        this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);*/
     }
 
     @Override
@@ -856,7 +856,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
         } else {
             LinkedHashMap auxLink = new LinkedHashMap();
-            
+
             for (Egreso eg : this.egresosList) {
                 this.totals.put(eg.getEgresoNombreEgreso(), 0);
                 this.resultsTotals.add("0");
@@ -984,7 +984,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
         }
 
-        
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
         this.resumenRecaudacionFacade.edit(resumenRecaudacion);

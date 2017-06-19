@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionId", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionId = :cajaRecaudacionId"),
-    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionIdUsuario", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdUsuario = :cajaRecaudacionIdUsuario"),
+    @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionIdUsuario", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdUsuario = :cajaRecaudacionIdUsuario AND c.cajaRecaudacionActiva = 1"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombreCaja", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombreCaja = :cajaRecaudacionNombreCaja"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionTieneEgresos", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionTieneEgresos = :cajaRecaudacionTieneEgresos"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionActiva", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionActiva = :cajaRecaudacionActiva"),

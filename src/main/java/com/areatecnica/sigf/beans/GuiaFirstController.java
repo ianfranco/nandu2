@@ -38,6 +38,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import org.joda.time.DateTime;
 
 @Named(value = "guiaFirstController")
 @ViewScoped
@@ -73,6 +74,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
     private IEstadoGuiaDao estadoGuiaDao;
     private IVentaBoletoDao ventaBoletoDao;
     private Guia selected;
+    private Guia auxGuia;
     private GrupoServicio grupoServicio;
     private Date fecha;
     private String formatFecha;
@@ -283,6 +285,20 @@ public class GuiaFirstController extends AbstractController<Guia> {
     }
 
     /**
+     * @return the auxGuia
+     */
+    public Guia getAuxGuia() {
+        return auxGuia;
+    }
+
+    /**
+     * @param auxGuia the auxGuia to set
+     */
+    public void setAuxGuia(Guia auxGuia) {
+        this.auxGuia = auxGuia;
+    }
+
+    /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
@@ -306,7 +322,6 @@ public class GuiaFirstController extends AbstractController<Guia> {
         return "/serieBoletoGuia/index";
     }
 
-    
     /**
      * Sets the "items" attribute with a collection of VentaCombustible entities
      * that are retrieved from Guia?cap_first and returns the navigation
@@ -440,18 +455,24 @@ public class GuiaFirstController extends AbstractController<Guia> {
     public void handleBusChange(ActionEvent event) {
         if (this.getSelected().getGuiaIdBus() != null) {
 
-            Guia auxGuia = this.guiaDao.findLastGuiaByBusFecha(this.getSelected().getGuiaIdBus(), this.fecha);
+            DateTime dateTime = new DateTime(this.fecha);
 
-            if (auxGuia != null) {
-                this.getSelected().setGuiaTurno(auxGuia.getGuiaTurno() + 1);
-                JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha \nSe actualizó el N° de Turno a " + this.getSelected().getGuiaTurno());
+            setAuxGuia(this.guiaDao.findLastGuiaByBusFecha(this.getSelected().getGuiaIdBus(), dateTime.plusDays(1).toDate()));
+
+            if (getAuxGuia() != null) {
+                DateTime d1 = new DateTime(getAuxGuia().getGuiaFecha());
+                DateTime d2 = new DateTime(this.fecha);
+                if (d1.toLocalDate().isEqual(d2.toLocalDate())) {
+                    this.getSelected().setGuiaTurno(getAuxGuia().getGuiaTurno() + 1);
+                    JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha \nSe actualizó el N° de Turno a " + this.getSelected().getGuiaTurno());
+                }
 
                 this.ventaBoletoDao = new IVentaBoletoDaoImpl();
                 this.setVentaBoletoBusList((List<VentaBoleto>) this.ventaBoletoDao.findByBusEstado(this.getSelected().getGuiaIdBus()));
-                
+
                 this.boletoGuiaList = new ArrayList<>();
 
-                for (SerieBoletoGuia s : auxGuia.getSerieBoletoGuiaList()) {
+                for (SerieBoletoGuia s : getAuxGuia().getSerieBoletoGuiaList()) {
                     SerieBoletoGuia newSerie = new SerieBoletoGuia();
                     newSerie.setSerieBoletoGuiaFechaIngreso(new Date());
                     newSerie.setSerieBoletoGuiaIdGuia(this.getSelected());
