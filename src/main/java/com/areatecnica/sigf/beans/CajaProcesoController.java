@@ -161,10 +161,10 @@ public class CajaProcesoController extends AbstractController<CajaProceso> {
                     cp.setCajaProcesoIdCaja(cajaRecaudacion);
                     this.ejbFacade.create(cp);
                 }else{
-                    System.err.println("NO ESTA ACTIVO EL PROCESO: "+cp.getCajaProcesoIdProceso().getProcesoRecaudacionNombre());
+                    JsfUtil.addExclamationMessage("NO ESTA ACTIVO EL PROCESO: "+cp.getCajaProcesoIdProceso().getProcesoRecaudacionNombre());
                 }
             } else {
-                System.err.println("ACTUALIZANDO EL PROCESO: "+cp.getCajaProcesoIdProceso().getProcesoRecaudacionNombre());
+                JsfUtil.addExclamationMessage("ACTUALIZANDO EL PROCESO: "+cp.getCajaProcesoIdProceso().getProcesoRecaudacionNombre());
                 cp.setCajaProcesoFechaActualizacion(new Date());
                 this.ejbFacade.edit(cp);
             }

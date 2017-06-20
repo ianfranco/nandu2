@@ -254,7 +254,6 @@ public final class CountPage implements java.io.Serializable {
 
                     } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | NullPointerException ex) {
                         Logger.getLogger(CountPage.class.getName()).log(Level.SEVERE, null, ex);
-                        System.err.println("NO SE HA ENCONTRADO EL CAMPO");
                     }
                 }
             }
@@ -1039,8 +1038,6 @@ public final class CountPage implements java.io.Serializable {
     public void setEgresoProcesoRecaudacionCount(int egresoProcesoCount) {
         this.egresoProcesoRecaudacionCount = egresoProcesoCount;
     }
-
-    
 
     /**
      * @return the egresoRecaudacionCount

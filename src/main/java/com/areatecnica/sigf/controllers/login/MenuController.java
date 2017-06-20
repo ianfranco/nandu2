@@ -96,8 +96,7 @@ public class MenuController implements java.io.Serializable {
 
                 for (RolMenu m : this.getUsuario().getUsuarioIdRol().getRolMenuList()) {
 
-                    List<Privilegio> privilegios = m.getRolMenuIdMenu().getPrivilegioList();
-                    System.err.println("tamaño de privilegios" + privilegios.size());
+                    List<Privilegio> privilegios = m.getRolMenuIdMenu().getPrivilegioList();                    
                     menuList.add(new Menu(m.getRolMenuIdMenu().getMenuId(),
                             m.getRolMenuIdMenu().getMenuNombre(),
                             null,
@@ -167,7 +166,7 @@ public class MenuController implements java.io.Serializable {
      * @param name
      */
     public void setPage(String link, String name) {
-        //System.err.println("LINK:"+link+" nombre:"+name);
+        
         FacesContext context = FacesContext.getCurrentInstance();
         Map<String, Object> map = context.getViewRoot().getViewMap();
         List<String> list = new ArrayList<>();

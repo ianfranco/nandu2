@@ -887,7 +887,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.resumenRecaudacion.setResumenRecaudacionIdProceso(procesoRecaudacion);
             this.resumenRecaudacion.setResumenRecaudacionTotal(0);
 
-            System.err.println("entra a la condición");
             this.egresosResumenList = new ArrayList<>();
             this.egresosList.stream().map((eg) -> {
                 EgresoRecaudacion egresoRecaudacion = new EgresoRecaudacion();
@@ -910,7 +909,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
             this.egresosResumenList.stream().forEach((eg) -> {
                 int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-                System.err.println("VALOR EGRESO:" + val);
                 eg.setEgresoRecaudacionTotalEgreso(val);
             });
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
@@ -985,18 +983,24 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
     public void printResumen() {
         if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
-            JsfUtil.addSuccessMessage("Se ha Cerrado el Proceso");
+            JsfUtil.addSuccessMessage("Proceso Cerrado");
         } else {
-            JsfUtil.addSuccessMessage("Se ha Abierto el Proceso");
+            JsfUtil.addSuccessMessage("Proceso Abierto");
         }
+        
+        System.err.println("TAMAÑO DE EGRESOS:"+this.egresosResumenList.size());
 
-        this.egresosResumenList.stream().forEach((eg) -> {
-            int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-            System.err.println("VALOR EGRESO:" + val);
-            eg.setEgresoRecaudacionTotalEgreso(val);
-        });
+        for(EgresoRecaudacion er: this.egresosResumenList){
+            System.err.println("EGRESO EN RECAUDACION: "+er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+            if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
+                int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+                er.setEgresoRecaudacionTotalEgreso(val);
+            } else {
+                System.err.println("no hay VALOR POR EGRESO: "+er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+            }
+        }
+        
         this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
-
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
         this.resumenRecaudacionFacade.edit(resumenRecaudacion);

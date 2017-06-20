@@ -84,11 +84,9 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
 
         calendar.set(Calendar.DATE, 1);
         this.setFrom(calendar.getTime());
-        System.err.println("FROM:" + this.getFrom());
 
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
         this.setTo(calendar.getTime());
-        System.err.println("TO:" + this.getTo());
 
         this.mes = calendar.get(Calendar.MONTH) + 1;
         this.anio = calendar.get(Calendar.YEAR);
@@ -96,10 +94,6 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.cajaRecaudacionList = this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser());
 
-        /*eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
-        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));*/
     }
 
     /**
@@ -344,26 +338,32 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
         calendar.set(Calendar.DATE, 1);
         calendar.set(Calendar.MONTH, mes - 1);
         this.setFrom(calendar.getTime());
-        System.err.println("FROM en carga:" + this.getFrom());
 
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DATE));
         this.setTo(calendar.getTime());
-        System.err.println("TO en carga:" + this.getTo());
 
         this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
 
-        System.err.println("LOAD RESUMEN");
         LocalDate fechaInicio = new LocalDate(this.from);
         LocalDate fechaFinal = new LocalDate(this.to);
 
         for (LocalDate date = fechaInicio; date.isBefore(fechaFinal.plusDays(1)); date = date.plusDays(1)) {
-            System.err.println("FECHA:" + date);
+
             ResumenRecaudacion recaudacion = this.resumenRecaudacionDao.findByCajaProcesoDate(cajaRecaudacion, procesoRecaudacion, date.toDate());
             if (recaudacion != null) {
-                getEventModel().addEvent(new DefaultScheduleEvent(decimalFormat.format(recaudacion.getResumenRecaudacionTotal()), date.toDate(), date.toDate(), true));
+                
+                String evento = decimalFormat.format(recaudacion.getResumenRecaudacionTotal());
+                
+                DefaultScheduleEvent event = new DefaultScheduleEvent( recaudacion.getResumenRecaudacionCerrado()?evento:evento + " En Digitación" , date.toDate(), date.toDate(), true);
+                event.setStyleClass("event1");
+                getEventModel().addEvent(event);
                 mapResumen.put(date.toDate(), recaudacion);
             } else {
-                getEventModel().addEvent(new DefaultScheduleEvent("Sin Recaudación", date.toDate(), date.toDate(), true));
+
+                DefaultScheduleEvent event = new DefaultScheduleEvent("Sin Recaudación", date.toDate(), date.toDate(), true);
+                event.setStyleClass("event1");
+
+                getEventModel().addEvent(event);
             }
         }
     }

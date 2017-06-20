@@ -36,7 +36,7 @@ public class BusController extends AbstractController<Bus> {
     private UnidadNegocioController busIdUnidadNegocioController;
 
     private IBusDao busDao;
-    
+
     /**
      * Initialize the concrete Bus controller bean. The AbstractController
      * requires the EJB Facade object for most operations.
@@ -247,14 +247,15 @@ public class BusController extends AbstractController<Bus> {
     public Bus prepareCreate(ActionEvent event) {
         super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
         this.getSelected().setBusFechaIngreso(new Date());
-        //this.dao;
+        this.getSelected().setBusFechaRevisionTecnica(new Date());
+
         return this.getSelected();
     }
 
-    public void findMaxByUnidad(){
-        UnidadNegocio unidad = this.getSelected().getBusIdUnidadNegocio();        
-        this.busDao = new IBusDaoImpl();        
+    public void findMaxByUnidad() {
+        UnidadNegocio unidad = this.getSelected().getBusIdUnidadNegocio();
+        this.busDao = new IBusDaoImpl();
         this.getSelected().setBusNumero(this.busDao.findMaxNumeroUnidad(unidad));
     }
-    
+
 }

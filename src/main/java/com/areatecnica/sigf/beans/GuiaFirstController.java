@@ -490,7 +490,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                 JsfUtil.addExclamationMessage("No se han encontrado Guías para el Bus seleccionado, debe completar la información de los boletos");
 
                 List<TarifaGrupoServicio> auxList = this.tarifaGrupoServicioDao.findAllByCuenta();
-                System.err.println("TAMAÑO DE LISTA DE TARIFAS:" + auxList.size());
+                
                 this.boletoGuiaList = new ArrayList<>();
                 //this.getSelected().setSerieBoletoGuiaList(boletoGuiaList);
 

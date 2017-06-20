@@ -387,9 +387,7 @@ public abstract class AbstractController<T> implements Serializable {
             newItem = itemClass.newInstance();
             this.selected = newItem;
             initializeEmbeddableKey();
-            
-            
-            
+
             return newItem;
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
@@ -495,7 +493,6 @@ public abstract class AbstractController<T> implements Serializable {
         for (Field field : this.getItemClass().getSuperclass().getDeclaredFields()) {
             if (!field.getType().toString().contains("java.util.List")) {
                 if (!field.getName().equals("serialVersionUID")) {
-                    System.err.println("CAMPO2:" + field.getName());
                     if (field.getType().toString().contains("com.areatecnica.sigf.entities")) {
                         getManyToOneList().add(field.getName());
                     } else {
