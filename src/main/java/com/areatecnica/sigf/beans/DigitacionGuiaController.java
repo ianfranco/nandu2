@@ -990,6 +990,13 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             JsfUtil.addSuccessMessage("Se ha Abierto el Proceso");
         }
 
+        this.egresosResumenList.stream().forEach((eg) -> {
+            int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+            System.err.println("VALOR EGRESO:" + val);
+            eg.setEgresoRecaudacionTotalEgreso(val);
+        });
+        this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
+
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
         this.resumenRecaudacionFacade.edit(resumenRecaudacion);
