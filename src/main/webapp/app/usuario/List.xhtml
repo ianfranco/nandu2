@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioId}"/>
+                <h:outputLabel value="#{item.usuarioId}"/>
             </p:column>
 
 
@@ -62,21 +62,21 @@
                 <f:facet name="header">
                     <h:outputText value="Rut"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioRut}"/>
+                <h:outputLabel value="#{item.usuarioRut}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioNombres}" filterBy="#{item.usuarioNombres}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioNombres}"/>
+                <h:outputLabel value="#{item.usuarioNombres}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioApellidoPaterno}" filterBy="#{item.usuarioApellidoPaterno}">
                 <f:facet name="header">
                     <h:outputText value="Ap.Paterno"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioApellidoPaterno}"/>
+                <h:outputLabel value="#{item.usuarioApellidoPaterno}"/>
             </p:column>
 
 
@@ -84,28 +84,28 @@
                 <f:facet name="header">
                     <h:outputText value="Ap.Materno"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioApellidoMaterno}"/>
+                <h:outputLabel value="#{item.usuarioApellidoMaterno}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioIdTerminal.terminalNombre}" filterBy="#{item.usuarioIdTerminal.terminalNombre}">
                 <f:facet name="header">
                     <h:outputText value="Terminal"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioIdTerminal.terminalNombre}"/>
+                <h:outputLabel value="#{item.usuarioIdTerminal.terminalNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioIdRol.rolNombre}" filterBy="#{item.usuarioIdRol.rolNombre}">
                 <f:facet name="header">
                     <h:outputText value="Rol"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioIdRol.rolNombre}"/>
+                <h:outputLabel value="#{item.usuarioIdRol.rolNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioEmail}" filterBy="#{item.usuarioEmail}">
                 <f:facet name="header">
                     <h:outputText value="Email"/>
                 </f:facet>
-                <p:outputLabel value="#{item.usuarioEmail}"/>
+                <h:outputLabel value="#{item.usuarioEmail}"/>
             </p:column>
 
             <p:column sortBy="#{item.usuarioActivo}" filterBy="#{item.usuarioActivo}" style="text-align: center;">

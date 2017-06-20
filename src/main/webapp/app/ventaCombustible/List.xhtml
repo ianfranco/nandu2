@@ -54,23 +54,23 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.ventaCombustibleIdSurtidor.surtidorId}" filterBy="#{item.ventaCombustibleIdSurtidor.surtidorId}">
                 <f:facet name="header">
                     <h:outputText value="Surtidor"/>
                 </f:facet>
-                <p:outputLabel value="#{item.ventaCombustibleIdSurtidor.surtidorId}"/>
+                <h:outputLabel value="#{item.ventaCombustibleIdSurtidor.surtidorId}"/>
             </p:column>
 
             <p:column sortBy="#{item.ventaCombustibleFecha}" filterBy="#{item.ventaCombustibleFecha}">
                 <f:facet name="header">
                     <h:outputText value="Hora"/>
                 </f:facet>
-                <p:outputLabel value="#{item.ventaCombustibleFecha}">
+                <h:outputLabel value="#{item.ventaCombustibleFecha}">
                     <f:convertDateTime pattern="HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
 
@@ -78,7 +78,7 @@
                 <f:facet name="header">
                     <h:outputText value="Total Venta"/>
                 </f:facet>
-                <p:outputLabel value="#{item.ventaCombustibleValor}"/>
+                <h:outputLabel value="#{item.ventaCombustibleValor}"/>
             </p:column>
 
 
@@ -86,7 +86,7 @@
                 <f:facet name="header">
                     <h:outputText value="N° de Litros"/>
                 </f:facet>
-                <p:outputLabel value="#{item.ventaCombustibleCantidad}"/>
+                <h:outputLabel value="#{item.ventaCombustibleCantidad}"/>
             </p:column>
 
             <!--                           

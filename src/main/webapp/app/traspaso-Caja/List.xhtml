@@ -12,12 +12,12 @@
                 <h:form id="CompraBoletoCreateForm">
                     <p:focus context="inventarioCajaIdCaja"/>
                     <p:panelGrid columns="2"  style="width: 100%;">                        
-                        <p:outputLabel value="Fecha" for="compraBoletoFecha" />
-                        <p:outputLabel id="compraBoletoFecha" value="#{traspasoBoletoCajaController.selected.inventarioCajaFechaIngreso}"  >
+                        <h:outputLabel value="Fecha" for="compraBoletoFecha" />
+                        <h:outputLabel id="compraBoletoFecha" value="#{traspasoBoletoCajaController.selected.inventarioCajaFechaIngreso}"  >
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </p:outputLabel>
+                        </h:outputLabel>
 
-                        <p:outputLabel value="Caja" for="inventarioCajaIdCaja" />
+                        <h:outputLabel value="Caja" for="inventarioCajaIdCaja" />
                         <p:selectOneMenu id="inventarioCajaIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="#{bundle.EditInventarioCajaRequiredMessage_inventarioCajaIdCaja}" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cajaTerminalController.items}"
@@ -27,11 +27,11 @@
                                            />
                         </p:selectOneMenu>
 
-                        <p:outputLabel value=""/>
+                        <h:outputLabel value=""/>
                         <h:panelGrid columns="3" id="detalleTraspasoPanel" >
-                            <p:outputLabel style="margin-left: 5px;" value="Tipo Boleto" for="idBoleto" />                            
-                            <p:outputLabel style="margin-left: 5px;" value="Inventario" for="inventarioCajaIdInventarioInterno"/>
-                            <p:outputLabel style="margin-left: 5px;" value="Agregar" for="addButton"/>
+                            <h:outputLabel style="margin-left: 5px;" value="Tipo Boleto" for="idBoleto" />                            
+                            <h:outputLabel style="margin-left: 5px;" value="Inventario" for="inventarioCajaIdInventarioInterno"/>
+                            <h:outputLabel style="margin-left: 5px;" value="Agregar" for="addButton"/>
 
                             <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{traspasoBoletoCajaController.boletoItem}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
                                 <f:selectItem itemLabel="Seleccionar"/>                                
@@ -80,35 +80,35 @@
                                     <f:facet name="header">
                                         <h:outputText value="N°"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{rowIndex+1}"/>
+                                    <h:outputLabel value="#{rowIndex+1}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Tipo Boleto"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
+                                    <h:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Identificador"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.inventarioCajaIdentificador}"/>
+                                    <h:outputLabel value="#{item.inventarioCajaIdentificador}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Serie"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.inventarioCajaSerie}"/>
+                                    <h:outputLabel value="#{item.inventarioCajaSerie}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Caja"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombreCaja}"/>
+                                    <h:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombreCaja}"/>
                                 </p:column>
 
                             </p:dataTable>

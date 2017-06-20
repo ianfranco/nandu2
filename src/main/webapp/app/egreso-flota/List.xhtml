@@ -13,7 +13,7 @@
                 Egresos x Flotas
             </f:facet>
             <p:panelGrid columns="5" style="margin-bottom: 10px;width: 100%;">
-                <p:outputLabel value="Flota" for="busIdFlota" />
+                <h:outputLabel value="Flota" for="busIdFlota" />
                 <p:selectOneMenu id="busIdFlota" value="#{egresoFlotaController.flota}" required="true" requiredMessage="Debe seleccionar la Flota" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{flotaController.items}"
@@ -48,14 +48,14 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoFlotaIdEgreso.egresoNombreEgreso}" filterBy="#{item.egresoFlotaIdEgreso.egresoNombreEgreso}">
                     <f:facet name="header">
                         <h:outputText value="Egreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoFlotaIdEgreso.egresoNombreEgreso}"/>
+                    <h:outputLabel value="#{item.egresoFlotaIdEgreso.egresoNombreEgreso}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoFlotaValorDefecto}" filterBy="#{item.egresoFlotaValorDefecto}" style="text-align: center;">
@@ -84,9 +84,9 @@
                     <f:facet name="header">
                         <h:outputText value="F.Ingreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoFlotaFechaIngreso}">
+                    <h:outputLabel value="#{item.egresoFlotaFechaIngreso}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
                 <f:facet name="footer">

@@ -53,7 +53,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.inventarioInternoIdBoleto.boletoId}" filterBy="#{item.inventarioInternoIdBoleto.boletoNombre}">
@@ -61,21 +61,21 @@
                     <h:outputText value="Boleto"/>
                 </f:facet>
                 
-                <p:outputLabel value="#{item.inventarioInternoIdBoleto.boletoNombre}"/>
+                <h:outputLabel value="#{item.inventarioInternoIdBoleto.boletoNombre}"/>
             </p:column>
             
             <p:column sortBy="#{item.inventarioInternoIdentificador}" filterBy="#{item.inventarioInternoIdentificador}">
                 <f:facet name="header">
                     <h:outputText value="Identificador"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioInternoIdentificador}"/>
+                <h:outputLabel value="#{item.inventarioInternoIdentificador}"/>
             </p:column>
             
             <p:column sortBy="#{item.inventarioInternoSerie}" filterBy="#{item.inventarioInternoSerie}">
                 <f:facet name="header">
                     <h:outputText value="Serie"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioInternoSerie}"/>
+                <h:outputLabel value="#{item.inventarioInternoSerie}"/>
             </p:column>
 
             <p:column sortBy="#{item.inventarioInternoEstado}" filterBy="#{item.inventarioInternoEstado}">
@@ -89,9 +89,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioInternoFechaIngreso}">
+                <h:outputLabel value="#{item.inventarioInternoFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

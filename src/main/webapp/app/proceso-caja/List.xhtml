@@ -13,7 +13,7 @@
                 Procesos x Cajas de Recaudación
             </f:facet>
             <p:panelGrid columns="5" style="margin-bottom: 10px;width: 100%;">
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" />
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" />
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{cajaProcesoController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{cajaTerminalController.items}"
@@ -42,7 +42,7 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
                 
@@ -50,7 +50,7 @@
                     <f:facet name="header">
                         <h:outputText value="Proceso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.cajaProcesoIdProceso.procesoRecaudacionNombre}"/>
+                    <h:outputLabel value="#{item.cajaProcesoIdProceso.procesoRecaudacionNombre}"/>
                 </p:column>
 
 
@@ -65,9 +65,9 @@
                     <f:facet name="header">
                         <h:outputText value="F.Ingreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.cajaProcesoFechaIngreso}">
+                    <h:outputLabel value="#{item.cajaProcesoFechaIngreso}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
 
@@ -75,9 +75,9 @@
                     <f:facet name="header">
                         <h:outputText value="F.Actualización"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.cajaProcesoFechaActualizacion}">
+                    <h:outputLabel value="#{item.cajaProcesoFechaActualizacion}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
 

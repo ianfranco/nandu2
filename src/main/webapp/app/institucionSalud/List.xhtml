@@ -54,14 +54,14 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.institucionSaludNombre}" filterBy="#{item.institucionSaludNombre}">
                 <f:facet name="header">
                     <h:outputText value="#{bundle.ListInstitucionSaludTitle_institucionSaludNombre}"/>
                 </f:facet>
-                <p:outputLabel value="#{item.institucionSaludNombre}"/>
+                <h:outputLabel value="#{item.institucionSaludNombre}"/>
             </p:column>
 
 

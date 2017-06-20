@@ -354,17 +354,11 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
                 
                 String evento = decimalFormat.format(recaudacion.getResumenRecaudacionTotal());
                 
-                DefaultScheduleEvent event = new DefaultScheduleEvent( recaudacion.getResumenRecaudacionCerrado()?evento:evento + " En Digitación" , date.toDate(), date.toDate(), true);
-                event.setStyleClass("event1");
+                DefaultScheduleEvent event = new DefaultScheduleEvent( recaudacion.getResumenRecaudacionCerrado()?evento:evento + " \n (Digitación)" , date.toDate(), date.toDate(), true);
+                event.setStyleClass(".event1");
                 getEventModel().addEvent(event);
                 mapResumen.put(date.toDate(), recaudacion);
-            } else {
-
-                DefaultScheduleEvent event = new DefaultScheduleEvent("Sin Recaudación", date.toDate(), date.toDate(), true);
-                event.setStyleClass("event1");
-
-                getEventModel().addEvent(event);
-            }
+            } 
         }
     }
 

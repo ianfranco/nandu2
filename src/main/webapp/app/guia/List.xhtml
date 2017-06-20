@@ -14,7 +14,7 @@
                 Registro de Guías
             </f:facet>
             <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
-                <p:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
+                <h:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
                 <p:selectOneMenu id="busIdGrupoServicio" value="#{guiaFirstController.grupoServicio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdGrupoServicio}" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{guiaFirstController.grupoServicioList}"
@@ -44,7 +44,7 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
 
@@ -52,58 +52,58 @@
                     <f:facet name="header">
                         <h:outputText value="Folio"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaFolio}"/>
+                    <h:outputLabel value="#{item.guiaFolio}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaFechaIngreso}" filterBy="#{item.guiaFechaIngreso}">
                     <f:facet name="header">
                         <h:outputText value="Hora Registro"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaFechaIngreso}">
+                    <h:outputLabel value="#{item.guiaFechaIngreso}">
                         <f:convertDateTime pattern="HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdBus.busNumero}" filterBy="#{item.guiaIdBus.busNumero}">
                     <f:facet name="header">
                         <h:outputText value="N° Bus"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdBus.busNumero}"/>
+                    <h:outputLabel value="#{item.guiaIdBus.busNumero}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdBus.busIdUnidadNegocio.unidadNegocioNumero}" filterBy="#{item.guiaIdBus.busIdUnidadNegocio.unidadNegocioNumero}">
                     <f:facet name="header">
                         <h:outputText value="Unidad"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdBus.busIdUnidadNegocio.unidadNegocioNumero}"/>
+                    <h:outputLabel value="#{item.guiaIdBus.busIdUnidadNegocio.unidadNegocioNumero}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdBus.busPatente}" filterBy="#{item.guiaIdBus.busPatente}">
                     <f:facet name="header">
                         <h:outputText value="PPU"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdBus.busPatente}"/>
+                    <h:outputLabel value="#{item.guiaIdBus.busPatente}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdBus.busIdFlota.flotaNombre}" filterBy="#{item.guiaIdBus.busIdFlota.flotaNombre}">
                     <f:facet name="header">
                         <h:outputText value="Flota"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdBus.busIdFlota.flotaNombre}"/>
+                    <h:outputLabel value="#{item.guiaIdBus.busIdFlota.flotaNombre}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador.trabajadorCodigo}" filterBy="#{item.guiaIdTrabajador.trabajadorCodigo}">
                     <f:facet name="header">
                         <h:outputText value="N° Cond."/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdTrabajador.trabajadorCodigo}"/>
+                    <h:outputLabel value="#{item.guiaIdTrabajador.trabajadorCodigo}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador.trabajadorApellidoPaterno}" filterBy="#{item.guiaIdTrabajador.trabajadorApellidoPaterno}">
                     <f:facet name="header">
                         <h:outputText value="Conductor"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaIdTrabajador.trabajadorApellidoPaterno} #{item.guiaIdTrabajador.trabajadorNombres}"/>
+                    <h:outputLabel value="#{item.guiaIdTrabajador.trabajadorApellidoPaterno} #{item.guiaIdTrabajador.trabajadorNombres}"/>
                 </p:column>
 
 
@@ -111,7 +111,7 @@
                     <f:facet name="header">
                         <h:outputText value="Turno"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.guiaTurno}"/>
+                    <h:outputLabel value="#{item.guiaTurno}"/>
                 </p:column>
 
                 <f:facet name="footer">

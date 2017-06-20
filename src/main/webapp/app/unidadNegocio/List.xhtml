@@ -54,37 +54,37 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.unidadNegocioId}"/>
+                <h:outputLabel value="#{item.unidadNegocioId}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioNumero}" filterBy="#{item.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="N°"/>
                 </f:facet>
-                <p:outputLabel value="#{item.unidadNegocioNumero}"/>
+                <h:outputLabel value="#{item.unidadNegocioNumero}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioFolio}" filterBy="#{item.unidadNegocioFolio}">
                 <f:facet name="header">
                     <h:outputText value="Folio"/>
                 </f:facet>
-                <p:outputLabel value="#{item.unidadNegocioFolio}"/>
+                <h:outputLabel value="#{item.unidadNegocioFolio}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteId}" filterBy="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteId}">
                 <f:facet name="header">
                     <h:outputText value="Operador"/>
                 </f:facet>
-                <p:outputLabel value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                <h:outputLabel value="#{item.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.unidadNegocioFechaIngreso}" filterBy="#{item.unidadNegocioFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.unidadNegocioFechaIngreso}">
+                <h:outputLabel value="#{item.unidadNegocioFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
 

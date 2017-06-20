@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busId}"/>
+                <h:outputLabel value="#{item.busId}"/>
             </p:column>
 
 
@@ -62,42 +62,42 @@
                 <f:facet name="header">
                     <h:outputText value="N°"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busNumero}"/>
+                <h:outputLabel value="#{item.busNumero}"/>
             </p:column>
 
             <p:column sortBy="#{item.busIdUnidadNegocio.unidadNegocioNumero}" filterBy="#{item.busIdUnidadNegocio.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="Unidad"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busIdUnidadNegocio.unidadNegocioNumero}"/>
+                <h:outputLabel value="#{item.busIdUnidadNegocio.unidadNegocioNumero}"/>
             </p:column>
 
             <p:column sortBy="#{item.busPatente}" filterBy="#{item.busPatente}">
                 <f:facet name="header">
                     <h:outputText value="PPU"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busPatente}"/>
+                <h:outputLabel value="#{item.busPatente}"/>
             </p:column>
 
             <p:column sortBy="#{item.busIdEmpresa.empresaNombre}" filterBy="#{item.busIdEmpresa.empresaNombre}">
                 <f:facet name="header">
                     <h:outputText value="Empresa"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busIdEmpresa.empresaNombre}"/>
+                <h:outputLabel value="#{item.busIdEmpresa.empresaNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.busIdFlota.flotaNombre}" filterBy="#{item.busIdFlota.flotaNombre}">
                 <f:facet name="header">
                     <h:outputText value="Flota"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busIdFlota.flotaNombre}"/>
+                <h:outputLabel value="#{item.busIdFlota.flotaNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.busAdministrador}" filterBy="#{item.busAdministrador}">
                 <f:facet name="header">
                     <h:outputText value="Admin."/>
                 </f:facet>
-                <p:outputLabel value="#{item.busAdministrador}"/>
+                <h:outputLabel value="#{item.busAdministrador}"/>
             </p:column>
 
 
@@ -105,7 +105,7 @@
                 <f:facet name="header">
                     <h:outputText value="Año"/>
                 </f:facet>
-                <p:outputLabel value="#{item.busAnio}"/>
+                <h:outputLabel value="#{item.busAnio}"/>
             </p:column>
 
             <f:facet name="{buttons}">

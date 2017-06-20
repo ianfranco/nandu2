@@ -13,7 +13,7 @@
                 Egresos x Cajas de Recaudación
             </f:facet>
             <p:panelGrid columns="5" style="margin-bottom: 10px;width: 100%;">
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" />
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" />
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{egresoCajaRecaudacionController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{cajaTerminalController.items}"
@@ -48,14 +48,14 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoCajaRecaudacionIdEgreso.egresoNombreEgreso}" filterBy="#{item.egresoCajaRecaudacionIdEgreso.egresoNombreEgreso}">
                     <f:facet name="header">
                         <h:outputText value="Egreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoCajaRecaudacionIdEgreso.egresoNombreEgreso}"/>
+                    <h:outputLabel value="#{item.egresoCajaRecaudacionIdEgreso.egresoNombreEgreso}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoCajaRecaudacionValorDefecto}" filterBy="#{item.egresoCajaRecaudacionValorDefecto}" style="text-align: center;">
@@ -84,9 +84,9 @@
                     <f:facet name="header">
                         <h:outputText value="F.Ingreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoCajaRecaudacionFechaIngreso}">
+                    <h:outputLabel value="#{item.egresoCajaRecaudacionFechaIngreso}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
                 <f:facet name="footer">

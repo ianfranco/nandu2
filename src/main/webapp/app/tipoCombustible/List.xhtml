@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.tipoCombustibleId}"/>
+                <h:outputLabel value="#{item.tipoCombustibleId}"/>
             </p:column>
 
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.tipoCombustibleNombre}"/>
+                <h:outputLabel value="#{item.tipoCombustibleNombre}"/>
             </p:column>
 
 
@@ -70,9 +70,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.tipoCombustibleFechaIngreso}">
+                <h:outputLabel value="#{item.tipoCombustibleFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

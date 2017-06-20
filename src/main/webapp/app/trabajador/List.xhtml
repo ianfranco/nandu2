@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorId}"/>
+                <h:outputLabel value="#{item.trabajadorId}"/>
             </p:column>
 
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">
                     <h:outputText value="Cód."/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorCodigo}"/>
+                <h:outputLabel value="#{item.trabajadorCodigo}"/>
             </p:column>
 
 
@@ -70,7 +70,7 @@
                 <f:facet name="header">
                     <h:outputText value="Rut"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorRut}"/>
+                <h:outputLabel value="#{item.trabajadorRut}"/>
             </p:column>
 
 
@@ -78,7 +78,7 @@
                 <f:facet name="header">
                     <h:outputText value="Nombres"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorNombres}"/>
+                <h:outputLabel value="#{item.trabajadorNombres}"/>
             </p:column>
 
 
@@ -86,7 +86,7 @@
                 <f:facet name="header">
                     <h:outputText value="Ap.Paterno"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorApellidoPaterno}"/>
+                <h:outputLabel value="#{item.trabajadorApellidoPaterno}"/>
             </p:column>
 
 
@@ -94,14 +94,14 @@
                 <f:facet name="header">
                     <h:outputText value="Ap.Materno"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorApellidoMaterno}"/>
+                <h:outputLabel value="#{item.trabajadorApellidoMaterno}"/>
             </p:column>
 
             <p:column sortBy="#{item.trabajadorIdTerminal.terminalNombre}" filterBy="#{item.trabajadorIdTerminal.terminalNombre}">
                 <f:facet name="header">
                     <h:outputText value="Terminal"/>
                 </f:facet>
-                <p:outputLabel value="#{item.trabajadorIdTerminal.terminalNombre}"/>
+                <h:outputLabel value="#{item.trabajadorIdTerminal.terminalNombre}"/>
             </p:column>
 
             <!--

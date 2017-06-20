@@ -54,30 +54,30 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.institucionAvpNombre}" filterBy="#{item.institucionAvpNombre}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.institucionAvpNombre}"/>
+                <h:outputLabel value="#{item.institucionAvpNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.institucionApvIdTipo.tipoInstitucionApvId}" filterBy="#{item.institucionApvIdTipo.tipoInstitucionApvId}">
                 <f:facet name="header">
                     <h:outputText value="Tipo"/>
                 </f:facet>
-                <p:outputLabel value="#{item.institucionApvIdTipo.tipoInstitucionApvId}"/>
+                <h:outputLabel value="#{item.institucionApvIdTipo.tipoInstitucionApvId}"/>
             </p:column>
 
             <p:column sortBy="#{item.institucionAvpFechaIngreso}" filterBy="#{item.institucionAvpFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.institucionAvpFechaIngreso}">
+                <h:outputLabel value="#{item.institucionAvpFechaIngreso}">
                     <f:convertDateTime pattern="dd/MMyyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
 

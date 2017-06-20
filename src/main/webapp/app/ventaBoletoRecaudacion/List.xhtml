@@ -15,10 +15,10 @@
             </f:facet>
             <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
 
-                <p:outputLabel value="Fecha:" for="fechaRecaudacion" style="text-align: right;"/>
-                <p:outputLabel id="fechaRecaudacion" value="#{ventaBoletoRecaudacionController.fechaVentaBoleto}"/>
+                <h:outputLabel value="Fecha:" for="fechaRecaudacion" style="text-align: right;"/>
+                <h:outputLabel id="fechaRecaudacion" value="#{ventaBoletoRecaudacionController.fechaVentaBoleto}"/>
 
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{digitacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{ventaBoletoRecaudacionController.cajaRecaudacionList}"
@@ -47,16 +47,16 @@
                 <p:ajax event="rowUnselect" update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{egresoBusController.resetParents}" global="false"/>  
 
                 <f:facet name="header">
-                    Recaudación al: <p:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
+                    Recaudación al: <h:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
                         <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </f:facet>
 
                 <p:column sortBy="#{item.ventaBoletoValorVentaBoleto}" filterBy="#{item.ventaBoletoValorVentaBoleto}">
                     <f:facet name="header">
                         <h:outputText value="Valor"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoValorVentaBoleto}"/>
+                    <h:outputLabel value="#{item.ventaBoletoValorVentaBoleto}"/>
                 </p:column>
 
 
@@ -72,9 +72,9 @@
                     <f:facet name="header">
                         <h:outputText value="Hora de Venta"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoFechaIngreso}">
+                    <h:outputLabel value="#{item.ventaBoletoFechaIngreso}">
                         <f:convertDateTime pattern="HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
 
@@ -82,7 +82,7 @@
                     <f:facet name="header">
                         <h:outputText value="Comprador"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoIdGuia.guiaId}"/>
+                    <h:outputLabel value="#{item.ventaBoletoIdGuia.guiaId}"/>
                 </p:column>
 
 
@@ -90,7 +90,7 @@
                     <f:facet name="header">
                         <h:outputText value="Caja"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaId}"/>
+                    <h:outputLabel value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaId}"/>
                 </p:column>
 
             </p:dataTable>

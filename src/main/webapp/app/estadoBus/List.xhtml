@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.estadoBusNombre}"/>
+                <h:outputLabel value="#{item.estadoBusNombre}"/>
             </p:column>
 
 
@@ -70,9 +70,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.estadoBusFechaIngreso}">
+                <h:outputLabel value="#{item.estadoBusFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

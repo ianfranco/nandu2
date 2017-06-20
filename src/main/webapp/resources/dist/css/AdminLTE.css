@@ -314,13 +314,7 @@ a:focus {
     padding: 15px 15px 0 15px;
 }
 
-.event1 .fc-event,
-.event1 a,
-.event1 .fc-event-inner {
-    font-size: 20px;
-    background: Red;
-    border-color: Yellow;
-}
+
 
 .content-header > h1 {
     margin: 0;

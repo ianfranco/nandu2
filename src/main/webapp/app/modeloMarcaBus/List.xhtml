@@ -54,30 +54,30 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.modeloMarcaBusId}"/>
+                <h:outputLabel value="#{item.modeloMarcaBusId}"/>
             </p:column>
 
             <p:column sortBy="#{item.modeloMarcaBusIdMarca.marcaBusNombre}" filterBy="#{item.modeloMarcaBusIdMarca.marcaBusNombre}">
                 <f:facet name="header">
                     <h:outputText value="Marca"/>
                 </f:facet>
-                <p:outputLabel value="#{item.modeloMarcaBusIdMarca.marcaBusNombre}"/>
+                <h:outputLabel value="#{item.modeloMarcaBusIdMarca.marcaBusNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.modeloMarcaBusNombre}" filterBy="#{item.modeloMarcaBusNombre}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.modeloMarcaBusNombre}"/>
+                <h:outputLabel value="#{item.modeloMarcaBusNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.modeloMarcaBusFechaIngreso}" filterBy="#{item.modeloMarcaBusFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.modeloMarcaBusFechaIngreso}">
+                <h:outputLabel value="#{item.modeloMarcaBusFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

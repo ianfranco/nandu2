@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.flotaId}"/>
+                <h:outputLabel value="#{item.flotaId}"/>
             </p:column>
 
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.flotaNombre}"/>
+                <h:outputLabel value="#{item.flotaNombre}"/>
             </p:column>
 
 
@@ -70,9 +70,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.flotaFechaIngreso}">
+                <h:outputLabel value="#{item.flotaFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

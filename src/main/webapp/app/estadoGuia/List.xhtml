@@ -54,23 +54,23 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.estadoGuiaNombre}" filterBy="#{item.estadoGuiaNombre}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.estadoGuiaNombre}"/>
+                <h:outputLabel value="#{item.estadoGuiaNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.estadoGuiaFechaIngreso}" filterBy="#{item.estadoGuiaFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.estadoGuiaFechaIngreso}">
+                <h:outputLabel value="#{item.estadoGuiaFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

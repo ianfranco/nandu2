@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.surtidorId}"/>
+                <h:outputLabel value="#{item.surtidorId}"/>
             </p:column>
 
 
@@ -62,30 +62,30 @@
                 <f:facet name="header">
                     <h:outputText value="Identificador"/>
                 </f:facet>
-                <p:outputLabel value="#{item.surtidorIdentificador}"/>
+                <h:outputLabel value="#{item.surtidorIdentificador}"/>
             </p:column>
             
             <p:column sortBy="#{item.surtidorIdTerminal.terminalNombre}" filterBy="#{item.surtidorIdTerminal.terminalNombre}">
                 <f:facet name="header">
                     <h:outputText value="Terminal"/>
                 </f:facet>
-                <p:outputLabel value="#{item.surtidorIdTerminal.terminalNombre}"/>
+                <h:outputLabel value="#{item.surtidorIdTerminal.terminalNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.surtidorObservaciones}" filterBy="#{item.surtidorObservaciones}">
                 <f:facet name="header">
                     <h:outputText value="Observaciones"/>
                 </f:facet>
-                <p:outputLabel value="#{item.surtidorObservaciones}"/>
+                <h:outputLabel value="#{item.surtidorObservaciones}"/>
             </p:column>
 
             <p:column sortBy="#{item.surtidorFechaIngreso}" filterBy="#{item.surtidorFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.surtidorFechaIngreso}">
+                <h:outputLabel value="#{item.surtidorFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

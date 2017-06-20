@@ -61,7 +61,7 @@
                 <f:facet name="header">
                     <h:outputText value="Serie"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioCajaSerie}"/>
+                <h:outputLabel value="#{item.inventarioCajaSerie}"/>
             </p:column>
 
 
@@ -69,14 +69,14 @@
                 <f:facet name="header">
                     <h:outputText value="Identificador"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioCajaIdentificador}"/>
+                <h:outputLabel value="#{item.inventarioCajaIdentificador}"/>
             </p:column>
 
             <p:column sortBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}" filterBy="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}">
                 <f:facet name="header">
                     <h:outputText value="Boleto"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
+                <h:outputLabel value="#{item.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto.boletoNombre}"/>
             </p:column>
 
 
@@ -84,7 +84,7 @@
                 <f:facet name="header">
                     <h:outputText value="Caja"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombreCaja}"/>
+                <h:outputLabel value="#{item.inventarioCajaIdCaja.cajaRecaudacionNombreCaja}"/>
             </p:column>
 
             
@@ -92,9 +92,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.inventarioCajaFechaIngreso}">
+                <h:outputLabel value="#{item.inventarioCajaFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
             
             <!--

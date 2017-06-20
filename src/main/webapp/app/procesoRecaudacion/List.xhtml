@@ -54,14 +54,14 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.procesoRecaudacionId}"/>
+                <h:outputLabel value="#{item.procesoRecaudacionId}"/>
             </p:column>
 
             <p:column sortBy="#{item.procesoRecaudacionNombre}" filterBy="#{item.procesoRecaudacionNombre}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.procesoRecaudacionNombre}"/>
+                <h:outputLabel value="#{item.procesoRecaudacionNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.procesoRecaudacionActivo}" filterBy="#{item.procesoRecaudacionActivo}" style="text-align: center;">
@@ -75,9 +75,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.procesoRecaudacionFechaIngreso}">
+                <h:outputLabel value="#{item.procesoRecaudacionFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

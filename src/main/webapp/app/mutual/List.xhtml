@@ -54,14 +54,14 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.mutualNombre}" filterBy="#{item.mutualNombre}">
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.mutualNombre}"/>
+                <h:outputLabel value="#{item.mutualNombre}"/>
             </p:column>
 
 
@@ -69,7 +69,7 @@
                 <f:facet name="header">
                     <h:outputText value="Comisión"/>
                 </f:facet>
-                <p:outputLabel value="#{item.mutualComision}"/>
+                <h:outputLabel value="#{item.mutualComision}"/>
             </p:column>
 
 
@@ -77,7 +77,7 @@
                 <f:facet name="header">
                     <h:outputText value="Porcentaje"/>
                 </f:facet>
-                <p:outputLabel value="#{item.mutualPorcentajeDescuento}"/>
+                <h:outputLabel value="#{item.mutualPorcentajeDescuento}"/>
             </p:column>
 
 
@@ -85,9 +85,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.mutualFechaIngreso}">
+                <h:outputLabel value="#{item.mutualFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

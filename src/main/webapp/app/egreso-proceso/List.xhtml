@@ -13,7 +13,7 @@
                 Egresos x Procesos
             </f:facet>
             <p:panelGrid columns="5" style="margin-bottom: 10px;width: 100%;">
-                <p:outputLabel value="Proceso" for="busIdFlota" />
+                <h:outputLabel value="Proceso" for="busIdFlota" />
                 <p:selectOneMenu id="busIdFlota" value="#{egresoProcesoRecaudacionController.procesoRecaudacion}" required="true" requiredMessage="Debe seleccionar el Proceso" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{procesoRecaudacionController.items}"
@@ -48,14 +48,14 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoProcesoRecaudacionIdEgreso.egresoNombreEgreso}" filterBy="#{item.egresoProcesoRecaudacionIdEgreso.egresoNombreEgreso}">
                     <f:facet name="header">
                         <h:outputText value="Egreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoProcesoRecaudacionIdEgreso.egresoNombreEgreso}"/>
+                    <h:outputLabel value="#{item.egresoProcesoRecaudacionIdEgreso.egresoNombreEgreso}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.egresoProcesoRecaudacionValorDefecto}" filterBy="#{item.egresoProcesoRecaudacionValorDefecto}" style="text-align: center;">
@@ -84,9 +84,9 @@
                     <f:facet name="header">
                         <h:outputText value="F.Ingreso"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.egresoProcesoRecaudacionFechaIngreso}">
+                    <h:outputLabel value="#{item.egresoProcesoRecaudacionFechaIngreso}">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
                 <f:facet name="footer">

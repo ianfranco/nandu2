@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.cajaRecaudacionId}"/>
+                <h:outputLabel value="#{item.cajaRecaudacionId}"/>
             </p:column>
 
 
@@ -62,14 +62,14 @@
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.cajaRecaudacionNombreCaja}"/>
+                <h:outputLabel value="#{item.cajaRecaudacionNombreCaja}"/>
             </p:column>
 
             <p:column sortBy="#{item.cajaRecaudacionIdTerminal.terminalNombre}" filterBy="#{item.cajaRecaudacionIdTerminal.terminalNombre}">
                 <f:facet name="header">
                     <h:outputText value="Terminal"/>
                 </f:facet>
-                <p:outputLabel value="#{item.cajaRecaudacionIdTerminal.terminalNombre}"/>
+                <h:outputLabel value="#{item.cajaRecaudacionIdTerminal.terminalNombre}"/>
             </p:column>
 
 
@@ -77,7 +77,7 @@
                 <f:facet name="header">
                     <h:outputText value="Usuario"/>
                 </f:facet>
-                <p:outputLabel value="#{item.cajaRecaudacionIdUsuario.usuarioNombres}"/>
+                <h:outputLabel value="#{item.cajaRecaudacionIdUsuario.usuarioNombres}"/>
             </p:column>
 
             <p:column sortBy="#{item.cajaRecaudacionActiva}" filterBy="#{item.cajaRecaudacionActiva}" style="text-align: center;">
@@ -91,9 +91,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>
                 </f:facet>
-                <p:outputLabel value="#{item.cajaRecaudacionFechaIngreso}">
+                <h:outputLabel value="#{item.cajaRecaudacionFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

@@ -12,22 +12,22 @@
                 <h:form id="CompraBoletoCreateForm">
                     <p:focus context="compraBoletoFolioFactura"/>
                     <p:panelGrid columns="2"  style="width: 100%;" id="detalle">
-                        <p:outputLabel value="Folio" for="compraBoletoFolioFactura" />
+                        <h:outputLabel value="Folio" for="compraBoletoFolioFactura" />
                         <p:inputText id="compraBoletoFolioFactura" value="#{registroCompraBoletoController.selected.compraBoletoFolioFactura}" title="#{bundle.CreateCompraBoletoTitle_compraBoletoFolioFactura}" required="true" requiredMessage="#{bundle.CreateCompraBoletoRequiredMessage_compraBoletoFolioFactura}" onfocus="this.setSelectionRange(0, this.value.length)">
                             <p:ajax event="valueChange" listener="#{registroCompraBoletoController.findFolio}" update="growl"/>
                         </p:inputText>
 
-                        <p:outputLabel value="Fecha" for="compraBoletoFecha" />
+                        <h:outputLabel value="Fecha" for="compraBoletoFecha" />
                         <p:calendar id="compraBoletoFecha" pattern="dd/MM/yyyy" value="#{registroCompraBoletoController.selected.compraBoletoFecha}" title="#{bundle.CreateCompraBoletoTitle_compraBoletoFecha}" required="true" requiredMessage="#{bundle.CreateCompraBoletoRequiredMessage_compraBoletoFecha}" locale="es"/>
 
-                        <p:outputLabel value=""/>
+                        <h:outputLabel value=""/>
                         <h:panelGrid columns="6" id="detalleComprasPanel" >
-                            <p:outputLabel style="margin-left: 5px;" value="Tipo Boleto" />
-                            <p:outputLabel style="margin-left: 5px;" value="Identificador" />
-                            <p:outputLabel style="margin-left: 5px;" value="Serie" for="serie"/>
-                            <p:outputLabel style="margin-left: 5px;" value="N° Rollos" />
-                            <p:outputLabel style="margin-left: 5px;" value="Valor x Rollo" />
-                            <p:outputLabel style="margin-left: 5px;" value="Agregar"/>
+                            <h:outputLabel style="margin-left: 5px;" value="Tipo Boleto" />
+                            <h:outputLabel style="margin-left: 5px;" value="Identificador" />
+                            <h:outputLabel style="margin-left: 5px;" value="Serie" for="serie"/>
+                            <h:outputLabel style="margin-left: 5px;" value="N° Rollos" />
+                            <h:outputLabel style="margin-left: 5px;" value="Valor x Rollo" />
+                            <h:outputLabel style="margin-left: 5px;" value="Agregar"/>
 
                             <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{registroCompraBoletoController.detalleCompraBoleto.detalleCompraBoletoIdBoleto}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
                                 <f:selectItem itemLabel="Seleccionar"/>                                
@@ -73,50 +73,50 @@
                                     <f:facet name="header">
                                         <h:outputText value="N°"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{rowIndex+1}"/>
+                                    <h:outputLabel value="#{rowIndex+1}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Tipo Boleto"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.detalleCompraBoletoIdBoleto.boletoNombre}"/>
+                                    <h:outputLabel value="#{item.detalleCompraBoletoIdBoleto.boletoNombre}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Identificador"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.detalleCompraBoletoIdentificador}"/>
+                                    <h:outputLabel value="#{item.detalleCompraBoletoIdentificador}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Serie"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.detalleCompraBoletoSerie}"/>
+                                    <h:outputLabel value="#{item.detalleCompraBoletoSerie}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="N° Rollos"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.detalleCompraBoletoCantidadRollos}"/>
+                                    <h:outputLabel value="#{item.detalleCompraBoletoCantidadRollos}"/>
                                 </p:column>
 
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Total"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.detalleCompraBoletoTotal}">
+                                    <h:outputLabel value="#{item.detalleCompraBoletoTotal}">
                                         <f:convertNumber currencyCode="$"/>
-                                    </p:outputLabel>
+                                    </h:outputLabel>
                                 </p:column>
 
                             </p:dataTable>
 
                             <h:panelGroup id="totales">
-                                <p:outputLabel value="Total" for="compraBoletoTotal" />
+                                <h:outputLabel value="Total" for="compraBoletoTotal" />
                                 <p:inputNumber id="compraBoletoTotal" decimalPlaces="0" symbol="$" value="#{registroCompraBoletoController.selected.compraBoletoTotal}" title="#{bundle.CreateCompraBoletoTitle_compraBoletoTotal}" required="true" requiredMessage="#{bundle.CreateCompraBoletoRequiredMessage_compraBoletoTotal}" onfocus="this.setSelectionRange(0, this.value.length)"/>
                             </h:panelGroup>
                             <f:facet name="footer">

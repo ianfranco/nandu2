@@ -54,7 +54,7 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalId}"/>
+                <h:outputLabel value="#{item.terminalId}"/>
             </p:column>
 
 
@@ -62,7 +62,7 @@
                 <f:facet name="header">
                     <h:outputText value="Nombre"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalNombre}"/>
+                <h:outputLabel value="#{item.terminalNombre}"/>
             </p:column>
 
 
@@ -70,21 +70,21 @@
                 <f:facet name="header">
                     <h:outputText value="Dirección"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalDireccion}"/>
+                <h:outputLabel value="#{item.terminalDireccion}"/>
             </p:column>
 
             <p:column sortBy="#{item.terminalIdComuna.comunaNombre}" filterBy="#{item.terminalIdComuna.comunaNombre}">
                 <f:facet name="header">
                     <h:outputText value="Comuna"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalIdComuna.comunaNombre}"/>
+                <h:outputLabel value="#{item.terminalIdComuna.comunaNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.terminalSuperficie}" filterBy="#{item.terminalSuperficie}" style="text-align: center;">
                 <f:facet name="header">
                     <h:outputText value="Superficie"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalSuperficie}"/>
+                <h:outputLabel value="#{item.terminalSuperficie}"/>
             </p:column>
 
 
@@ -92,7 +92,7 @@
                 <f:facet name="header">
                     <h:outputText value="Teléfono"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalTelefono}"/>
+                <h:outputLabel value="#{item.terminalTelefono}"/>
             </p:column>
 
 
@@ -100,7 +100,7 @@
                 <f:facet name="header">
                     <h:outputText value="Email"/>
                 </f:facet>
-                <p:outputLabel value="#{item.terminalEmail}"/>
+                <h:outputLabel value="#{item.terminalEmail}"/>
             </p:column>
 
             <!--

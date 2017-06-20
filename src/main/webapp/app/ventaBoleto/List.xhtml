@@ -10,7 +10,7 @@
     <h:form id="VentaBoletoListForm" class="form-height">
         <p:panel header="Venta de Boletos">
             <p:panelGrid columns="2">
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{ventaBoletoRecaudacionController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{ventaBoletoRecaudacionController.cajaRecaudacionList}"
@@ -38,7 +38,7 @@
                     <f:facet name="header">
                         <h:outputText value="#"/>
                     </f:facet>
-                    <p:outputLabel value="#{rowIndex+1}"/>
+                    <h:outputLabel value="#{rowIndex+1}"/>
                 </p:column>
 
 
@@ -46,7 +46,7 @@
                     <f:facet name="header">
                         <h:outputText value="Valor"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoValorVentaBoleto}"/>
+                    <h:outputLabel value="#{item.ventaBoletoValorVentaBoleto}"/>
                 </p:column>
 
 
@@ -62,9 +62,9 @@
                     <f:facet name="header">
                         <h:outputText value="Hora de Venta"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoFechaIngreso}">
+                    <h:outputLabel value="#{item.ventaBoletoFechaIngreso}">
                         <f:convertDateTime pattern="HH:mm:ss" />
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </p:column>
 
 
@@ -72,7 +72,7 @@
                     <f:facet name="header">
                         <h:outputText value="N° Bus"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoIdBus.busNumero}"/>
+                    <h:outputLabel value="#{item.ventaBoletoIdBus.busNumero}"/>
                 </p:column>
 
 
@@ -80,7 +80,7 @@
                     <f:facet name="header">
                         <h:outputText value="Caja"/>
                     </f:facet>
-                    <p:outputLabel value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaId}"/>
+                    <h:outputLabel value="#{item.ventaBoletoIdInventarioCaja.inventarioCajaId}"/>
                 </p:column>
 
                 <f:facet name="footer">

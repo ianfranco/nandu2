@@ -54,14 +54,14 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{rowIndex+1}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.valorRolloUnidadCompra}" filterBy="#{item.valorRolloUnidadCompra}">
                 <f:facet name="header">
                     <h:outputText value="Valor Compra"/>
                 </f:facet>
-                <p:outputLabel value="#{item.valorRolloUnidadCompra}"/>
+                <h:outputLabel value="#{item.valorRolloUnidadCompra}"/>
             </p:column>
 
 
@@ -69,21 +69,21 @@
                 <f:facet name="header">
                     <h:outputText value="Valor Venta"/>
                 </f:facet>
-                <p:outputLabel value="#{item.valorRolloUnidadVenta}"/>
+                <h:outputLabel value="#{item.valorRolloUnidadVenta}"/>
             </p:column>
 
             <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}">
                 <f:facet name="header">
                     <h:outputText value="Unidad"/>
                 </f:facet>
-                <p:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}"/>
+                <h:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioNumero}"/>
             </p:column>
 
             <p:column sortBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}" filterBy="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}">
                 <f:facet name="header">
                     <h:outputText value="Operador"/>
                 </f:facet>
-                <p:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
+                <h:outputLabel value="#{item.valorRolloUnidadIdUnidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"/>
             </p:column>
 
             <f:facet name="{buttons}">

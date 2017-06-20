@@ -24,10 +24,10 @@
             </f:facet>
             <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
 
-                <p:outputLabel value="F. Recaudación:" for="fechaRecaudacion" style="text-align: right;"/>
+                <h:outputLabel value="F. Recaudación:" for="fechaRecaudacion" style="text-align: right;"/>
                 <p:calendar id="fechaRecaudacion" value="#{digitacionGuiaController.fechaRecaudacion}" locale="es" pattern="dd/MM/yyyy" required="true" requiredMessage="Debe seleccionar la fecha"/>
 
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{digitacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{digitacionGuiaController.cajaRecaudacionList}"
@@ -38,7 +38,7 @@
                     <p:ajax event="valueChange" update="procesoRecaudacion" listener="#{digitacionGuiaController.handleCajaRecaudacionChange(event)}"/>
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Proceso:" for="procesoRecaudacion" style="text-align: right;"/>
+                <h:outputLabel value="Proceso:" for="procesoRecaudacion" style="text-align: right;"/>
                 <p:selectOneMenu id="procesoRecaudacion" value="#{digitacionGuiaController.procesoRecaudacion}" required="true" requiredMessage="Debe seleccionar el proceso" converter="omnifaces.SelectItemsConverter" >
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{digitacionGuiaController.procesoRecaudacionList}"
@@ -50,19 +50,19 @@
                 <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton, :GuiaListForm:datalist:printButton" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
 
-                <p:outputLabel value="Permitir Egresos x:" style="text-align: right;"/>
+                <h:outputLabel value="Permitir Egresos x:" style="text-align: right;"/>
                 <p:panelGrid columns="6" style="text-align: right;" >
-                    <p:outputLabel value="Bus"/>
+                    <h:outputLabel value="Bus"/>
                     <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoBus}"/>
 
-                    <p:outputLabel value="Flota" />
+                    <h:outputLabel value="Flota" />
                     <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoFlota}"/>
 
-                    <p:outputLabel value="Proceso"/>
+                    <h:outputLabel value="Proceso"/>
                     <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoProceso}"/>
                 </p:panelGrid>
 
-                <p:outputLabel value="N° de Vueltas x Defecto:" style="text-align: right;"/>
+                <h:outputLabel value="N° de Vueltas x Defecto:" style="text-align: right;"/>
                 <p:inputNumber value="#{digitacionGuiaController.numeroVueltas}" decimalPlaces="0"/>
 
             </p:panelGrid>
@@ -85,9 +85,9 @@
                 <p:ajax event="rowUnselect" update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{egresoBusController.resetParents}" global="false"/>  
 
                 <f:facet name="header">
-                    Recaudación al: <p:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
+                    Recaudación al: <h:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
                         <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </p:outputLabel>
+                    </h:outputLabel>
                 </f:facet>
 
                 <p:column style="text-align: center; font-weight: 900;">
@@ -109,9 +109,9 @@
                     <f:facet name="header">
                         <h:outputText value="Fecha"/>
                     </f:facet>
-                    <h:outputText value="#{item.guiaFecha}">
+                    <h:outputLabel value="#{item.guiaFecha}">
                         <f:convertDateTime pattern="dd/MM/yy" />
-                    </h:outputText>
+                    </h:outputLabel>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdBus.busNumero}" filterBy="#{item.guiaIdBus.busNumero}" style="text-align: center; font-weight: 900;">

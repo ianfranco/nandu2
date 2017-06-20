@@ -54,30 +54,30 @@
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <p:outputLabel value="#{item.precioCombustibleId}"/>
+                <h:outputLabel value="#{item.precioCombustibleId}"/>
             </p:column>
 
             <p:column sortBy="#{item.precioCombustibleIdTipoCombustible.tipoCombustibleNombre}" filterBy="#{item.precioCombustibleIdTipoCombustible.tipoCombustibleNombre}">
                 <f:facet name="header">
                     <h:outputText value="Tipo"/>
                 </f:facet>
-                <p:outputLabel value="#{item.precioCombustibleIdTipoCombustible.tipoCombustibleNombre}"/>
+                <h:outputLabel value="#{item.precioCombustibleIdTipoCombustible.tipoCombustibleNombre}"/>
             </p:column>
 
             <p:column sortBy="#{item.precioCombustibleValor}" filterBy="#{item.precioCombustibleValor}">
                 <f:facet name="header">
                     <h:outputText value="Valor"/>
                 </f:facet>
-                <p:outputLabel value="#{item.precioCombustibleValor}"/>
+                <h:outputLabel value="#{item.precioCombustibleValor}"/>
             </p:column>
 
             <p:column sortBy="#{item.precioCombustibleFechaPrecioCombustible}" filterBy="#{item.precioCombustibleFechaPrecioCombustible}">
                 <f:facet name="header">
                     <h:outputText value="Fecha"/>
                 </f:facet>
-                <p:outputLabel value="#{item.precioCombustibleFechaPrecioCombustible}">
+                <h:outputLabel value="#{item.precioCombustibleFechaPrecioCombustible}">
                     <f:convertDateTime pattern="dd/MM/yyyy" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
 
@@ -85,9 +85,9 @@
                 <f:facet name="header">
                     <h:outputText value="F.Actualización"/>
                 </f:facet>
-                <p:outputLabel value="#{item.precioCombustibleFechaIngreso}">
+                <h:outputLabel value="#{item.precioCombustibleFechaIngreso}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                </p:outputLabel>
+                </h:outputLabel>
             </p:column>
 
             <f:facet name="{buttons}">

@@ -7,21 +7,21 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition>
-        <p:dialog id="ProfileDlg" widgetVar="ProfileDialog" modal="true" appendTo="@(body)" resizable="false" draggable="false" header="Profile">
+        <p:dialog id="ProfileDlg" widgetVar="ProfileDialog" modal="true" appendTo="@(body)" resizable="false" draggable="false" header="Ficha">
             <h:form id="ProfileForm">
                 <p:panelGrid columnClasses="column" columns="2">
                     
                     <h:outputText value="Nombre :"/>
                     <h:outputText value="#{loginController.usuario.usuarioNombres}"/>
                     
-                    <h:outputText value="Surname :"/>
+                    <h:outputText value="Apellido :"/>
                     <h:outputText value="#{loginController.usuario.usuarioApellidoPaterno}"/>
                     
-                    <h:outputText value="Ip Address :"/>
+                    <h:outputText value="IP:"/>
                     <h:outputText value="#{loginController.ipAddress}"/>
                     
-                    <h:outputText value="Job :"/>
-                    <h:outputText value="Web Developer"/>
+                    <h:outputText value="Rol:"/>
+                    <h:outputText value="#{loginController.usuario.usuarioIdRol.rolNombre}"/>
                     
                     <f:facet name="footer">
                         <div class="footer-right">

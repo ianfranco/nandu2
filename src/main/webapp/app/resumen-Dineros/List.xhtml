@@ -7,9 +7,9 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:form id="ResumenDinerosListForm" class="form-height">
-        <p:panel header="Dineros Recaudados x Mes">
+        <p:panel id="panelDineros" header="Dineros Recaudados x Mes">
             <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
-                <p:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
+                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
                 <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{resumenDinerosController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{resumenDinerosController.cajaRecaudacionList}"
@@ -20,7 +20,7 @@
                     <p:ajax event="valueChange" update="procesoRecaudacion" listener="#{resumenDinerosController.handleCajaRecaudacionChange(event)}"/>
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Proceso:" for="procesoRecaudacion" style="text-align: right;"/>
+                <h:outputLabel value="Proceso:" for="procesoRecaudacion" style="text-align: right;"/>
                 <p:selectOneMenu id="procesoRecaudacion" value="#{resumenDinerosController.procesoRecaudacion}" required="true" requiredMessage="Debe seleccionar el proceso" converter="omnifaces.SelectItemsConverter" >
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{resumenDinerosController.procesoRecaudacionList}"
@@ -30,7 +30,7 @@
                                    />
                 </p:selectOneMenu>
 
-                <p:outputLabel for="mes" value="Seleccionar:" />
+                <h:outputLabel for="mes" value="Seleccionar:" />
                 <p:selectOneMenu id="mes" value="#{resumenDinerosController.mes}" style="width:125px">
                     <f:selectItem itemLabel="Enero" itemValue="1" />
                     <f:selectItem itemLabel="Febrero" itemValue="2" />
@@ -46,7 +46,7 @@
                     <f:selectItem itemLabel="Diciembre" itemValue="12" />
                 </p:selectOneMenu>
 
-                <p:outputLabel for="anio" value="Año:" />
+                <h:outputLabel for="anio" value="Año:" />
                 <p:inputText id="anio" value="#{resumenDinerosController.anio}" size="5" />
 
                 <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Recaudación" update="growl, schedule" style="width:150px" actionListener="#{resumenDinerosController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
@@ -71,7 +71,9 @@
                 </p:schedule>
             </p:panelGrid>
         </p:panel>
-
+        <p:commandButton id="printButton" value="Print" type="button" icon="ui-icon-print" styleClass="btn btn-primary">
+            <p:printer target="schedule"/>
+        </p:commandButton> 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
 </ui:composition>
