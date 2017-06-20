@@ -427,8 +427,9 @@ public class GuiaFirstController extends AbstractController<Guia> {
         }
         this.items.add(this.getSelected());
         this.boletoGuiaList = null;
-        this.setSelected(prepareCreate(event));
         JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.getSelected().getGuiaIdBus().getBusNumero() + " " + this.getSelected().getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
+        this.setSelected(prepareCreate(event));
+        
     }
 
     public void load() {

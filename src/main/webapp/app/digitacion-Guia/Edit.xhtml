@@ -144,7 +144,7 @@
 
                             </p:column>
                             <p:column  style="background: #e5e5e5;">
-                                <p:commandButton actionListener="#{digitacionGuiaController.save}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist, :GuiaListForm:datalistResumen, :growl" styleClass="btn btn-primary" oncomplete="handleSubmit(xhr,status,args,PF('GuiaEditDialog'));">
+                                <p:commandButton actionListener="#{digitacionGuiaController.save}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist, :growl" styleClass="btn btn-primary" oncomplete="handleSubmit(xhr,status,args,PF('GuiaEditDialog'));">
                                     <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Editar Guía?" icon="ui-icon-alert"/>
                                 </p:commandButton>
                                 <p:commandButton value="Cerrar" oncomplete="PF('GuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary"/>

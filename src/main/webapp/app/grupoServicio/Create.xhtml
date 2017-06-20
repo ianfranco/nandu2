@@ -16,7 +16,17 @@
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="Identificador" for="grupoServicioIdentificador" />
-                        <p:inputText id="grupoServicioIdentificador" value="#{grupoServicioController.selected.grupoServicioIdentificador}" title="#{bundle.CreateGrupoServicioTitle_grupoServicioIdentificador}" required="true" requiredMessage="#{bundle.CreateGrupoServicioRequiredMessage_grupoServicioIdentificador}" size="45" maxlength="45"/>
+                        <p:inputText id="grupoServicioIdentificador" value="#{grupoServicioController.selected.grupoServicioIdentificador}" title="#{bundle.CreateGrupoServicioTitle_grupoServicioIdentificador}" required="true" requiredMessage="Debe ingresar el Identificador" size="45" maxlength="45"/>
+
+                        <p:outputLabel value="Terminal" for="busIdTerminal" />
+                        <p:selectOneMenu id="busIdTerminal" value="#{grupoServicioController.selected.grupoServicioIdTerminal}" required="true" requiredMessage="Debe seleccionar el Terminal" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{terminalController.items}"
+                                           var="busIdTerminalItem"
+                                           itemValue="#{busIdTerminalItem}"
+                                           itemLabel="#{busIdTerminalItem.terminalNombre}"
+                                           />
+                        </p:selectOneMenu>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{grupoServicioController.saveNew}" value="#{bundle.Save}" update="display,:GrupoServicioListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GrupoServicioCreateDialog'));">

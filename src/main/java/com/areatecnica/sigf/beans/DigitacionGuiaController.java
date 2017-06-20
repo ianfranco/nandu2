@@ -611,13 +611,14 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
         this.resultsTotals = new ArrayList<>();
 
-        for (Object i : totals.values()) {
+        totals.values().stream().forEach((i) -> {
             this.resultsTotals.add(decimalFormat.format((int) i));
-        }
+        });
 
-        for (EgresoRecaudacion eg : this.egresosResumenList) {
+        //dudas acá
+        this.egresosResumenList.stream().forEach((eg) -> {
             eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
-        }
+        });
 
         /*
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
@@ -826,8 +827,9 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         this.list = this.guiaDao.findByProcesoFechaRecaudacion(procesoRecaudacion, fechaRecaudacion);
         JsfUtil.addSuccessMessage("Cantidad de Guías Registradas: " + this.list.size());
 
+        /*Si la lista no está vacía*/
         if (!this.list.isEmpty()) {
-            /*Proceso de carga de egresos*/
+            /*Proceso de carga de egresos a partir de cada guía*/
             for (Guia g : this.list) {
                 List<EgresoGuia> auxEgresosGuia = g.getEgresoGuiaList();
                 LinkedHashMap auxLink = new LinkedHashMap();
@@ -887,15 +889,17 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
             System.err.println("entra a la condición");
             this.egresosResumenList = new ArrayList<>();
-            for (Egreso eg : this.egresosList) {
+            this.egresosList.stream().map((eg) -> {
                 EgresoRecaudacion egresoRecaudacion = new EgresoRecaudacion();
                 egresoRecaudacion.setEgresoRecaudacionIdResumen(resumenRecaudacion);
                 egresoRecaudacion.setEgresoRecaudacionIdEgreso(eg);
+                return egresoRecaudacion;
+            }).map((egresoRecaudacion) -> {
                 egresoRecaudacion.setEgresoRecaudacionTotalEgreso(0);
-
+                return egresoRecaudacion;
+            }).forEach((egresoRecaudacion) -> {
                 this.egresosResumenList.add(egresoRecaudacion);
-
-            }
+            });
             //prueba
             this.listOfMaps.add(new LinkedHashMap());
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
@@ -904,11 +908,15 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         } else {
             this.egresosResumenList = this.resumenRecaudacion.getEgresoRecaudacionList();
 
-            if (this.egresosResumenList == null) {
-
-            }
+            this.egresosResumenList.stream().forEach((eg) -> {
+                int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+                System.err.println("VALOR EGRESO:" + val);
+                eg.setEgresoRecaudacionTotalEgreso(val);
+            });
+            this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
 
         }
+
         this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
     }
 
@@ -976,12 +984,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     }
 
     public void printResumen() {
-        if (!this.estadoProceso) {
-            JsfUtil.addSuccessMessage("Proceso Cerrado");
-            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.TRUE);
+        if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
+            JsfUtil.addSuccessMessage("Se ha Cerrado el Proceso");
         } else {
-            JsfUtil.addSuccessMessage("Proceso en Digitación");
-            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
+            JsfUtil.addSuccessMessage("Se ha Abierto el Proceso");
         }
 
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);

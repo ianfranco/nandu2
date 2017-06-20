@@ -32,7 +32,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Fecha:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:calendar id="guiaFecha" pattern="dd/MM/yyyy" value="#{digitacionGuiaController.selected.guiaFecha}" title="#{bundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFecha}"  locale="es" onfocus="this.setSelectionRange(0, 2)">
+                                <p:calendar id="guiaFecha" pattern="dd/MM/yyyy" value="#{digitacionGuiaController.selected.guiaFecha}" title="#{bundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe ingresar la Fecha de la Guía"  locale="es" onfocus="this.setSelectionRange(0, 2)">
                                     <p:ajax event="valueChange" listener="#{digitacionGuiaController.handleBusChange(event)}" update="guiaTurno, growl"/>
                                 </p:calendar>
                             </p:column>
@@ -43,7 +43,7 @@
                         <!-- SEGUNDA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;">N° Bus:</p:column>
-                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{digitacionGuiaController.selected.guiaIdBus}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaIdBus}" converter="omnifaces.SelectItemsConverter">
+                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{digitacionGuiaController.selected.guiaIdBus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{digitacionGuiaController.busesList}"
                                                    var="guiaIdBusItem"
@@ -60,7 +60,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">N° Conductor</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:selectOneMenu id="guiaIdTrabajador" value="#{digitacionGuiaController.selected.guiaIdTrabajador}"  converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="guiaIdTrabajador" value="#{digitacionGuiaController.selected.guiaIdTrabajador}" required="true" requiredMessage="Debe seleccionar al Conductor" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{trabajadorController.items}"
                                                    var="guiaIdTrabajadorItem"
