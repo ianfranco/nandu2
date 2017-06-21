@@ -25,12 +25,14 @@ public class FlotaController extends AbstractController<Flota> {
     @PostConstruct
     @Override
     public void init() {
-        super.setFacade(ejbFacade);        
+        super.setFacade(ejbFacade);
     }
 
     public FlotaController() {
         // Inform the Abstract parent controller of the concrete Flota Entity
         super(Flota.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Flota.findAllByCuenta");
     }
 
     /**

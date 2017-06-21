@@ -1,12 +1,12 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.controllers.BusFacade;
 import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.Date;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -36,6 +36,8 @@ public class BusController extends AbstractController<Bus> {
     private UnidadNegocioController busIdUnidadNegocioController;
 
     private IBusDao busDao;
+    
+    private List<Bus> items;
 
     /**
      * Initialize the concrete Bus controller bean. The AbstractController
@@ -52,7 +54,22 @@ public class BusController extends AbstractController<Bus> {
         super(Bus.class);
 
         columnNames();
-        //columnList();
+        
+    }
+
+    /**
+     * @return the items
+     */
+    @Override
+    public List<Bus> getItems() {        
+        return this.getCurrentUser().getUsuarioIdTerminal().getBusList();
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<Bus> items) {
+        this.items = items;
     }
 
     /**
@@ -258,4 +275,6 @@ public class BusController extends AbstractController<Bus> {
         this.getSelected().setBusNumero(this.busDao.findMaxNumeroUnidad(unidad));
     }
 
+    
+    
 }

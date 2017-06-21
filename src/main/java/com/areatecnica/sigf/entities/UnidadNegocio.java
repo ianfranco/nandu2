@@ -36,11 +36,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "unidad_negocio", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UnidadNegocio.findAll", query = "SELECT u FROM UnidadNegocio u")
-    , @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioId", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioId = :unidadNegocioId")
-    , @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioNumero", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioNumero = :unidadNegocioNumero")
-    , @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioFolio", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioFolio = :unidadNegocioFolio")
-    , @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioFechaIngreso", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioFechaIngreso = :unidadNegocioFechaIngreso")})
+    @NamedQuery(name = "UnidadNegocio.findAll", query = "SELECT u FROM UnidadNegocio u"), 
+    @NamedQuery(name = "UnidadNegocio.findAllByCuenta", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioIdCuenta = :idCuenta "), 
+    @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioId", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioId = :unidadNegocioId"), 
+    @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioNumero", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioNumero = :unidadNegocioNumero"), 
+    @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioFolio", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioFolio = :unidadNegocioFolio"), 
+    @NamedQuery(name = "UnidadNegocio.findByUnidadNegocioFechaIngreso", query = "SELECT u FROM UnidadNegocio u WHERE u.unidadNegocioFechaIngreso = :unidadNegocioFechaIngreso")})
 public class UnidadNegocio implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -208,5 +209,5 @@ public class UnidadNegocio implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.UnidadNegocio[ unidadNegocioId=" + unidadNegocioId + " ]";
     }
-    
+
 }

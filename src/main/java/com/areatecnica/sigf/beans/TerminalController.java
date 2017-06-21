@@ -1,6 +1,5 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.controllers.TerminalFacade;
 import java.util.Date;
@@ -33,6 +32,8 @@ public class TerminalController extends AbstractController<Terminal> {
     public TerminalController() {
         // Inform the Abstract parent controller of the concrete Terminal Entity
         super(Terminal.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Terminal.findAllByCuenta");
     }
 
     /**
@@ -160,7 +161,8 @@ public class TerminalController extends AbstractController<Terminal> {
             terminalIdComunaController.setSelected(this.getSelected().getTerminalIdComuna());
         }
     }
-
+   
+    
     @Override
     public Terminal prepareCreate(ActionEvent event) {
         super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.

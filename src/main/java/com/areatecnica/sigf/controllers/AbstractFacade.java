@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.controllers;
 
+import com.areatecnica.sigf.entities.Cuenta;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -85,6 +86,10 @@ public abstract class AbstractFacade<T> {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
+    }
+
+    public List<T> findAllByCuenta(Cuenta cuenta, String namedQuery) {
+        return getEntityManager().createNamedQuery(namedQuery).setParameter("idCuenta", cuenta).getResultList();
     }
 
     public List<T> findRange(int[] range) {

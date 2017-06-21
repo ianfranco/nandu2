@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Flota.findAll", query = "SELECT f FROM Flota f")
+    , @NamedQuery(name = "Flota.findAllByCuenta", query = "SELECT f FROM Flota f WHERE f.flotaIdCuenta = :idCuenta")
     , @NamedQuery(name = "Flota.findByFlotaId", query = "SELECT f FROM Flota f WHERE f.flotaId = :flotaId")
     , @NamedQuery(name = "Flota.findByFlotaNombre", query = "SELECT f FROM Flota f WHERE f.flotaNombre = :flotaNombre")
     , @NamedQuery(name = "Flota.findByFlotaTieneEgresos", query = "SELECT f FROM Flota f WHERE f.flotaTieneEgresos = :flotaTieneEgresos")
@@ -165,7 +166,7 @@ public class Flota implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Flota[ flotaId=" + flotaId + " ]";
     }
-    
+
     @PrePersist
     protected void onPrePersist() {
         this.flotaFechaIngreso = new Date();

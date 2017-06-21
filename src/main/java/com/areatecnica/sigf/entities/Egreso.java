@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "egreso", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e")
+    @NamedQuery(name = "Egreso.findAll", query = "SELECT e FROM Egreso e"), 
+    @NamedQuery(name = "Egreso.findAllByCuenta", query = "SELECT e FROM Egreso e WHERE e.egresoIdCuenta = :idCuenta")
     , @NamedQuery(name = "Egreso.findByEgresoId", query = "SELECT e FROM Egreso e WHERE e.egresoId = :egresoId")
     , @NamedQuery(name = "Egreso.findByEgresoNombreEgreso", query = "SELECT e FROM Egreso e WHERE e.egresoNombreEgreso = :egresoNombreEgreso")
     , @NamedQuery(name = "Egreso.findByEgresoObligatorio", query = "SELECT e FROM Egreso e WHERE e.egresoObligatorio = :egresoObligatorio")

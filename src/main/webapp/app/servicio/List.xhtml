@@ -18,7 +18,7 @@
         </p:contextMenu>
 
         <coco:datatable id="datalist"
-                        value="#{servicioController.lazyList}"
+                        value="#{servicioController.items}"
                         rowKey="#{item.servicioId}"
                         selection="#{servicioController.selected}"
                         filtered="#{servicioController.filtered}"
@@ -50,11 +50,11 @@
                 </div>
             </f:facet>
 
-            <p:column sortBy="#{item.servicioId}" filterBy="#{item.servicioId}">
+            <p:column  style="text-align: center;">
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputLabel value="#{item.servicioId}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.servicioNumeroServicio}" filterBy="#{item.servicioNumeroServicio}">

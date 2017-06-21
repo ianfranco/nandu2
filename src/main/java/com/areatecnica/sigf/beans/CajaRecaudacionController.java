@@ -37,6 +37,8 @@ public class CajaRecaudacionController extends AbstractController<CajaRecaudacio
     public CajaRecaudacionController() {
         // Inform the Abstract parent controller of the concrete CajaTerminal Entity
         super(CajaRecaudacion.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("CajaRecaudacion.findAllByCuenta");
     }
 
     /**
@@ -131,6 +133,7 @@ public class CajaRecaudacionController extends AbstractController<CajaRecaudacio
     public CajaRecaudacion prepareCreate(ActionEvent event) {
         super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
         this.getSelected().setCajaRecaudacionFechaIngreso(new Date());
+        this.getSelected().setCajaRecaudacionIdCuenta(this.getUserCount());
         this.getSelected().setCajaRecaudacionActiva(Boolean.TRUE);
         return this.getSelected();
     }

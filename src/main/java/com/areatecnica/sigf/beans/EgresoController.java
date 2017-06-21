@@ -31,6 +31,8 @@ public class EgresoController extends AbstractController<Egreso> {
     public EgresoController() {
         // Inform the Abstract parent controller of the concrete Egreso Entity
         super(Egreso.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Egreso.findAllByCuenta");
     }
 
     /**

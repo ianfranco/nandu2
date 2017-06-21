@@ -15,7 +15,7 @@
             </f:facet>
             <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
                 <h:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
-                <p:selectOneMenu id="busIdGrupoServicio" value="#{guiaFirstController.grupoServicio}" required="true" requiredMessage="#{myBundle.CreateBusRequiredMessage_busIdGrupoServicio}" converter="omnifaces.SelectItemsConverter">
+                <p:selectOneMenu id="busIdGrupoServicio" value="#{guiaFirstController.grupoServicio}" required="true" requiredMessage="Debe seleccionar el Grupo/Servicio" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                     <f:selectItems value="#{guiaFirstController.grupoServicioList}"
                                    var="busIdGrupoServicioItem"

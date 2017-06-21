@@ -195,8 +195,6 @@ public class MenuController implements java.io.Serializable {
             System.out.println("menuListSize:" + menuList.size());
         }
 
-        System.out.println("size:" + menuList.size());
-
         for (int i = 0; i < menuList.size(); i++) {
             Menu get = menuList.get(i);
             if (get.getTopMenuId() != null) {

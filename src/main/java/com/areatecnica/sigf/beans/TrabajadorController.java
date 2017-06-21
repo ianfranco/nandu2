@@ -55,6 +55,8 @@ public class TrabajadorController extends AbstractController<Trabajador> {
     public TrabajadorController() {
         // Inform the Abstract parent controller of the concrete Trabajador Entity
         super(Trabajador.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Trabajador.findAllByCuenta");
     }
 
     /**

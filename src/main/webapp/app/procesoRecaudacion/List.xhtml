@@ -50,11 +50,11 @@
                 </div>
             </f:facet>
 
-            <p:column sortBy="#{item.procesoRecaudacionId}" filterBy="#{item.procesoRecaudacionId}" style="text-align: center;">
+            <p:column  style="text-align: center;">
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputLabel value="#{item.procesoRecaudacionId}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
             <p:column sortBy="#{item.procesoRecaudacionNombre}" filterBy="#{item.procesoRecaudacionNombre}">

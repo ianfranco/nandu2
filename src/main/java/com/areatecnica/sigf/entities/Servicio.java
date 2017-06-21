@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @EntityListeners({AuditListener.class})
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s")
+    @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s"), 
+    @NamedQuery(name = "Servicio.findAllByCuenta", query = "SELECT s FROM Servicio s WHERE s.servicioIdCuenta = :idCuenta")
     , @NamedQuery(name = "Servicio.findByServicioId", query = "SELECT s FROM Servicio s WHERE s.servicioId = :servicioId")
     , @NamedQuery(name = "Servicio.findByServicioNumeroServicio", query = "SELECT s FROM Servicio s WHERE s.servicioNumeroServicio = :servicioNumeroServicio")
     , @NamedQuery(name = "Servicio.findByServicioLongitud", query = "SELECT s FROM Servicio s WHERE s.servicioLongitud = :servicioLongitud")
@@ -101,6 +102,9 @@ public class Servicio implements Serializable {
     private List<ControlServicio> controlServicioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "horarioServicioIdServicio")
     private List<HorarioServicio> horarioServicioList;
+    @JoinColumn(name = "servicio_id_cuenta", referencedColumnName = "cuenta_id")
+    @ManyToOne(optional = false)
+    private Cuenta servicioIdCuenta;
     @JoinColumn(name = "servicio_id_grupo_servicio", referencedColumnName = "grupo_servicio_id")
     @ManyToOne(optional = false)
     private GrupoServicio servicioIdGrupoServicio;
@@ -261,6 +265,14 @@ public class Servicio implements Serializable {
         this.servicioIdTerminal = servicioIdTerminal;
     }
 
+    public Cuenta getServicioIdCuenta() {
+        return servicioIdCuenta;
+    }
+
+    public void setServicioIdCuenta(Cuenta servicioIdCuenta) {
+        this.servicioIdCuenta = servicioIdCuenta;
+    }
+    
     public UnidadNegocio getServicioIdUnidad() {
         return servicioIdUnidad;
     }

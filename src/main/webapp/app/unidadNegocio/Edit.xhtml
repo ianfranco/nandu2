@@ -42,7 +42,7 @@
 
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{unidadNegocioController.save}" value="#{bundle.Save}" update="display,:UnidadNegocioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnidadNegocioEditDialog'));">
+                    <p:commandButton actionListener="#{unidadNegocioController.save}" value="#{bundle.Save}" update="display,:UnidadNegocioListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UnidadNegocioEditDialog'));">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('UnidadNegocioEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

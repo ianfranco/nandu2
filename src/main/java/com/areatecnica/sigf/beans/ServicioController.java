@@ -1,8 +1,8 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.Servicio;
 import com.areatecnica.sigf.controllers.ServicioFacade;
+import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -34,6 +34,8 @@ public class ServicioController extends AbstractController<Servicio> {
     public ServicioController() {
         // Inform the Abstract parent controller of the concrete Servicio Entity
         super(Servicio.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Servicio.findAllByCuenta");
     }
 
     /**
@@ -138,4 +140,14 @@ public class ServicioController extends AbstractController<Servicio> {
             servicioIdUnidadController.setSelected(this.getSelected().getServicioIdUnidad());
         }
     }
+
+    @Override
+    public Servicio prepareCreate(ActionEvent event) {
+        super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+        this.getSelected().setServicioIdCuenta(this.getUserCount());
+        this.getSelected().setServicioFechaIngreso(new Date());
+        return getSelected();
+    }
+    
+    
 }

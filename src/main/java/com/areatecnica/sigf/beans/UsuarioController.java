@@ -35,6 +35,8 @@ public class UsuarioController extends AbstractController<Usuario> {
     public UsuarioController() {
         // Inform the Abstract parent controller of the concrete Usuario Entity
         super(Usuario.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Usuario.findAllByCuenta");
     }
 
     /**

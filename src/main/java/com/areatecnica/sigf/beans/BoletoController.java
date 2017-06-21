@@ -31,6 +31,8 @@ public class BoletoController extends AbstractController<Boleto> {
     public BoletoController() {
         // Inform the Abstract parent controller of the concrete Boleto Entity
         super(Boleto.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("Boleto.findAllByCuenta");
     }
 
 

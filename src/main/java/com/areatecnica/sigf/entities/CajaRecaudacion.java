@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CajaRecaudacion.findAll", query = "SELECT c FROM CajaRecaudacion c"),
+    @NamedQuery(name = "CajaRecaudacion.findAllByCuenta", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdCuenta =:idCuenta"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionId", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionId = :cajaRecaudacionId"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionIdUsuario", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionIdUsuario = :cajaRecaudacionIdUsuario AND c.cajaRecaudacionActiva = 1"),
     @NamedQuery(name = "CajaRecaudacion.findByCajaRecaudacionNombreCaja", query = "SELECT c FROM CajaRecaudacion c WHERE c.cajaRecaudacionNombreCaja = :cajaRecaudacionNombreCaja"),
@@ -76,6 +77,9 @@ public class CajaRecaudacion implements Serializable {
     private List<CajaProceso> cajaProcesoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "resumenRecaudacionIdCaja")
     private List<ResumenRecaudacion> resumenRecaudacionList;
+    @JoinColumn(name = "caja_recaudacion_id_cuenta", referencedColumnName = "cuenta_id")
+    @ManyToOne(optional = false)
+    private Cuenta cajaRecaudacionIdCuenta;
     @JoinColumn(name = "caja_recaudacion_id_terminal", referencedColumnName = "terminal_id")
     @ManyToOne(optional = false)
     private Terminal cajaRecaudacionIdTerminal;
@@ -167,6 +171,14 @@ public class CajaRecaudacion implements Serializable {
 
     public void setResumenRecaudacionList(List<ResumenRecaudacion> resumenRecaudacionList) {
         this.resumenRecaudacionList = resumenRecaudacionList;
+    }
+    
+    public Cuenta getCajaRecaudacionIdCuenta() {
+        return cajaRecaudacionIdCuenta;
+    }
+
+    public void setCajaRecaudacionIdCuenta(Cuenta cajaRecaudacionIdCuenta) {
+        this.cajaRecaudacionIdCuenta = cajaRecaudacionIdCuenta;
     }
 
     public Terminal getCajaRecaudacionIdTerminal() {

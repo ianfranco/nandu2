@@ -35,6 +35,8 @@ public class UnidadNegocioController extends AbstractController<UnidadNegocio> {
     public UnidadNegocioController() {
         // Inform the Abstract parent controller of the concrete UnidadNegocio Entity
         super(UnidadNegocio.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("UnidadNegocio.findAllByCuenta");
     }
 
     /**

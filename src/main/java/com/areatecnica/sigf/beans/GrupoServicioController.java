@@ -33,6 +33,8 @@ public class GrupoServicioController extends AbstractController<GrupoServicio> {
     public GrupoServicioController() {
         // Inform the Abstract parent controller of the concrete GrupoServicio Entity
         super(GrupoServicio.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("GrupoServicio.findAllByCuenta");
     }
 
     /**
@@ -101,6 +103,7 @@ public class GrupoServicioController extends AbstractController<GrupoServicio> {
         super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
         this.getSelected().setGrupoServicioFechaIngreso(new Date());
         this.getSelected().setGrupoServicioIdCuenta(this.getUserCount());
+        this.getSelected().setGrupoServicioAccesoInspector(Boolean.TRUE);
         return this.getSelected();
     }
 

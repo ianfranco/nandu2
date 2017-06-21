@@ -93,6 +93,8 @@ public class Cuenta implements Serializable {
     private List<Flota> flotaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "egresoIdCuenta")
     private List<Egreso> egresoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaRecaudacionIdCuenta")
+    private List<CajaRecaudacion> cajaRecaudacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoObservacionIdCuenta")
     private List<TipoObservacion> tipoObservacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "administracionMensualIdCuenta")
@@ -136,6 +138,8 @@ public class Cuenta implements Serializable {
     @JoinColumn(name = "cuenta_id_tipo", referencedColumnName = "tipo_cuenta_id")
     @ManyToOne(optional = false)
     private TipoCuenta cuentaIdTipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servicioIdCuenta")
+    private List<Servicio> servicioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoTrabajadorIdCuenta")
     private List<TipoTrabajador> tipoTrabajadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cajaCompensacionIdCuenta")
@@ -437,6 +441,15 @@ public class Cuenta implements Serializable {
     public void setGrupoServicioList(List<GrupoServicio> grupoServicioList) {
         this.grupoServicioList = grupoServicioList;
     }
+    
+    @XmlTransient
+    public List<CajaRecaudacion> getCajaRecaudacionList() {
+        return cajaRecaudacionList;
+    }
+
+    public void setCajaRecaudacionList(List<CajaRecaudacion> cajaRecaudacionList) {
+        this.cajaRecaudacionList = cajaRecaudacionList;
+    }
 
     @XmlTransient
     public List<CompraCombustible> getCompraCombustibleList() {
@@ -498,6 +511,15 @@ public class Cuenta implements Serializable {
 
     public void setCuentaIdTipo(TipoCuenta cuentaIdTipo) {
         this.cuentaIdTipo = cuentaIdTipo;
+    }
+    
+    @XmlTransient
+    public List<Servicio> getServicioList() {
+        return servicioList;
+    }
+
+    public void setServicioList(List<Servicio> servicioList) {
+        this.servicioList = servicioList;
     }
 
     @XmlTransient

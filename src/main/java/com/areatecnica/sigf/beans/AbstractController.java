@@ -56,6 +56,8 @@ public abstract class AbstractController<T> implements Serializable {
     private Object paramItems;
     private Usuario currentUser;
     private Cuenta userCount;
+    private Boolean limitedByCuenta;
+    private String namedQuery;
 
     private enum PersistAction {
         CREATE,
@@ -72,7 +74,7 @@ public abstract class AbstractController<T> implements Serializable {
         this.itemClass = itemClass;
         listVisible = new ArrayList<Boolean>();
         listWidth = new ArrayList<>();
-
+        this.limitedByCuenta = Boolean.FALSE;
         this.currentUser = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
         this.userCount = this.currentUser.getUsuarioIdCuenta();
     }
@@ -172,6 +174,34 @@ public abstract class AbstractController<T> implements Serializable {
     }
 
     /**
+     * @return the limitedByCuenta
+     */
+    public Boolean getLimitedByCuenta() {
+        return limitedByCuenta;
+    }
+
+    /**
+     * @param limitedByCuenta the limitedByCuenta to set
+     */
+    public void setLimitedByCuenta(Boolean limitedByCuenta) {
+        this.limitedByCuenta = limitedByCuenta;
+    }
+
+    /**
+     * @return the namedQuery
+     */
+    public String getNamedQuery() {
+        return namedQuery;
+    }
+
+    /**
+     * @param namedQuery the namedQuery to set
+     */
+    public void setNamedQuery(String namedQuery) {
+        this.namedQuery = namedQuery;
+    }
+
+    /**
      *
      * @return
      */
@@ -214,7 +244,12 @@ public abstract class AbstractController<T> implements Serializable {
      */
     public Collection<T> getItems() {
         if (items == null) {
-            items = this.ejbFacade.findAll();
+            if (getLimitedByCuenta()) {
+                items = this.ejbFacade.findAllByCuenta(userCount, getNamedQuery());
+            } else {
+                items = this.ejbFacade.findAll();
+            }
+
         }
         return items;
     }

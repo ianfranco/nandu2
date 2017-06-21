@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Boleto.findAll", query = "SELECT b FROM Boleto b")
+    , @NamedQuery(name = "Boleto.findAllByCuenta", query = "SELECT b FROM Boleto b WHERE b.boletoIdCuenta = :idCuenta")
     , @NamedQuery(name = "Boleto.findByBoletoId", query = "SELECT b FROM Boleto b WHERE b.boletoId = :boletoId")
     , @NamedQuery(name = "Boleto.findByBoletoNombre", query = "SELECT b FROM Boleto b WHERE b.boletoNombre = :boletoNombre")
     , @NamedQuery(name = "Boleto.findByBoletoActivo", query = "SELECT b FROM Boleto b WHERE b.boletoActivo = :boletoActivo")
@@ -65,7 +66,7 @@ public class Boleto implements Serializable {
     private Date boletoFechaIngreso;
     @JoinColumn(name = "boleto_id_cuenta", referencedColumnName = "cuenta_id")
     @ManyToOne(optional = false)
-    private Cuenta boletoIdCuenta;    
+    private Cuenta boletoIdCuenta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "inventarioInternoIdBoleto")
     private List<InventarioInterno> inventarioInternoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "detalleCompraBoletoIdBoleto")
@@ -126,7 +127,7 @@ public class Boleto implements Serializable {
     public void setBoletoIdCuenta(Cuenta boletoIdCuenta) {
         this.boletoIdCuenta = boletoIdCuenta;
     }
-    
+
     @XmlTransient
     public List<InventarioInterno> getInventarioInternoList() {
         return inventarioInternoList;
@@ -178,5 +179,5 @@ public class Boleto implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Boleto[ boletoId=" + boletoId + " ]";
     }
-    
+
 }
