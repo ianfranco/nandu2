@@ -47,7 +47,7 @@
                                    itemLabel="#{procesoItem.procesoRecaudacionNombre}"
                                    />
                 </p:selectOneMenu>
-                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton, :GuiaListForm:datalist:printButton" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton, :GuiaListForm:datalist:printButton" styleClass="btn btn-primary" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
 
                 <h:outputLabel value="Permitir Egresos x:" style="text-align: right;"/>
@@ -231,8 +231,8 @@
 
                 <f:facet name="footer">
                     <div>
-                        <p:selectBooleanButton value="#{digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}"  onLabel="Cerrado" offLabel="En digitación" onIcon="ui-icon-check" offIcon="fa fa-download" >
-                            <p:ajax event="valueChange" listener="#{digitacionGuiaController.printResumen}" update="growl, createButton, editButton, deleteButton"/>
+                        <p:selectBooleanButton id="estadoProceso" value="#{digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" disabled="#{empty digitacionGuiaController.cajaRecaudacion}" onLabel="Cerrado" offLabel="En digitación" onIcon="ui-icon-check" offIcon="fa fa-download" >
+                            <p:ajax event="valueChange" listener="#{digitacionGuiaController.printResumen}" update="growl, createButton, editButton, viewButton, deleteButton"/>
                         </p:selectBooleanButton>
                         <p:commandButton id="createButton"  styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{digitacionGuiaController.prepareCreate}" disabled="#{empty digitacionGuiaController.cajaRecaudacion or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                         <p:commandButton id="viewButton"    styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
@@ -240,9 +240,9 @@
                         <p:commandButton id="deleteButton"  styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{digitacionGuiaController.delete}" update=":growl,datalist" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                             <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
                         </p:commandButton>
-                        <p:commandButton id="printButton" value="Print" type="button" icon="ui-icon-print" styleClass="btn btn-primary" disabled="#{empty digitacionGuiaController.cajaRecaudacion}">
+                        <p:commandButton id="printButton" value="Imprimir" type="button" icon="ui-icon-print" styleClass="btn btn-primary" disabled="#{empty digitacionGuiaController.cajaRecaudacion}">
                             <p:printer target="datalist" />
-                        </p:commandButton>                        
+                        </p:commandButton>
                     </div>                    
                 </f:facet>
 

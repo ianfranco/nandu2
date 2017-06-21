@@ -586,12 +586,17 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         this.getSelected().setEgresoGuiaList(egresoGuiaList);
         this.ejbFacade.create(this.getSelected());
 
+        if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
+            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
+            this.resumenRecaudacionFacade.edit(resumenRecaudacion);
+        }
+
         /*
          * Agrega nueva fila a la tabla
          *
          */
         LinkedHashMap auxLink = new LinkedHashMap();
-        for (EgresoGuia eg : this.getEgresoGuiaList()) {
+        for (EgresoGuia eg : this.getSelected().getEgresoGuiaList()) {
             if (eg.getEgresoGuiaIdEgreso().getEgresoObligatorio()) {
                 String key = eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso();
 
@@ -642,6 +647,11 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.ejbFacade.edit(this.getSelected());
             JsfUtil.addSuccessMessage("Se ha editado la Guia N°:" + this.getSelected().getGuiaFolio());
 
+            if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
+                this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
+                this.resumenRecaudacionFacade.edit(resumenRecaudacion);
+            }
+
             LinkedHashMap auxLink = new LinkedHashMap();
             for (EgresoGuia eg : this.getEgresoGuiaList()) {
                 if (eg.getEgresoGuiaIdEgreso().getEgresoObligatorio()) {
@@ -662,12 +672,12 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.listOfMaps.set(this.listOfMaps.indexOf(guiaLink), auxLink);
             this.setSelected(null);
 
-            for (EgresoRecaudacion eg : this.egresosResumenList) {
+            /*for (EgresoRecaudacion eg : this.egresosResumenList) {
                 eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
                 if (this.resultsTotals.contains(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
                     //this.resultsTotals.set(this.resultsTotals.indexOf(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()), decimalFormat.format(eg.getEgresoRecaudacionTotalEgreso()));
                 }
-            }
+            }*/
 
             this.resultsTotals.clear();
 
@@ -686,45 +696,52 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
         try {
             Guia auxGuia = this.getSelected();
+            this.setEgresoGuiaList(this.getSelected().getEgresoGuiaList());
+            this.ejbFacade.remove(this.getSelected().getGuiaId());
 
-            this.ejbFacade.remove(auxGuia);
+            if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
+                this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
+                this.resumenRecaudacionFacade.edit(resumenRecaudacion);
+            }
 
             this.list.remove(this.getSelected());
             JsfUtil.addSuccessMessage("Se ha eliminado la Guia N°:" + auxGuia.getGuiaFolio());
 
-            LinkedHashMap auxLink = new LinkedHashMap();
-            for (EgresoGuia eg : this.getEgresoGuiaList()) {
-                if (eg.getEgresoGuiaIdEgreso().getEgresoObligatorio()) {
-                    String key = eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso();
+            //LinkedHashMap auxLink = new LinkedHashMap();
+            /*for (EgresoGuia eg : this.getEgresoGuiaList()) {
 
-                    if (totals.containsKey(key)) {
-                        int aux = (int) totals.get(key);
-                        aux -= eg.getEgresoGuiaMonto();
-                        totals.put(key, aux);
-                    }
-                    auxLink.put(eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso(), eg.getEgresoGuiaMonto());
+                String key = eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso();
+
+                if (totals.containsKey(key)) {
+                    int aux = (int) totals.get(key);
+                    System.err.println("VVALOR TOTAL ANTES DE CAMBIAR :"+aux);
+                    aux = aux - eg.getEgresoGuiaMonto();
+                    System.err.println("VVALOR TOTAL DESPUES DE CAMBIAR :"+aux);
+                    totals.put(key, aux);
+                    System.err.println("NOMBRE:" + eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso() + " VALOR:" + eg.getEgresoGuiaMonto());
+                    //auxLink.put(eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso(), eg.getEgresoGuiaMonto());
                 }
-            }
+            }*/
 
             this.listOfMaps.remove(this.listOfMaps.indexOf(guiaLink));
             this.setSelected(null);
 
             this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
 
-            for (EgresoRecaudacion eg : this.egresosResumenList) {
+            /*for (EgresoRecaudacion eg : this.egresosResumenList) {
                 eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
                 //this.resultsTotals.set(this.resultsTotals.indexOf(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()), decimalFormat.format(eg.getEgresoRecaudacionTotalEgreso()));
-            }
+            }*/
+
             this.resultsTotals.clear();
             for (Object i : totals.values()) {
-
                 this.resultsTotals.add(decimalFormat.format((int) i));
             }
 
-            this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
+            /*this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
             this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
 
-            this.resumenRecaudacionFacade.edit(resumenRecaudacion);
+            this.resumenRecaudacionFacade.edit(resumenRecaudacion);*/
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -907,8 +924,9 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         } else {
             this.egresosResumenList = this.resumenRecaudacion.getEgresoRecaudacionList();
 
-            this.egresosResumenList.stream().forEach((eg) -> {
+            this.egresosResumenList.stream().forEach((EgresoRecaudacion eg) -> {
                 int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+                System.err.println("vañasdasd:" + val);
                 eg.setEgresoRecaudacionTotalEgreso(val);
             });
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
@@ -987,19 +1005,19 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         } else {
             JsfUtil.addSuccessMessage("Proceso Abierto");
         }
-        
-        System.err.println("TAMAÑO DE EGRESOS:"+this.egresosResumenList.size());
 
-        for(EgresoRecaudacion er: this.egresosResumenList){
-            System.err.println("EGRESO EN RECAUDACION: "+er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+        System.err.println("TAMAÑO DE EGRESOS:" + this.egresosResumenList.size());
+
+        for (EgresoRecaudacion er : this.egresosResumenList) {
+            System.err.println("EGRESO EN RECAUDACION: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
             if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
                 int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
                 er.setEgresoRecaudacionTotalEgreso(val);
             } else {
-                System.err.println("no hay VALOR POR EGRESO: "+er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+                System.err.println("no hay VALOR POR EGRESO: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
             }
         }
-        
+
         this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());

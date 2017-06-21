@@ -56,6 +56,11 @@ public abstract class AbstractFacade<T> {
         }
     }
 
+    public void remove(Integer id) {
+        T entity = getEntityManager().find(entityClass, id);
+        getEntityManager().remove(entity);
+    }
+
     public void remove(T entity) {
         try {
             if (getEntityManager().contains(entity)) {

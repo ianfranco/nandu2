@@ -85,4 +85,8 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
         }
     }
 
+    @Override
+    public void delete(Guia guia){
+        
+    }
 }

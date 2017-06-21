@@ -34,4 +34,6 @@ public interface IGuiaDao<T> extends IGenericDAO<T> {
     
     public List<Guia> findByFechaGrupoServicio(GrupoServicio grupoServicio, Date fecha);
     
+    public void delete(Guia guia);
+    
 }
