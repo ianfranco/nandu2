@@ -15,6 +15,7 @@ import com.areatecnica.sigf.entities.EgresoRecaudacion;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ResumenRecaudacion;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -63,9 +64,11 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
     private int anio;
     private int resumenTotal;
     private String resumenTotalFormat;
+    private String stringDate;
     private Calendar calendar;
     private static String pattern = "###,###.###";
     private static DecimalFormat decimalFormat = new DecimalFormat(pattern);
+    private static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates a new instance of ResumenDinerosController
@@ -282,6 +285,14 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
         this.eventModel = eventModel;
     }
 
+    public String getStringDate() {
+        return stringDate;
+    }
+
+    public void setStringDate(String stringDate) {
+        this.stringDate = stringDate;
+    }
+
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
@@ -308,6 +319,8 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
             }
             this.setResumenTotal(total);
             this.setResumenTotalFormat(decimalFormat.format(getResumenTotal()));
+            Date auxDate = event.getStartDate();
+            this.stringDate = format.format(auxDate);
         }
     }
 
