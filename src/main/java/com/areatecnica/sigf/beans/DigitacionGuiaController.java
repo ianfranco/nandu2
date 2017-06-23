@@ -20,6 +20,7 @@ import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Egreso;
+import com.areatecnica.sigf.entities.EgresoCajaRecaudacion;
 import com.areatecnica.sigf.entities.EgresoGuia;
 import com.areatecnica.sigf.entities.EgresoProcesoRecaudacion;
 import com.areatecnica.sigf.entities.EgresoRecaudacion;
@@ -678,7 +679,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                     //this.resultsTotals.set(this.resultsTotals.indexOf(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()), decimalFormat.format(eg.getEgresoRecaudacionTotalEgreso()));
                 }
             }*/
-
             this.resultsTotals.clear();
 
             for (Object i : totals.values()) {
@@ -722,7 +722,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                     //auxLink.put(eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso(), eg.getEgresoGuiaMonto());
                 }
             }*/
-
             this.listOfMaps.remove(this.listOfMaps.indexOf(guiaLink));
             this.setSelected(null);
 
@@ -732,7 +731,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
                 //this.resultsTotals.set(this.resultsTotals.indexOf(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()), decimalFormat.format(eg.getEgresoRecaudacionTotalEgreso()));
             }*/
-
             this.resultsTotals.clear();
             for (Object i : totals.values()) {
                 this.resultsTotals.add(decimalFormat.format((int) i));
@@ -742,7 +740,6 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
 
             this.resumenRecaudacionFacade.edit(resumenRecaudacion);*/
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -838,8 +835,13 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 egreso.setEgresoPorcentaje(epr.getEgresoProcesoRecaudacionPorcentaje());
                 this.egresosList.add(egreso);
             }
-        }else{
-            for()
+        } else {
+            for (EgresoCajaRecaudacion ecr : this.cajaRecaudacion.getEgresoCajaRecaudacionList()) {
+                Egreso egreso = ecr.getEgresoCajaRecaudacionIdEgreso();
+                egreso.setEgresoValorDefecto(ecr.getEgresoCajaRecaudacionValorDefecto());
+                egreso.setEgresoPorcentaje(ecr.getEgresoCajaRecaudacionPorcentaje());
+                this.egresosList.add(egreso);
+            }
         }
 
         this.guiaDao = new IGuiaDaoImpl();
