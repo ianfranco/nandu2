@@ -46,7 +46,7 @@
 
                             <p:inputNumber style="margin-left: 5px;" id="valorXRollo" value="#{registroCompraBoletoController.detalleCompraBoleto.detalleCompraBoletoTotal}" title="#{bundle.CreateDetalleCompraBoletoTitle_serie}" size="10" maxlength="5" onfocus="this.setSelectionRange(0, this.value.length)" required="true" requiredMessage="Debe ingresar el valor del rollo" decimalPlaces="0"/>
 
-                            <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{registroCompraBoletoController.addDetalleCompra}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, DetalleCompraBoletoCreateForm:totales, :growl, detalleComprasPanel">
+                            <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{registroCompraBoletoController.addDetalleCompra}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, DetalleCompraBoletoCreateForm:totales, :growl, detalleComprasPanel, DetalleCompraBoletoCreateForm:saveButton">
 
                             </p:commandButton>                        
                         </h:panelGrid>
@@ -120,7 +120,7 @@
                                 <p:inputNumber id="compraBoletoTotal" decimalPlaces="0" symbol="$" value="#{registroCompraBoletoController.selected.compraBoletoTotal}" title="#{bundle.CreateCompraBoletoTitle_compraBoletoTotal}" required="true" requiredMessage="#{bundle.CreateCompraBoletoRequiredMessage_compraBoletoTotal}" onfocus="this.setSelectionRange(0, this.value.length)"/>
                             </h:panelGroup>
                             <f:facet name="footer">
-                                <p:commandButton actionListener="#{registroCompraBoletoController.saveNew}" value="#{bundle.Save}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
+                                <p:commandButton id="saveButton" actionListener="#{registroCompraBoletoController.saveNew}" value="#{bundle.Save}" disabled="#{empty registroCompraBoletoController.selected.detalleCompraBoletoList}" update="display,:growl, :CompraBoletoCreateForm:detalle, datalist" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" >
                                     <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                                 </p:commandButton>
                                 <p:commandButton value="#{bundle.Cancel}" update="display" process="@this" immediate="true" resetValues="true"/>

@@ -190,10 +190,12 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     }
 
     public void handleBoletoChange(ActionEvent event) {
-        this.inventarioInternoList = this.inventarioInternoDao.findByBoletoEstado(this.boletoItem, Boolean.FALSE);
-        for (InventarioCaja c : this.inventarioCajaList) {
-            if (this.inventarioInternoList.contains(c.getInventarioCajaIdInventarioInterno())) {
-                this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
+        if (this.boletoItem != null) {
+            this.inventarioInternoList = this.inventarioInternoDao.findByBoletoEstado(this.boletoItem, Boolean.FALSE);
+            for (InventarioCaja c : this.inventarioCajaList) {
+                if (this.inventarioInternoList.contains(c.getInventarioCajaIdInventarioInterno())) {
+                    this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
+                }
             }
         }
     }
@@ -206,14 +208,16 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
             InventarioCaja i = new InventarioCaja();
             i.setInventarioCajaFechaIngreso(new Date());
             i.setInventarioCajaEstado(Boolean.FALSE);
-            i.setInventarioCajaIdentificador(ic.getInventarioCajaIdInventarioInterno().getInventarioInternoIdentificador());
-            i.setInventarioCajaSerie(ic.getInventarioCajaIdInventarioInterno().getInventarioInternoSerie());
-            i.getInventarioCajaIdInventarioInterno().setInventarioInternoEstado(Boolean.TRUE);
+            i.setInventarioCajaIdCaja(caja);
+            i.setInventarioCajaIdInventarioInterno(ic);
+            i.setInventarioCajaIdentificador(ic.getInventarioInternoIdentificador());
+            i.setInventarioCajaSerie(ic.getInventarioInternoSerie());
+            ic.setInventarioInternoEstado(Boolean.TRUE);
 
-            this.inventarioInternoList.remove(ic.getInventarioCajaIdInventarioInterno());
+            this.inventarioInternoList.remove(ic);
 
-            this.inventarioCajaList.add(ic);
-            ic.setInventarioCajaIdCaja(caja);
+            this.inventarioCajaList.add(i);
+
         }
 
         this.setSelected(null);

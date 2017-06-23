@@ -18,7 +18,7 @@
                         </h:outputLabel>
 
                         <h:outputLabel value="Caja" for="inventarioCajaIdCaja" />
-                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="#{bundle.EditInventarioCajaRequiredMessage_inventarioCajaIdCaja}" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="inventarioCajaIdCaja" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdCaja}" required="true" requiredMessage="Debe seleccionar la Caja Recaudación" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{cajaTerminalController.items}"
                                            var="inventarioCajaIdCajaItem"
@@ -43,7 +43,7 @@
                                 <p:ajax event="valueChange" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
                             </p:selectOneMenu>
 
-                            <p:selectCheckboxMenu label="Seleccionar..." id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" converter="omnifaces.SelectItemsConverter">
+                            <p:selectCheckboxMenu label="Seleccionar..." id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" style="margin-left: 5px;" converter="omnifaces.SelectItemsConverter" panelStyle="width:250px">
                                 <f:selectItems value="#{traspasoBoletoCajaController.inventarioInternoList}"
                                                var="inventarioCajaIdInventarioInternoItem"
                                                itemValue="#{inventarioCajaIdInventarioInternoItem}"
@@ -51,7 +51,7 @@
                                                />
                             </p:selectCheckboxMenu>
 
-                            <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno">
+                            <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno, DetalleCompraBoletoCreateForm:saveButton">
 
                             </p:commandButton>                        
                         </h:panelGrid>
@@ -112,7 +112,7 @@
                             </p:dataTable>
 
                             <f:facet name="footer">
-                                <p:commandButton actionListener="#{traspasoBoletoCajaController.saveNew}" value="#{bundle.Save}" update="display, datalist, :growl" >
+                                <p:commandButton id="saveButton" actionListener="#{traspasoBoletoCajaController.saveNew}" value="#{bundle.Save}" update="display, datalist, :growl" disabled="#{empty traspasoBoletoCajaController.inventarioCajaList}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                                     <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                                 </p:commandButton>
                                 <p:commandButton value="#{bundle.Cancel}" update="display" process="@this" immediate="true" resetValues="true"/>

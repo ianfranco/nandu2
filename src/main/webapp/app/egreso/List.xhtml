@@ -50,11 +50,11 @@
                 </div>
             </f:facet>
 
-            <p:column sortBy="#{item.egresoId}" filterBy="#{item.egresoId}">
+            <p:column>
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
-                <h:outputLabel value="#{item.egresoId}"/>
+                <h:outputLabel value="#{rowIndex+1}"/>
             </p:column>
 
 

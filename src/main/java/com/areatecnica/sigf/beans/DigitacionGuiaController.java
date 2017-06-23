@@ -838,6 +838,8 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 egreso.setEgresoPorcentaje(epr.getEgresoProcesoRecaudacionPorcentaje());
                 this.egresosList.add(egreso);
             }
+        }else{
+            for()
         }
 
         this.guiaDao = new IGuiaDaoImpl();
