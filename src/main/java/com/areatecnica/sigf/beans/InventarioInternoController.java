@@ -35,7 +35,7 @@ public class InventarioInternoController extends AbstractController<InventarioIn
     public void init() {
         super.setFacade(ejbFacade);
         this.inventarioInternoDao = new IInventarioInternoDaoImpl();
-        this.items = this.inventarioInternoDao.findByEstado(Boolean.FALSE);
+        this.items = this.inventarioInternoDao.findByEstado(Boolean.FALSE, this.getUserCount());
     }
 
     public InventarioInternoController() {

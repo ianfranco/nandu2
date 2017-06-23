@@ -1,6 +1,5 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.controllers.BoletoFacade;
 import java.util.Date;

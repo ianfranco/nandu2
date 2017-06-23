@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "InventarioCaja.findAll", query = "SELECT i FROM InventarioCaja i"),
     @NamedQuery(name = "InventarioCaja.findByInventarioCajaId", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaId = :inventarioCajaId"),
-    @NamedQuery(name = "InventarioCaja.findByInventarioCajaEstado", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado"),
+    @NamedQuery(name = "InventarioCaja.findByInventarioCajaEstado", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado AND i.inventarioCajaIdCaja.cajaRecaudacionIdCuenta = :idCuenta"),
     @NamedQuery(name = "InventarioCaja.findByInventarioCajaBoletoEstadoCaja", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaEstado = :inventarioCajaEstado AND i.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto AND i.inventarioCajaIdCaja =:inventarioCajaIdCaja"),
     @NamedQuery(name = "InventarioCaja.findByInventarioCajaSerie", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaSerie = :inventarioCajaSerie"),
     @NamedQuery(name = "InventarioCaja.findByInventarioCajaIdentificador", query = "SELECT i FROM InventarioCaja i WHERE i.inventarioCajaIdentificador = :inventarioCajaIdentificador"),

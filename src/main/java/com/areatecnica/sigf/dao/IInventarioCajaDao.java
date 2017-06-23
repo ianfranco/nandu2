@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao;
 
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import java.util.List;
 
@@ -18,6 +19,6 @@ public interface IInventarioCajaDao<T> extends IGenericDAO<T>{
     
     public List<InventarioCaja> findByBoletoEstado(CajaRecaudacion cajaRecaudacion, Boleto boleto, Boolean estado);
     
-    public List<InventarioCaja> findByEstado(Boolean estado);
+    public List<InventarioCaja> findByEstado(Boolean estado, Cuenta cuenta);
     
 }

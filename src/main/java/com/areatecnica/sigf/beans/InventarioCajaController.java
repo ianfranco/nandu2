@@ -1,9 +1,10 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
-import com.areatecnica.sigf.beans.InventarioInternoController;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.controllers.InventarioCajaFacade;
+import com.areatecnica.sigf.dao.IInventarioCajaDao;
+import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -21,6 +22,9 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     private InventarioInternoController inventarioCajaIdInventarioInternoController;
     @Inject
     private CajaRecaudacionController inventarioCajaIdCajaController;
+    
+    private List<InventarioCaja> items;
+    private IInventarioCajaDao inventarioCajaDao;
 
     /**
      * Initialize the concrete InventarioCaja controller bean. The
@@ -30,6 +34,23 @@ public class InventarioCajaController extends AbstractController<InventarioCaja>
     @Override
     public void init() {
         super.setFacade(ejbFacade);
+        this.inventarioCajaDao = new IInventarioCajaDaoImpl();
+        this.setItems((List<InventarioCaja>) this.inventarioCajaDao.findByEstado(Boolean.FALSE, this.getUserCount()));
+    }
+
+    /**
+     * @return the items
+     */
+    @Override
+    public List<InventarioCaja> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<InventarioCaja> items) {
+        this.items = items;
     }
 
     public InventarioCajaController() {

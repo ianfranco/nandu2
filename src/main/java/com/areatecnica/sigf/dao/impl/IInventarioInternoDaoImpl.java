@@ -7,6 +7,7 @@ package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IInventarioInternoDao;
 import com.areatecnica.sigf.entities.Boleto;
+import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.InventarioInterno;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -27,9 +28,9 @@ public class IInventarioInternoDaoImpl extends GenericDAOImpl<InventarioInterno>
     }
 
     @Override
-    public List<InventarioInterno> findByEstado(Boolean estado) {
+    public List<InventarioInterno> findByEstado(Boolean estado, Cuenta cuenta) {
         try {
-            return this.entityManager.createNamedQuery("InventarioInterno.findByInventarioInternoEstado").setParameter("inventarioInternoEstado", estado).getResultList();
+            return this.entityManager.createNamedQuery("InventarioInterno.findByInventarioInternoEstado").setParameter("inventarioInternoEstado", estado).setParameter("idCuenta", cuenta).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

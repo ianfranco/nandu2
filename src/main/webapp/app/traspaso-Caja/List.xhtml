@@ -43,15 +43,13 @@
                                 <p:ajax event="valueChange" update="inventarioCajaIdInventarioInterno" listener="#{traspasoBoletoCajaController.handleBoletoChange(event)}" global="false"/>
                             </p:selectOneMenu>
 
-                            <p:selectOneMenu id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.selected.inventarioCajaIdInventarioInterno}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" converter="omnifaces.SelectItemsConverter">
-                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <p:selectCheckboxMenu label="Seleccionar..." id="inventarioCajaIdInventarioInterno" value="#{traspasoBoletoCajaController.inventarioCajaSelectedItems}" required="true" requiredMessage="Debe seleccionar el boleto del inventario" converter="omnifaces.SelectItemsConverter">
                                 <f:selectItems value="#{traspasoBoletoCajaController.inventarioInternoList}"
                                                var="inventarioCajaIdInventarioInternoItem"
                                                itemValue="#{inventarioCajaIdInventarioInternoItem}"
                                                itemLabel="#{inventarioCajaIdInventarioInternoItem.inventarioInternoIdentificador}#{inventarioCajaIdInventarioInternoItem.inventarioInternoSerie}"
                                                />
-
-                            </p:selectOneMenu>
+                            </p:selectCheckboxMenu>
 
                             <p:commandButton style="margin-left: 5px;" value="Agregar" id="addButton" actionListener="#{traspasoBoletoCajaController.addInventarioCaja(event)}" styleClass="ui-priority-primary" update="DetalleCompraBoletoCreateForm:datalist, :growl, detalleTraspasoPanel, inventarioCajaIdInventarioInterno">
 

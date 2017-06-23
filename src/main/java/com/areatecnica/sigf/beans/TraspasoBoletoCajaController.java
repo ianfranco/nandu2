@@ -43,6 +43,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     private InventarioInterno inventarioInterno;
     private List<InventarioInterno> inventarioInternoList;
     private List<InventarioCaja> inventarioCajaList;
+    private List<InventarioInterno> inventarioCajaSelectedItems;
     private IInventarioInternoDao inventarioInternoDao;
 
     private enum PersistAction {
@@ -129,6 +130,20 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     }
 
     /**
+     * @return the inventarioCajaSelectedItems
+     */
+    public List<InventarioInterno> getInventarioCajaSelectedItems() {
+        return inventarioCajaSelectedItems;
+    }
+
+    /**
+     * @param inventarioCajaSelectedItems the inventarioCajaSelectedItems to set
+     */
+    public void setInventarioCajaSelectedItems(List<InventarioInterno> inventarioCajaSelectedItems) {
+        this.inventarioCajaSelectedItems = inventarioCajaSelectedItems;
+    }
+
+    /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
@@ -187,19 +202,23 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 
         CajaRecaudacion caja = this.getSelected().getInventarioCajaIdCaja();
 
-        this.getSelected().setInventarioCajaFechaIngreso(new Date());
-        this.getSelected().setInventarioCajaEstado(Boolean.FALSE);
-        this.getSelected().setInventarioCajaIdentificador(this.getSelected().getInventarioCajaIdInventarioInterno().getInventarioInternoIdentificador());
-        this.getSelected().setInventarioCajaSerie(this.getSelected().getInventarioCajaIdInventarioInterno().getInventarioInternoSerie());
-        this.getSelected().getInventarioCajaIdInventarioInterno().setInventarioInternoEstado(Boolean.TRUE);
+        for (InventarioInterno ic : this.inventarioCajaSelectedItems) {
+            InventarioCaja i = new InventarioCaja();
+            i.setInventarioCajaFechaIngreso(new Date());
+            i.setInventarioCajaEstado(Boolean.FALSE);
+            i.setInventarioCajaIdentificador(ic.getInventarioCajaIdInventarioInterno().getInventarioInternoIdentificador());
+            i.setInventarioCajaSerie(ic.getInventarioCajaIdInventarioInterno().getInventarioInternoSerie());
+            i.getInventarioCajaIdInventarioInterno().setInventarioInternoEstado(Boolean.TRUE);
 
-        this.inventarioInternoList.remove(this.getSelected().getInventarioCajaIdInventarioInterno());
+            this.inventarioInternoList.remove(ic.getInventarioCajaIdInventarioInterno());
 
-        this.inventarioCajaList.add(this.getSelected());
+            this.inventarioCajaList.add(ic);
+            ic.setInventarioCajaIdCaja(caja);
+        }
 
         this.setSelected(null);
         this.setSelected(new InventarioCaja());
-        this.getSelected().setInventarioCajaIdCaja(caja);
+        //this.getSelected().setInventarioCajaIdCaja(caja);
 
     }
 
@@ -209,8 +228,8 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
             try {
                 if (persistAction != PersistAction.DELETE) {
 
-                    for (InventarioCaja i : this.inventarioCajaList) {                        
-                        this.ejbFacade.edit(i);                        
+                    for (InventarioCaja i : this.inventarioCajaList) {
+                        this.ejbFacade.edit(i);
                     }
 
                     this.inventarioCajaList = null;

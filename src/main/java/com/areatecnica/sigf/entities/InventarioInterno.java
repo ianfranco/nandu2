@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "InventarioInterno.findByInventarioInternoBoletoEstado", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoIdBoleto = :inventarioInternoIdBoleto AND  i.inventarioInternoEstado =:inventarioInternoEstado"),
     @NamedQuery(name = "InventarioInterno.findByInventarioInternoSerie", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoSerie = :inventarioInternoSerie"),
     @NamedQuery(name = "InventarioInterno.findByInventarioInternoIdentificador", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoIdentificador = :inventarioInternoIdentificador"),
-    @NamedQuery(name = "InventarioInterno.findByInventarioInternoEstado", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoEstado = :inventarioInternoEstado"),
+    @NamedQuery(name = "InventarioInterno.findByInventarioInternoEstado", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoEstado = :inventarioInternoEstado AND i.inventarioInternoIdBoleto.boletoIdCuenta=:idCuenta"),
     @NamedQuery(name = "InventarioInterno.findByInventarioInternoFechaIngreso", query = "SELECT i FROM InventarioInterno i WHERE i.inventarioInternoFechaIngreso = :inventarioInternoFechaIngreso")})
 public class InventarioInterno implements Serializable {
 

@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Trabajador.findAll", query = "SELECT t FROM Trabajador t"), 
-    @NamedQuery(name = "Trabajador.findAllByCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorId:=idCuenta")
+    @NamedQuery(name = "Trabajador.findAllByCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorIdCuenta =:idCuenta")
     , @NamedQuery(name = "Trabajador.findByTrabajadorId", query = "SELECT t FROM Trabajador t WHERE t.trabajadorId = :trabajadorId")
     , @NamedQuery(name = "Trabajador.findByTrabajadorCodigo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCodigo = :trabajadorCodigo")
     , @NamedQuery(name = "Trabajador.findByTrabajadorRut", query = "SELECT t FROM Trabajador t WHERE t.trabajadorRut = :trabajadorRut")
@@ -163,6 +163,9 @@ public class Trabajador implements Serializable {
     @JoinColumn(name = "trabajador_id_comuna", referencedColumnName = "comuna_id")
     @ManyToOne(optional = false)
     private Comuna trabajadorIdComuna;
+    @JoinColumn(name = "trabajador_id_cuenta", referencedColumnName = "cuenta_id")
+    @ManyToOne(optional = false)
+    private Cuenta trabajadorIdCuenta;
     @JoinColumn(name = "trabajador_id_tipo_cotizacion_trabajador", referencedColumnName = "tipo_cotizacion_trabajador_id")
     @ManyToOne(optional = false)
     private TipoCotizacionTrabajador trabajadorIdTipoCotizacionTrabajador;
@@ -485,6 +488,14 @@ public class Trabajador implements Serializable {
         this.trabajadorIdComuna = trabajadorIdComuna;
     }
 
+    public Cuenta getTrabajadorIdCuenta() {
+        return trabajadorIdCuenta;
+    }
+
+    public void setTrabajadorIdCuenta(Cuenta trabajadorIdCuenta) {
+        this.trabajadorIdCuenta = trabajadorIdCuenta;
+    }
+    
     public TipoCotizacionTrabajador getTrabajadorIdTipoCotizacionTrabajador() {
         return trabajadorIdTipoCotizacionTrabajador;
     }
