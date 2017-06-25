@@ -192,11 +192,9 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
     public void handleBoletoChange(ActionEvent event) {
         if (this.boletoItem != null) {
             this.inventarioInternoList = this.inventarioInternoDao.findByBoletoEstado(this.boletoItem, Boolean.FALSE);
-            for (InventarioCaja c : this.inventarioCajaList) {
-                if (this.inventarioInternoList.contains(c.getInventarioCajaIdInventarioInterno())) {
-                    this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
-                }
-            }
+            this.inventarioCajaList.stream().filter((c) -> (this.inventarioInternoList.contains(c.getInventarioCajaIdInventarioInterno()))).forEachOrdered((c) -> {
+                this.inventarioInternoList.remove(c.getInventarioCajaIdInventarioInterno());
+            });
         }
     }
 
@@ -204,7 +202,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
 
         CajaRecaudacion caja = this.getSelected().getInventarioCajaIdCaja();
 
-        for (InventarioInterno ic : this.inventarioCajaSelectedItems) {
+        this.inventarioCajaSelectedItems.forEach((ic) -> {
             InventarioCaja i = new InventarioCaja();
             i.setInventarioCajaFechaIngreso(new Date());
             i.setInventarioCajaEstado(Boolean.FALSE);
@@ -217,8 +215,7 @@ public class TraspasoBoletoCajaController extends AbstractController<InventarioC
             this.inventarioInternoList.remove(ic);
 
             this.inventarioCajaList.add(i);
-
-        }
+        });
 
         this.setSelected(null);
         this.setSelected(new InventarioCaja());
