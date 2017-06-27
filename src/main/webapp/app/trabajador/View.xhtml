@@ -12,120 +12,137 @@
 
             <h:form id="TrabajadorViewForm">
 
-                <h:panelGroup id="display">
-                    <p:tabView id="TrabajadorTabView">
+                <h:panelGroup id="display" rendered="#{trabajadorController.selected!=null}">
+                    <p:accordionPanel style="width: 830px">
+                        <p:tab title="General">
+                            <p:panelGrid columns="4" columnClasses="column, , column, " style="width: 800px">
+                                <p:outputLabel value="Código" for="trabajadorCodigo" />
+                                <p:outputLabel id="trabajadorCodigo" value="#{trabajadorController.selected.trabajadorCodigo}" title="#{bundle.CreateTrabajadorTitle_trabajadorCodigo}"/>
 
-                        <p:tab id="TrabajadorTab1" title="#{bundle.TabHeaderPrefix} 1">
-                            <p:panelGrid columns="2" columnClasses="column" rendered="#{trabajadorController.selected != null}">
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorId}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorId}" title="#{bundle.ViewTrabajadorTitle_trabajadorId}"/>
+                                <p:outputLabel value="Rut" for="trabajadorRut" />
+                                <p:outputLabel id="trabajadorRut" value="#{trabajadorController.selected.trabajadorRut}" title="#{bundle.CreateTrabajadorTitle_trabajadorRut}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorCodigo}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorCodigo}" title="#{bundle.ViewTrabajadorTitle_trabajadorCodigo}"/>
+                                <p:outputLabel value="Nombres" for="trabajadorNombres" />
+                                <p:outputLabel id="trabajadorNombres" value="#{trabajadorController.selected.trabajadorNombres}" title="#{bundle.CreateTrabajadorTitle_trabajadorNombres}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorRut}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorRut}" title="#{bundle.ViewTrabajadorTitle_trabajadorRut}"/>
+                                <p:outputLabel value="Ap.Paterno" for="trabajadorApellidoPaterno" />
+                                <p:outputLabel id="trabajadorApellidoPaterno" value="#{trabajadorController.selected.trabajadorApellidoPaterno}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorNombres}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorNombres}" title="#{bundle.ViewTrabajadorTitle_trabajadorNombres}"/>
+                                <p:outputLabel value="Ap.Materno" for="trabajadorApellidoMaterno" />
+                                <p:outputLabel id="trabajadorApellidoMaterno" value="#{trabajadorController.selected.trabajadorApellidoMaterno}" title="#{bundle.CreateTrabajadorTitle_trabajadorApellidoMaterno}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorApellidoPaterno}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorApellidoPaterno}" title="#{bundle.ViewTrabajadorTitle_trabajadorApellidoPaterno}"/>
+                                <p:outputLabel value="F.Nacimiento" for="trabajadorFechaNacimiento" />
+                                <p:outputLabel id="trabajadorFechaNacimiento" value="#{trabajadorController.selected.trabajadorFechaNacimiento}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorApellidoMaterno}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorApellidoMaterno}" title="#{bundle.ViewTrabajadorTitle_trabajadorApellidoMaterno}"/>
+                                <p:outputLabel value="Nacionalidad" for="trabajadorNacionalidad" />
+                                <h:panelGroup>
+                                    <p:selectOneButton id="trabajadorNacionalidad" value="#{trabajadorController.selected.trabajadorNacionalidad}" disabled="true">
+                                        <f:selectItem itemLabel="Chileno" itemValue="#{true}"  />
+                                        <f:selectItem itemLabel="Extranjero" itemValue="#{false}" />
+                                    </p:selectOneButton>
+                                </h:panelGroup>                                
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorFechaNacimiento}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorFechaNacimiento}" title="#{bundle.ViewTrabajadorTitle_trabajadorFechaNacimiento}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy" />
-                                </h:outputText>
+                                <p:outputLabel value="Sexo" for="trabajadorSexo" />
+                                <p:selectOneButton id="trabajadorSexo" value="#{trabajadorController.selected.trabajadorSexo}" disabled="true" >
+                                    <f:selectItem itemLabel="Hombre" itemValue="#{true}"/>
+                                    <f:selectItem itemLabel="Mujer" itemValue="#{false}"/>
+                                </p:selectOneButton>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorNacionalidad}"/>
-                                <h:selectBooleanCheckbox id="trabajadorNacionalidad" value="#{trabajadorController.selected.trabajadorNacionalidad}" title="#{bundle.EditTrabajadorTitle_trabajadorNacionalidad}"  disabled="true"/>
+                                <p:outputLabel value="Estado Civil" for="trabajadorIdEstadoCivil" />
+                                <p:outputLabel id="trabajadorIdEstadoCivil" value="#{trabajadorController.selected.trabajadorIdEstadoCivil.estadoCivilNombre}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorSexo}"/>
-                                <h:selectBooleanCheckbox id="trabajadorSexo" value="#{trabajadorController.selected.trabajadorSexo}" title="#{bundle.EditTrabajadorTitle_trabajadorSexo}"  disabled="true"/>
+                                <p:outputLabel value="Comuna" for="trabajadorIdComuna" />
+                                <p:outputLabel id="trabajadorIdComuna" value="#{trabajadorController.selected.trabajadorIdComuna.comunaNombre}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorCalle}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorCalle}" title="#{bundle.ViewTrabajadorTitle_trabajadorCalle}"/>
+                                <p:outputLabel value="Dirección" for="trabajadorNumeroDireccion" />
+                                <p:outputLabel id="trabajadorNumeroDireccion" value="#{trabajadorController.selected.trabajadorNumeroDireccion}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorNumeroDireccion}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorNumeroDireccion}" title="#{bundle.ViewTrabajadorTitle_trabajadorNumeroDireccion}"/>
+                                <p:outputLabel value="Calle" for="trabajadorCalle" />
+                                <p:outputLabel id="trabajadorCalle" value="#{trabajadorController.selected.trabajadorCalle}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorTelefonoFijo}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorTelefonoFijo}" title="#{bundle.ViewTrabajadorTitle_trabajadorTelefonoFijo}"/>
+                                <p:outputLabel value="Teléfono N° 1" for="trabajadorTelefonoFijo" />
+                                <p:outputLabel id="trabajadorTelefonoFijo" value="#{trabajadorController.selected.trabajadorTelefonoFijo}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorCelular}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorCelular}" title="#{bundle.ViewTrabajadorTitle_trabajadorCelular}"/>
+                                <p:outputLabel value="Teléfono N° 2" for="trabajadorCelular" />
+                                <p:outputLabel id="trabajadorCelular" value="#{trabajadorController.selected.trabajadorCelular}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorEmail}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorEmail}" title="#{bundle.ViewTrabajadorTitle_trabajadorEmail}"/>
+                                <p:outputLabel value="Email" for="trabajadorEmail" />
+                                <p:outputLabel id="trabajadorEmail" value="#{trabajadorController.selected.trabajadorEmail}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorNumeroCargas}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorNumeroCargas}" title="#{bundle.ViewTrabajadorTitle_trabajadorNumeroCargas}"/>
+                                <p:outputLabel value="Cesantía" for="trabajadorCesantia" />
+                                <p:selectBooleanCheckbox id="trabajadorCesantia" value="#{trabajadorController.selected.trabajadorCesantia}" disabled="true" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorMontoSalud}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorMontoSalud}" title="#{bundle.ViewTrabajadorTitle_trabajadorMontoSalud}"/>
+                                <p:outputLabel value="Regimen Previsional" for="trabajadorRegimen" />
+                                <p:selectOneButton id="trabajadorRegimen" value="#{trabajadorController.regimenPrevisional}"  disabled="true" >
+                                    <f:selectItem itemLabel="Afp" itemValue="#{0}"  />
+                                    <f:selectItem itemLabel="IPS" itemValue="#{1}"  />
+                                    <f:selectItem itemLabel="Jubilado" itemValue="#{2}"  />                                    
+                                </p:selectOneButton>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorFormaPagoApv}"/>
-                                <h:selectBooleanCheckbox id="trabajadorFormaPagoApv" value="#{trabajadorController.selected.trabajadorFormaPagoApv}" title="#{bundle.EditTrabajadorTitle_trabajadorFormaPagoApv}"  disabled="true"/>
+                                <p:outputLabel value="Previsión" for="trabajadorIdInstitucionPrevision" />
+                                <p:outputLabel id="trabajadorIdInstitucionPrevision" value="#{trabajadorController.selected.trabajadorIdInstitucionPrevision.institucionPrevisionNombre}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorMontoApv}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorMontoApv}" title="#{bundle.ViewTrabajadorTitle_trabajadorMontoApv}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorSubsidioJoven}"/>
-                                <h:selectBooleanCheckbox id="trabajadorSubsidioJoven" value="#{trabajadorController.selected.trabajadorSubsidioJoven}" title="#{bundle.EditTrabajadorTitle_trabajadorSubsidioJoven}"  disabled="true"/>
+                                <p:outputLabel value="Fonasa?:" for="trabajadorFonasa"/>
+                                <p:selectBooleanCheckbox id="trabajadorFonasa" value="#{trabajadorController.selected.trabajadorFonasa}" disabled="true"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorCesantia}"/>
-                                <h:selectBooleanCheckbox id="trabajadorCesantia" value="#{trabajadorController.selected.trabajadorCesantia}" title="#{bundle.EditTrabajadorTitle_trabajadorCesantia}"  disabled="true"/>
+                                <p:outputLabel value="Sindicato" for="trabajadorIdSindicato" />
+                                <p:outputLabel id="trabajadorIdSindicato" value="#{trabajadorController.selected.trabajadorIdSindicato.sindicatoNombre}" />
+
+                                <p:outputLabel value="Terminal" for="trabajadorIdTerminal" />
+                                <p:outputLabel id="trabajadorIdTerminal" value="#{trabajadorController.selected.trabajadorIdTerminal.terminalNombre}" />
+
+                                <p:outputLabel value="Centro de Costo" for="trabajadorIdCentroCosto" />
+                                <p:outputLabel id="trabajadorIdCentroCosto" value="#{trabajadorController.selected.trabajadorIdCentroCosto.centroCostoNombre}"/>
+
+                                <p:outputLabel value="Forma de Pago" for="trabajadorIdFormaPago" />
+                                <p:outputLabel id="trabajadorIdFormaPago" value="#{trabajadorController.selected.trabajadorIdFormaPago.formaPagoNombre}" />
+
+                                <p:outputLabel value="Estado" for="trabajadorContratado" />
+                                <p:selectBooleanCheckbox id="trabajadorContratado" value="#{trabajadorController.selected.trabajadorContratado}" disabled="true"/>
 
                             </p:panelGrid>
                         </p:tab>
-                        <p:tab id="TrabajadorTab2" title="#{bundle.TabHeaderPrefix} 2">
-                            <p:panelGrid columns="2" columnClasses="column" rendered="#{trabajadorController.selected != null}">
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorContratado}"/>
-                                <h:selectBooleanCheckbox id="trabajadorContratado" value="#{trabajadorController.selected.trabajadorContratado}" title="#{bundle.EditTrabajadorTitle_trabajadorContratado}"  disabled="true"/>
+                        <p:tab title="Ahorro Voluntario">
+                            <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                                <p:outputLabel value="¿Posee APV?" for="poseeAhorro"/>
+                                <p:selectBooleanCheckbox id="poseeAhorro" value="#{trabajadorController.selected.trabajadorPoseeApv}" disabled="true"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorFechaIngreso}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorFechaIngreso}" title="#{bundle.ViewTrabajadorTitle_trabajadorFechaIngreso}">
-                                    <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                                </h:outputText>
+                                <p:outputLabel value="Institución Apv" for="trabajadorIdInstitucionApv" />
+                                <p:outputLabel id="trabajadorIdInstitucionApv" value="#{trabajadorController.selected.trabajadorIdInstitucionApv}" />
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdInstitucionApv}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdInstitucionApv.institucionApvId}"/>
+                                <p:outputLabel value="Pago" for="trabajadorFormaPagoApv" />
+                                <p:selectOneButton id="trabajadorFormaPagoApv" value="#{trabajadorController.selected.trabajadorFormaPagoApv}" disabled="true">
+                                    <f:selectItem itemLabel="Directo" itemValue="#{true}"  />
+                                    <f:selectItem itemLabel="Indirecto" itemValue="#{false}"  />
+                                </p:selectOneButton>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdAsignacionFamiliar}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdAsignacionFamiliar.asignacionFamiliarId}"/>
+                                <p:outputLabel value="Monto Apv" for="trabajadorMontoApv" />
+                                <p:outputLabel id="trabajadorMontoApv" value="#{trabajadorController.selected.trabajadorMontoApv}" />
+                            </p:panelGrid>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdCentroCosto}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdCentroCosto.centroCostoId}"/>
+                        </p:tab>
+                        <p:tab title="Isapre">
+                            <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                                <p:outputLabel value="Salud" for="trabajadorIdInstitucionSalud" />
+                                <p:outputLabel id="trabajadorIdInstitucionSalud" value="#{trabajadorController.selected.trabajadorIdInstitucionSalud.institucionSaludNombre}" />
+                            </p:panelGrid>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdComuna}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdComuna.comunaId}"/>
+                        </p:tab>
+                        <p:tab title="Cargas Familiares">
+                            <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                                <p:outputLabel value="N° Cargas" for="trabajadorNumeroCargas" />
+                                <p:outputLabel id="trabajadorNumeroCargas" value="#{trabajadorController.selected.trabajadorNumeroCargas}" title="#{bundle.CreateTrabajadorTitle_trabajadorNumeroCargas}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdTipoCotizacionTrabajador}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdTipoCotizacionTrabajador.tipoCotizacionTrabajadorId}"/>
+                                <p:outputLabel value="Asignación Familiar" for="trabajadorIdAsignacionFamiliar" />
+                                <p:outputLabel id="trabajadorIdAsignacionFamiliar" value="#{trabajadorController.selected.trabajadorIdAsignacionFamiliar.asignacionFamiliarTramo}"/>
 
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdEstadoCivil}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdEstadoCivil.estadoCivilId}"/>
-
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdFormaPago}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdFormaPago.formaPagoId}"/>
-
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdInstitucionPrevision}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdInstitucionPrevision.institucionPrevisionId}"/>
-
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdInstitucionSalud}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdInstitucionSalud.institucionSaludId}"/>
-
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdSindicato}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdSindicato.sindicatoId}"/>
-
-                                <h:outputText value="#{bundle.ViewTrabajadorLabel_trabajadorIdTerminal}"/>
-                                <h:outputText value="#{trabajadorController.selected.trabajadorIdTerminal.terminalId}"/>
                             </p:panelGrid>
                         </p:tab>
-                    </p:tabView>
+                        <p:tab title="Banco">
+
+                        </p:tab>
+                    </p:accordionPanel>
                     <p:commandButton value="#{bundle.Close}" onclick="PF('TrabajadorViewDialog').hide()"/>
                 </h:panelGroup>
 

@@ -1006,8 +1006,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     public void printResumen() {
         if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
             JsfUtil.addSuccessMessage("Proceso Cerrado");
+            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.TRUE);
         } else {
             JsfUtil.addSuccessMessage("Proceso Abierto");
+            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
         }
 
         System.err.println("TAMAÑO DE EGRESOS:" + this.egresosResumenList.size());
@@ -1017,15 +1019,19 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
                 int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
                 er.setEgresoRecaudacionTotalEgreso(val);
+                System.err.println("valor x egreso:"+val);
             } else {
                 System.err.println("no hay VALOR POR EGRESO: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
             }
         }
 
-        this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
+        //this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
-        this.resumenRecaudacionFacade.edit(resumenRecaudacion);
+        
+        this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
+        
+        this.resumenRecaudacionDao.edit(this.resumenRecaudacion);
     }
 
     private class PorcentajeHelper {

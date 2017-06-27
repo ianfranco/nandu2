@@ -1,15 +1,21 @@
 package com.areatecnica.sigf.beans;
 
-import com.areatecnica.sigf.beans.AbstractController;
+import com.areatecnica.sigf.beans.util.JsfUtil;
 import com.areatecnica.sigf.entities.Trabajador;
 import com.areatecnica.sigf.controllers.TrabajadorFacade;
+import com.areatecnica.sigf.dao.ITrabajadorDao;
+import com.areatecnica.sigf.dao.impl.ITrabajadorDaoImpl;
+import com.ibm.icu.util.Calendar;
 import java.util.Date;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
+import org.joda.time.DateTime;
 
 @Named(value = "trabajadorController")
 @ViewScoped
@@ -42,6 +48,13 @@ public class TrabajadorController extends AbstractController<Trabajador> {
     @Inject
     private TerminalController trabajadorIdTerminalController;
 
+    private ITrabajadorDao trabajadorDao;
+
+    private Date minFechaNacimiento;
+    private Date maxFechaNacimiento;
+    private int regimenPrevisional;
+    private boolean errorTrabajador;
+
     /**
      * Initialize the concrete Trabajador controller bean. The
      * AbstractController requires the EJB Facade object for most operations.
@@ -57,6 +70,9 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         super(Trabajador.class);
         this.setLimitedByCuenta(Boolean.TRUE);
         this.setNamedQuery("Trabajador.findAllByCuenta");
+        Calendar calendar = Calendar.getInstance();
+        DateTime dateTime = new DateTime(calendar.get(Calendar.YEAR) - 20, 1, 1, 0, 0);
+        this.minFechaNacimiento = dateTime.toDate();
     }
 
     /**
@@ -75,6 +91,20 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         trabajadorIdInstitucionSaludController.setSelected(null);
         trabajadorIdSindicatoController.setSelected(null);
         trabajadorIdTerminalController.setSelected(null);
+    }
+
+    /**
+     * @return the regimenPrevisional
+     */
+    public int getRegimenPrevisional() {
+        return regimenPrevisional;
+    }
+
+    /**
+     * @param regimenPrevisional the regimenPrevisional to set
+     */
+    public void setRegimenPrevisional(int regimenPrevisional) {
+        this.regimenPrevisional = regimenPrevisional;
     }
 
     /**
@@ -206,8 +236,6 @@ public class TrabajadorController extends AbstractController<Trabajador> {
             trabajadorIdTipoCotizacionTrabajadorController.setSelected(this.getSelected().getTrabajadorIdTipoCotizacionTrabajador());
         }
     }
-
-    
 
     /**
      * Sets the "selected" attribute of the EstadoCivil controller in order to
@@ -437,8 +465,78 @@ public class TrabajadorController extends AbstractController<Trabajador> {
     @Override
     public Trabajador prepareCreate(ActionEvent event) {
         super.prepareCreate(event); //To change body of generated methods, choose Tools | Templates.
+
+        this.trabajadorDao = new ITrabajadorDaoImpl();
+
+        this.getSelected().setTrabajadorCodigo(this.trabajadorDao.findMaxCodigoCuenta(this.getUserCount()));
         this.getSelected().setTrabajadorFechaIngreso(new Date());
+        this.getSelected().setTrabajadorIdCuenta(this.getUserCount());
+        this.getSelected().setTrabajadorNacionalidad(Boolean.TRUE);
+        this.getSelected().setTrabajadorSexo(Boolean.TRUE);
+        this.getSelected().setTrabajadorSubsidioJoven(Boolean.FALSE);
+        this.getSelected().setTrabajadorIdEstadoCivil(this.trabajadorIdEstadoCivilController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdAsignacionFamiliar(this.trabajadorIdAsignacionFamiliarController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdCentroCosto(this.trabajadorIdCentroCostoController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdComuna(this.trabajadorIdComunaController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdSindicato(this.trabajadorIdSindicatoController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdTipoCotizacionTrabajador(this.trabajadorIdTipoCotizacionTrabajadorController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdInstitucionSalud(this.trabajadorIdInstitucionSaludController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorFechaNacimiento(this.minFechaNacimiento);
+        this.getSelected().setTrabajadorIdInstitucionApv(this.trabajadorIdInstitucionApvController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorIdInstitucionPrevision(this.trabajadorIdInstitucionPrevisionController.getItems().stream().findFirst().get());
+        this.getSelected().setTrabajadorFormaPagoApv(Boolean.TRUE);
+        this.getSelected().setTrabajadorMontoApv(0);
+        this.getSelected().setTrabajadorFonasa(Boolean.TRUE);
+        this.getSelected().setTrabajadorPoseeApv(Boolean.FALSE);
+        this.getSelected().setTrabajadorPoseeCargas(Boolean.FALSE);
+        this.getSelected().setTrabajadorPoseeCuentaBanco(Boolean.FALSE);
+        this.getSelected().setTrabajadorJubilado(Boolean.FALSE);
+        this.getSelected().setTrabajadorIps(Boolean.FALSE);
+        this.setRegimenPrevisional(0);
         return this.getSelected();
     }
 
+    @Override
+    public void save(ActionEvent event) {
+        super.save(event); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveNew(ActionEvent event) {
+
+        if (!errorTrabajador) {
+            switch (this.regimenPrevisional) {
+                case 0:
+                    break;
+                case 1:
+                    this.getSelected().setTrabajadorJubilado(Boolean.TRUE);
+                    this.getSelected().setTrabajadorIps(Boolean.FALSE);
+                    this.getSelected().setTrabajadorIdInstitucionPrevision(this.trabajadorIdInstitucionPrevisionController.getItems().stream().findFirst().get());
+                    break;
+                case 2:
+                    this.getSelected().setTrabajadorIps(Boolean.TRUE);
+                    this.getSelected().setTrabajadorJubilado(Boolean.FALSE);
+                    this.getSelected().setTrabajadorIdInstitucionPrevision(this.trabajadorIdInstitucionPrevisionController.getItems().stream().findFirst().get());
+                    break;
+                default:
+                    break;
+            }
+            super.saveNew(event);
+        } else {
+            JsfUtil.addErrorMessage("El rut se enncuentra registrado");
+        }
+    }
+
+    public void findTrabajador() {
+        if (!this.getSelected().getTrabajadorRut().equals("")) {
+            FacesMessage msg = new FacesMessage("Rut ya registrado", "Error de validación");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+
+            Trabajador auxTrabajador = this.trabajadorDao.findByTrabajadorRutAndCuenta(this.getSelected().getTrabajadorRut(), this.getUserCount());
+            if (auxTrabajador != null) {
+                this.errorTrabajador = Boolean.TRUE;
+                JsfUtil.addErrorMessage("Rut ya registrado");
+            }
+        }
+    }
 }

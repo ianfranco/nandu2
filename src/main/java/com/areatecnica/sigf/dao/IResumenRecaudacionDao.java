@@ -22,4 +22,6 @@ public interface IResumenRecaudacionDao<T> extends IGenericDAO<T> {
     public ResumenRecaudacion findByCajaProcesoDate(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion, Date fechaRecaudacion);
     
     public List<ResumenRecaudacion> findAllByCajaProcesoBetweenDates(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion, Date from, Date to);
+    
+    public void edit(ResumenRecaudacion resumen);
 }

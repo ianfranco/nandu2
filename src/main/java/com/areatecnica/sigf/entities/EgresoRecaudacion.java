@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -47,7 +48,7 @@ public class EgresoRecaudacion implements Serializable {
     @ManyToOne(optional = false)
     private Egreso egresoRecaudacionIdEgreso;
     @JoinColumn(name = "egreso_recaudacion_id_resumen", referencedColumnName = "resumen_recaudacion_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch=FetchType.LAZY)
     private ResumenRecaudacion egresoRecaudacionIdResumen;
 
     public EgresoRecaudacion() {

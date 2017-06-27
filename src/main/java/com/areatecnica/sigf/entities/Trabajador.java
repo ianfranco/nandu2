@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,30 +39,33 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "trabajador", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Trabajador.findAll", query = "SELECT t FROM Trabajador t"), 
-    @NamedQuery(name = "Trabajador.findAllByCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorIdCuenta =:idCuenta")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorId", query = "SELECT t FROM Trabajador t WHERE t.trabajadorId = :trabajadorId")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorCodigo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCodigo = :trabajadorCodigo")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorRut", query = "SELECT t FROM Trabajador t WHERE t.trabajadorRut = :trabajadorRut")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorNombres", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNombres = :trabajadorNombres")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorApellidoPaterno", query = "SELECT t FROM Trabajador t WHERE t.trabajadorApellidoPaterno = :trabajadorApellidoPaterno")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorApellidoMaterno", query = "SELECT t FROM Trabajador t WHERE t.trabajadorApellidoMaterno = :trabajadorApellidoMaterno")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorFechaNacimiento", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFechaNacimiento = :trabajadorFechaNacimiento")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorNacionalidad", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNacionalidad = :trabajadorNacionalidad")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorSexo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorSexo = :trabajadorSexo")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorCalle", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCalle = :trabajadorCalle")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorNumeroDireccion", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNumeroDireccion = :trabajadorNumeroDireccion")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorTelefonoFijo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorTelefonoFijo = :trabajadorTelefonoFijo")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorCelular", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCelular = :trabajadorCelular")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorEmail", query = "SELECT t FROM Trabajador t WHERE t.trabajadorEmail = :trabajadorEmail")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorNumeroCargas", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNumeroCargas = :trabajadorNumeroCargas")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorMontoSalud", query = "SELECT t FROM Trabajador t WHERE t.trabajadorMontoSalud = :trabajadorMontoSalud")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorFormaPagoApv", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFormaPagoApv = :trabajadorFormaPagoApv")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorMontoApv", query = "SELECT t FROM Trabajador t WHERE t.trabajadorMontoApv = :trabajadorMontoApv")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorSubsidioJoven", query = "SELECT t FROM Trabajador t WHERE t.trabajadorSubsidioJoven = :trabajadorSubsidioJoven")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorCesantia", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCesantia = :trabajadorCesantia")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorContratado", query = "SELECT t FROM Trabajador t WHERE t.trabajadorContratado = :trabajadorContratado")
-    , @NamedQuery(name = "Trabajador.findByTrabajadorFechaIngreso", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFechaIngreso = :trabajadorFechaIngreso")})
+    @NamedQuery(name = "Trabajador.findAll", query = "SELECT t FROM Trabajador t"),
+    @NamedQuery(name = "Trabajador.findAllByCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorIdCuenta =:idCuenta"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorId", query = "SELECT t FROM Trabajador t WHERE t.trabajadorId = :trabajadorId"),
+    @NamedQuery(name = "Trabajador.findMaxCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorIdCuenta = :trabajadorIdCuenta ORDER BY t.trabajadorCodigo DESC"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorIdTerminal", query = "SELECT t FROM Trabajador t WHERE t.trabajadorIdTerminal = :trabajadorIdTerminal"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorCodigo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCodigo = :trabajadorCodigo"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorRut", query = "SELECT t FROM Trabajador t WHERE t.trabajadorRut = :trabajadorRut"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorRutAndCuenta", query = "SELECT t FROM Trabajador t WHERE t.trabajadorRut = :trabajadorRut AND t.trabajadorIdCuenta =:trabajadorIdCuenta"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorNombres", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNombres = :trabajadorNombres"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorApellidoPaterno", query = "SELECT t FROM Trabajador t WHERE t.trabajadorApellidoPaterno = :trabajadorApellidoPaterno"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorApellidoMaterno", query = "SELECT t FROM Trabajador t WHERE t.trabajadorApellidoMaterno = :trabajadorApellidoMaterno"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorFechaNacimiento", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFechaNacimiento = :trabajadorFechaNacimiento"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorNacionalidad", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNacionalidad = :trabajadorNacionalidad"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorSexo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorSexo = :trabajadorSexo"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorCalle", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCalle = :trabajadorCalle"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorNumeroDireccion", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNumeroDireccion = :trabajadorNumeroDireccion"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorTelefonoFijo", query = "SELECT t FROM Trabajador t WHERE t.trabajadorTelefonoFijo = :trabajadorTelefonoFijo"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorCelular", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCelular = :trabajadorCelular"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorEmail", query = "SELECT t FROM Trabajador t WHERE t.trabajadorEmail = :trabajadorEmail"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorNumeroCargas", query = "SELECT t FROM Trabajador t WHERE t.trabajadorNumeroCargas = :trabajadorNumeroCargas"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorMontoSalud", query = "SELECT t FROM Trabajador t WHERE t.trabajadorMontoSalud = :trabajadorMontoSalud"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorFormaPagoApv", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFormaPagoApv = :trabajadorFormaPagoApv"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorMontoApv", query = "SELECT t FROM Trabajador t WHERE t.trabajadorMontoApv = :trabajadorMontoApv"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorSubsidioJoven", query = "SELECT t FROM Trabajador t WHERE t.trabajadorSubsidioJoven = :trabajadorSubsidioJoven"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorCesantia", query = "SELECT t FROM Trabajador t WHERE t.trabajadorCesantia = :trabajadorCesantia"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorContratado", query = "SELECT t FROM Trabajador t WHERE t.trabajadorContratado = :trabajadorContratado"),
+    @NamedQuery(name = "Trabajador.findByTrabajadorFechaIngreso", query = "SELECT t FROM Trabajador t WHERE t.trabajadorFechaIngreso = :trabajadorFechaIngreso")})
 public class Trabajador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -138,6 +142,30 @@ public class Trabajador implements Serializable {
     @Column(name = "trabajador_fecha_ingreso")
     @Temporal(TemporalType.TIMESTAMP)
     private Date trabajadorFechaIngreso;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_fonasa")
+    private boolean trabajadorFonasa;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_jubilado")
+    private boolean trabajadorJubilado;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_posee_cargas")
+    private boolean trabajadorPoseeCargas;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_posee_apv")
+    private boolean trabajadorPoseeApv;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_posee_cuenta_banco")
+    private boolean trabajadorPoseeCuentaBanco;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "trabajador_ips")
+    private boolean trabajadorIps;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "haberTrabajadorIdTrabajador")
     private List<HaberTrabajador> haberTrabajadorList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cargaTrabajadorIdTrabajador")
@@ -156,6 +184,7 @@ public class Trabajador implements Serializable {
     private InstitucionApv trabajadorIdInstitucionApv;
     @JoinColumn(name = "trabajador_id_asignacion_familiar", referencedColumnName = "asignacion_familiar_id")
     @ManyToOne(optional = false)
+    @OrderBy("asignacionFamiliarId DESC")
     private AsignacionFamiliar trabajadorIdAsignacionFamiliar;
     @JoinColumn(name = "trabajador_id_centro_costo", referencedColumnName = "centro_costo_id")
     @ManyToOne(optional = false)
@@ -495,7 +524,7 @@ public class Trabajador implements Serializable {
     public void setTrabajadorIdCuenta(Cuenta trabajadorIdCuenta) {
         this.trabajadorIdCuenta = trabajadorIdCuenta;
     }
-    
+
     public TipoCotizacionTrabajador getTrabajadorIdTipoCotizacionTrabajador() {
         return trabajadorIdTipoCotizacionTrabajador;
     }
@@ -652,6 +681,54 @@ public class Trabajador implements Serializable {
         this.observacionTrabajadorList = observacionTrabajadorList;
     }
 
+    public boolean getTrabajadorFonasa() {
+        return trabajadorFonasa;
+    }
+
+    public void setTrabajadorFonasa(boolean trabajadorFonasa) {
+        this.trabajadorFonasa = trabajadorFonasa;
+    }
+
+    public boolean getTrabajadorJubilado() {
+        return trabajadorJubilado;
+    }
+
+    public void setTrabajadorJubilado(boolean trabajadorJubilado) {
+        this.trabajadorJubilado = trabajadorJubilado;
+    }
+
+    public boolean getTrabajadorPoseeCargas() {
+        return trabajadorPoseeCargas;
+    }
+
+    public void setTrabajadorPoseeCargas(boolean trabajadorPoseeCargas) {
+        this.trabajadorPoseeCargas = trabajadorPoseeCargas;
+    }
+
+    public boolean getTrabajadorPoseeApv() {
+        return trabajadorPoseeApv;
+    }
+
+    public void setTrabajadorPoseeApv(boolean trabajadorPoseeApv) {
+        this.trabajadorPoseeApv = trabajadorPoseeApv;
+    }
+
+    public boolean getTrabajadorPoseeCuentaBanco() {
+        return trabajadorPoseeCuentaBanco;
+    }
+
+    public void setTrabajadorPoseeCuentaBanco(boolean trabajadorPoseeCuentaBanco) {
+        this.trabajadorPoseeCuentaBanco = trabajadorPoseeCuentaBanco;
+    }
+
+    public boolean getTrabajadorIps() {
+        return this.trabajadorIps;
+    }
+
+    public void setTrabajadorIps(Boolean trabajadorIps) {
+        this.trabajadorIps = trabajadorIps;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -676,5 +753,5 @@ public class Trabajador implements Serializable {
     public String toString() {
         return "com.areatecnica.sigf.entities.Trabajador[ trabajadorId=" + trabajadorId + " ]";
     }
-    
+
 }

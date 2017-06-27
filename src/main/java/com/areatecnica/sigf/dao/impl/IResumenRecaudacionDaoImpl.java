@@ -12,6 +12,7 @@ import com.areatecnica.sigf.entities.ResumenRecaudacion;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
+import javax.persistence.TransactionRequiredException;
 
 /**
  *
@@ -22,7 +23,7 @@ public class IResumenRecaudacionDaoImpl extends GenericDAOImpl<ResumenRecaudacio
     @Override
     public ResumenRecaudacion findByCajaProcesoDate(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion, Date fechaRecaudacion) {
         try {
-            return (ResumenRecaudacion)this.entityManager.createNamedQuery("ResumenRecaudacion.findByCajaProcesoDate").setParameter("resumenRecaudacionIdCaja", cajaRecaudacion).setParameter("resumenRecaudacionIdProceso", procesoRecaudacion).setParameter("resumenRecaudacionFecha", fechaRecaudacion).getSingleResult();
+            return (ResumenRecaudacion) this.entityManager.createNamedQuery("ResumenRecaudacion.findByCajaProcesoDate").setParameter("resumenRecaudacionIdCaja", cajaRecaudacion).setParameter("resumenRecaudacionIdProceso", procesoRecaudacion).setParameter("resumenRecaudacionFecha", fechaRecaudacion).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }
@@ -34,6 +35,15 @@ public class IResumenRecaudacionDaoImpl extends GenericDAOImpl<ResumenRecaudacio
             return this.entityManager.createNamedQuery("ResumenRecaudacion.findAllByCajaProcesoBetweenDates").setParameter("resumenRecaudacionIdCaja", cajaRecaudacion).setParameter("resumenRecaudacionIdProceso", procesoRecaudacion).setParameter("from", from).setParameter("to", to).getResultList();
         } catch (NoResultException ne) {
             return null;
+        }
+    }
+
+    @Override
+    public void edit(ResumenRecaudacion resumen) {
+        try {
+            this.entityManager.merge(resumen);
+        } catch (IllegalArgumentException | TransactionRequiredException ne) {
+            System.err.println("ERROR AAAAAAAAA");
         }
     }
 
