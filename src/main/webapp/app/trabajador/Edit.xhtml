@@ -135,7 +135,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Terminal" for="trabajadorIdTerminal" />
-                                <p:selectOneMenu id="trabajadorIdTerminal" value="#{trabajadorController.selected.trabajadorIdTerminal}" required="true" requiredMessage="#{bundle.CreateTrabajadorRequiredMessage_trabajadorIdTerminal}" converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="trabajadorIdTerminal" value="#{trabajadorController.selected.trabajadorIdTerminal}" required="true" requiredMessage="Debe seleccionar el Termninal" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{terminalController.items}"
                                                    var="trabajadorIdTerminalItem"
@@ -145,7 +145,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Centro de Costo" for="trabajadorIdCentroCosto" />
-                                <p:selectOneMenu id="trabajadorIdCentroCosto" value="#{trabajadorController.selected.trabajadorIdCentroCosto}" required="true" requiredMessage="#{bundle.CreateTrabajadorRequiredMessage_trabajadorIdCentroCosto}" converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="trabajadorIdCentroCosto" value="#{trabajadorController.selected.trabajadorIdCentroCosto}" required="true" requiredMessage="Debe seleccionar el Centro de Costo" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{centroCostoController.items}"
                                                    var="trabajadorIdCentroCostoItem"
@@ -155,7 +155,7 @@
                                 </p:selectOneMenu>
 
                                 <p:outputLabel value="Forma de Pago" for="trabajadorIdFormaPago" />
-                                <p:selectOneMenu id="trabajadorIdFormaPago" value="#{trabajadorController.selected.trabajadorIdFormaPago}" required="true" requiredMessage="#{bundle.CreateTrabajadorRequiredMessage_trabajadorIdFormaPago}" converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="trabajadorIdFormaPago" value="#{trabajadorController.selected.trabajadorIdFormaPago}" required="true" requiredMessage="Debe seleccionar la Forma de Pago" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{formaPagoController.items}"
                                                    var="trabajadorIdFormaPagoItem"
@@ -163,9 +163,6 @@
                                                    itemLabel="#{trabajadorIdFormaPagoItem.formaPagoNombre}"
                                                    />
                                 </p:selectOneMenu>
-
-                                <p:outputLabel value="Estado" for="trabajadorContratado" />
-                                <p:selectBooleanCheckbox id="trabajadorContratado" value="#{trabajadorController.selected.trabajadorContratado}" />
 
                             </p:panelGrid>
                         </p:tab>
@@ -235,7 +232,7 @@
 
                         </p:tab>
                     </p:accordionPanel>
-                    <p:commandButton actionListener="#{trabajadorController.save}" value="#{bundle.Save}" update="display,:TrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TrabajadorEditDialog'));">
+                    <p:commandButton actionListener="#{trabajadorController.save}" value="#{bundle.Save}" update="display,:TrabajadorListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TrabajadorEditDialog'));">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('TrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

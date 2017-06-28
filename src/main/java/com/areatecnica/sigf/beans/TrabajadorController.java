@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import org.joda.time.DateTime;
 
@@ -492,6 +491,7 @@ public class TrabajadorController extends AbstractController<Trabajador> {
         this.getSelected().setTrabajadorPoseeCuentaBanco(Boolean.FALSE);
         this.getSelected().setTrabajadorJubilado(Boolean.FALSE);
         this.getSelected().setTrabajadorIps(Boolean.FALSE);
+        this.getSelected().setTrabajadorContratado(Boolean.FALSE);
         this.setRegimenPrevisional(0);
         return this.getSelected();
     }
@@ -536,6 +536,8 @@ public class TrabajadorController extends AbstractController<Trabajador> {
             if (auxTrabajador != null) {
                 this.errorTrabajador = Boolean.TRUE;
                 JsfUtil.addErrorMessage("Rut ya registrado");
+            }else{
+                this.errorTrabajador = Boolean.FALSE;
             }
         }
     }

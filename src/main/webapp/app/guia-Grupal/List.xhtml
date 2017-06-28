@@ -7,16 +7,19 @@
                 xmlns:p="http://primefaces.org/ui"
                 >
 
-    <h:form id="GuiaListForm" class="form-height">
+    <p:panel>
+        <f:facet name="header">
+            Registro de Guías
+        </f:facet>
 
-        <p:panel>
-            <f:facet name="header">
-                Registro de Guías
-            </f:facet>
-            <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
+        <h:form id="selector">
+            <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+                <p:outputLabel value="Fecha"/>
+                <p:calendar id="fecha" value="#{guiaGrupalController.fecha}" mindate="#{guiaGrupalController.fechaMin}" maxdate="#{guiaGrupalController.fechaMax}" />
+
                 <p:outputLabel value="Folio Inicial"/>
                 <p:inputNumber id="folioInicial" decimalPlaces="0" value="#{guiaGrupalController.folioInicio}" required="true" requiredMessage="Debe ingresar el Folio"/>
-                
+
                 <h:outputLabel value="Grupo/Servicio" for="busIdGrupoServicio" />
                 <p:selectOneMenu id="busIdGrupoServicio" value="#{guiaGrupalController.grupoServicio}" required="true" requiredMessage="Debe seleccionar el Grupo/Servicio" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
@@ -27,9 +30,24 @@
                                    />
                 </p:selectOneMenu>
 
+                <p:outputLabel value="Copiar Anterior" />
+                <h:panelGroup>
+                    <p:panelGrid columns="4">
+                        <p:outputLabel value="Conductor" />
+                        <p:selectBooleanCheckbox value="#{guiaGrupalController.mantenerEstado}"/>
+
+                        <p:outputLabel value="Estado" />
+                        <p:selectBooleanCheckbox value="#{guiaGrupalController.mantenerEstado}"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+
+
+
                 <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton" style="width:120px" actionListener="#{guiaGrupalController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
             </p:panelGrid>
+        </h:form>
+        <h:form id="GuiaListForm" class="form-height">
 
             <p:dataTable id="datalist"
                          value="#{guiaGrupalController.items}"
@@ -83,7 +101,7 @@
                     <f:facet name="header">
                         <h:outputText value="Folio"/>
                     </f:facet>
-                    <p:inputNumber value="#{item.guiaFolio}" decimalPlaces="0"/>
+                    <p:inputNumber value="#{item.guiaFolio}" decimalPlaces="0" size="15"/>
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador.trabajadorCodigo}" filterBy="#{item.guiaIdTrabajador.trabajadorCodigo}">
@@ -108,8 +126,24 @@
                     <h:outputLabel id="guiaIdTrabajadorNombre" value="#{item.guiaIdTrabajador.trabajadorApellidoPaterno} #{item.guiaIdTrabajador.trabajadorNombres}"/>
                 </p:column>
 
+                <p:column sortBy="#{item.guiaIdEstado}" filterBy="#{item.guiaIdEstado}">
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <p:selectOneMenu id="guiaIdEstado" value="#{item.guiaIdEstado}" required="true" requiredMessage="Debe seleccionar el Estado" converter="omnifaces.SelectItemsConverter">
+                        <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                        <f:selectItems value="#{estadoGuiaController.items}"
+                                       var="guiaIdEstado"
+                                       itemValue="#{guiaIdEstado}"
+                                       itemLabel="#{guiaIdEstado.estadoGuiaNombre}"
+                                       />
+                    </p:selectOneMenu>
+                </p:column>
+
                 <f:facet name="footer">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{guiaGrupalController.prepareCreate}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaGrupalController.grupoServicio}"/>
+                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="Guardar" actionListener="#{guiaGrupalController.saveNew}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaGrupalController.grupoServicio}" update="datalist, growl">
+                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                    </p:commandButton>                    
                     <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty guiaGrupalController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
                     <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaGrupalController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
@@ -117,8 +151,8 @@
                 </f:facet>
 
             </p:dataTable>
-        </p:panel>
-        <ui:include src="/confirmation.xhtml"/>
-    </h:form>
 
+            <ui:include src="/confirmation.xhtml"/>
+        </h:form>
+    </p:panel>
 </ui:composition>

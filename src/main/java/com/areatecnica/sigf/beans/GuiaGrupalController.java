@@ -27,6 +27,7 @@ import com.areatecnica.sigf.entities.SerieBoletoGuia;
 import com.areatecnica.sigf.entities.TarifaGrupoServicio;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.models.SerieBoletoGuiaDataModel;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,9 +79,12 @@ public class GuiaGrupalController extends AbstractController<Guia> {
     private Guia auxGuia;
     private GrupoServicio grupoServicio;
     private Date fecha;
+    private Date fechaMin;
+    private Date fechaMax;
     private String formatFecha;
     private int folioInicio;
     private final static SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+    private Boolean mantenerEstado;
 
     /**
      * Initialize the concrete Guia controller bean. The AbstractController
@@ -110,6 +114,11 @@ public class GuiaGrupalController extends AbstractController<Guia> {
         this.grupoServicioDao = new IGrupoServicioDaoImpl();
         this.setGrupoServicioList((List<GrupoServicio>) this.grupoServicioDao.findByTerminal(this.getCurrentUser().getUsuarioIdTerminal()));
         //this.setBusesList(busesProceso(this.procesoRecaudacion));
+
+        DateTime time = new DateTime();
+        this.fechaMin = new Date();
+        this.fechaMax = time.plusDays(1).toDate();
+        this.fecha = this.fechaMax;
     }
 
     public GuiaGrupalController() {
@@ -188,6 +197,34 @@ public class GuiaGrupalController extends AbstractController<Guia> {
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
+    }
+
+    /**
+     * @return the fechaMin
+     */
+    public Date getFechaMin() {
+        return fechaMin;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFechaMin(Date fechaMin) {
+        this.fechaMin = fechaMin;
+    }
+
+    /**
+     * @return the fechaMax
+     */
+    public Date getFechaMax() {
+        return fechaMax;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFechaMax(Date fechaMax) {
+        this.fechaMax = fechaMax;
     }
 
     /**
@@ -301,7 +338,21 @@ public class GuiaGrupalController extends AbstractController<Guia> {
     public void setAuxGuia(Guia auxGuia) {
         this.auxGuia = auxGuia;
     }
-    
+
+    /**
+     * @return the mantenerEstado
+     */
+    public Boolean getMantenerEstado() {
+        return mantenerEstado;
+    }
+
+    /**
+     * @param mantenerEstado the auxGuia to set
+     */
+    public void setMantenerEstado(Boolean mantenerEstado) {
+        this.mantenerEstado = mantenerEstado;
+    }
+
     public int getFolioInicio() {
         return folioInicio;
     }
@@ -433,14 +484,18 @@ public class GuiaGrupalController extends AbstractController<Guia> {
 
     @Override
     public void saveNew(ActionEvent event) {
-        if (this.getSelected() != null) {
-            this.getSelected().setSerieBoletoGuiaList(this.boletoGuiaList);
-            this.ejbFacade.create(this.getSelected());
+        if (!this.getItems().isEmpty()) {
+
+            for (Guia g : this.items) {
+                this.ejbFacade.create(g);
+            }
+            int tamaño = this.items.size();
+            this.items = new ArrayList<>();
+
+            JsfUtil.addSuccessMessage("Se han creado " + tamaño + " Guías");
+        }else{
+            JsfUtil.addErrorMessage("Debe generar las guías");
         }
-        this.items.add(this.getSelected());
-        this.boletoGuiaList = null;
-        JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.getSelected().getGuiaIdBus().getBusNumero() + " " + this.getSelected().getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
-        this.setSelected(prepareCreate(event));
 
     }
 
@@ -452,9 +507,13 @@ public class GuiaGrupalController extends AbstractController<Guia> {
         this.busDao = new IBusDaoImpl();
         this.busesList = this.busDao.findByGrupoServicio(this.grupoServicio);
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
+        this.guiaDao = new IGuiaDaoImpl();
+
         CajaRecaudacion c = this.cajaRecaudacionDao.findById(1);
+
         this.setItems(new ArrayList<>());
         for (Bus b : this.busesList) {
+
             Guia g = new Guia();
             g.setGuiaFecha(new Date());
             g.setGuiaFolio(folioInicio);
@@ -463,6 +522,14 @@ public class GuiaGrupalController extends AbstractController<Guia> {
             g.setGuiaIdCajaTerminal(c);
             g.setGuiaIdCuenta(this.getUserCount());
             folioInicio++;
+
+            Guia aux = this.guiaDao.findLastGuiaByBusFecha(b, fecha);
+
+            if (aux != null) {
+                g.setGuiaIdEstado(aux.getGuiaIdEstado());
+                g.setGuiaIdTrabajador(aux.getGuiaIdTrabajador());
+            }
+
             this.getItems().add(g);
         }
     }
@@ -565,7 +632,5 @@ public class GuiaGrupalController extends AbstractController<Guia> {
         this.busDao = new IBusDaoImpl();
         return this.busDao.findByProceso(procesoRecaudacion);
     }
-
-    
 
 }

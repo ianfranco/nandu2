@@ -39,9 +39,9 @@ public class IResumenRecaudacionDaoImpl extends GenericDAOImpl<ResumenRecaudacio
     }
 
     @Override
-    public void edit(ResumenRecaudacion resumen) {
+    public void editar(ResumenRecaudacion resumen) {
         try {
-            this.entityManager.merge(resumen);
+            this.entityManager.persist(resumen);
         } catch (IllegalArgumentException | TransactionRequiredException ne) {
             System.err.println("ERROR AAAAAAAAA");
         }

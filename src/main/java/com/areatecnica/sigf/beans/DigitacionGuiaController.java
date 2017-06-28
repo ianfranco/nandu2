@@ -1031,7 +1031,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         
         this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
         
-        this.resumenRecaudacionDao.edit(this.resumenRecaudacion);
+        this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);
     }
 
     private class PorcentajeHelper {
