@@ -21,8 +21,17 @@
                         <h:outputText value="Nombre"/>
                         <h:outputText value="#{estadoGuiaController.selected.estadoGuiaNombre}" title="#{bundle.ViewEstadoGuiaTitle_estadoGuiaNombre}"/>
 
+                        <p:outputLabel value="Recaudación"  />
+                        <p:selectBooleanCheckbox value="#{estadoGuiaController.selected.estadoGuiaRecaudacion}" disabled="true"/>
+
+                        <p:outputLabel value="Inspector" />
+                        <p:selectBooleanCheckbox value="#{estadoGuiaController.selected.estadoGuiaInspector}" disabled="true"/>
+
+                        <p:outputLabel value="Operativo" />
+                        <p:selectBooleanCheckbox value="#{estadoGuiaController.selected.estadoGuiaPermitirOperacion}" disabled="true"/>
+                      
                         <h:outputText value="Activo"/>
-                        <h:selectBooleanCheckbox id="estadoGuiaActivo" value="#{estadoGuiaController.selected.estadoGuiaActivo}" title="#{bundle.EditEstadoGuiaTitle_estadoGuiaActivo}" required="true" requiredMessage="#{bundle.EditEstadoGuiaRequiredMessage_estadoGuiaActivo}" disabled="true"/>
+                        <h:selectBooleanCheckbox value="#{estadoGuiaController.selected.estadoGuiaActivo}" title="#{bundle.EditEstadoGuiaTitle_estadoGuiaActivo}" required="true" requiredMessage="#{bundle.EditEstadoGuiaRequiredMessage_estadoGuiaActivo}" disabled="true"/>
 
                         <h:outputText value="#{bundle.ViewEstadoGuiaLabel_estadoGuiaFechaIngreso}"/>
                         <h:outputText value="#{estadoGuiaController.selected.estadoGuiaFechaIngreso}" title="#{bundle.ViewEstadoGuiaTitle_estadoGuiaFechaIngreso}">

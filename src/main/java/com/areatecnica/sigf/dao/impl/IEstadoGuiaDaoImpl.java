@@ -25,6 +25,15 @@ public class IEstadoGuiaDaoImpl extends GenericDAOImpl<EstadoGuia> implements IE
             return null;
         }
     }
+    
+    @Override
+    public List<EstadoGuia> findAllByCuentaInspector(Cuenta cuenta) {
+        try {
+            return this.entityManager.createNamedQuery("EstadoGuia.findAllByCuentaInspector").setParameter("estadoGuiaIdCuenta", cuenta).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public EstadoGuia findById(int id) {

@@ -18,6 +18,8 @@ public interface IEstadoGuiaDao<T> extends IGenericDAO<T> {
     
     public List<EstadoGuia> findAllByCuenta(Cuenta cuenta);
     
+    public List<EstadoGuia> findAllByCuentaInspector(Cuenta cuenta);
+    
     public EstadoGuia findById(int id);
     
 }

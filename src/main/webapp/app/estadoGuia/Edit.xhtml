@@ -20,8 +20,17 @@
                         <p:outputLabel value="Nombre:" for="estadoGuiaNombre" />
                         <p:inputText id="estadoGuiaNombre" value="#{estadoGuiaController.selected.estadoGuiaNombre}" title="#{bundle.EditEstadoGuiaTitle_estadoGuiaNombre}" required="true" requiredMessage="#{bundle.EditEstadoGuiaRequiredMessage_estadoGuiaNombre}" size="45" maxlength="45"/>
 
-                        <p:outputLabel value="Estado" for="estadoGuiaActivo" />
-                        <p:selectBooleanCheckbox id="estadoGuiaActivo" value="#{estadoGuiaController.selected.estadoGuiaActivo}" required="true" requiredMessage="#{bundle.EditEstadoGuiaRequiredMessage_estadoGuiaActivo}"/>
+                        <p:outputLabel value="Recaudación" for="estadoGuiaRecaudacion" />
+                        <p:selectBooleanCheckbox id="estadoGuiaRecaudacion" value="#{estadoGuiaController.selected.estadoGuiaRecaudacion}"/>
+
+                        <p:outputLabel value="Inspector" for="estadoGuiaInspector" />
+                        <p:selectBooleanCheckbox id="estadoGuiaInspector" value="#{estadoGuiaController.selected.estadoGuiaInspector}" />
+
+                        <p:outputLabel value="Operativo" for="estadoOperativo" />
+                        <p:selectBooleanCheckbox id="estadoOperativo" value="#{estadoGuiaController.selected.estadoGuiaPermitirOperacion}" />
+
+                        <p:outputLabel value="Activo" for="estadoGuiaActivo" />
+                        <p:selectBooleanCheckbox id="estadoGuiaActivo" value="#{estadoGuiaController.selected.estadoGuiaActivo}" />
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{estadoGuiaController.save}" value="#{bundle.Save}" update="display,:EstadoGuiaListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EstadoGuiaEditDialog'));">

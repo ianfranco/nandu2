@@ -33,7 +33,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public List<VentaBoleto> findByBus(Bus bus) {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdBus").setParameter("ventaBoletoIdBus", bus).getResultList();
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuia").setParameter("ventaBoletoIdGuia", bus).getResultList();
         } catch (NoResultException ne) {            
             return null;
         }
@@ -42,7 +42,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public List<VentaBoleto> findByBusEstado(Bus bus) {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdBusEstado").setParameter("ventaBoletoIdBus", bus).getResultList();
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaEstado").setParameter("ventaBoletoIdGuia", bus).getResultList();
         } catch (NoResultException ne) {            
             return null;
         }
@@ -51,7 +51,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public List<VentaBoleto> findByDefaultBus() {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoDefaultBus").getResultList();
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoDefaultIdGuia").getResultList();
         } catch (NoResultException ne) {            
             return null;
         }

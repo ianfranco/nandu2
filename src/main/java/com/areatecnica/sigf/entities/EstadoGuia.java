@@ -36,12 +36,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "estado_guia", catalog = "sigf_v2", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "EstadoGuia.findAll", query = "SELECT e FROM EstadoGuia e")
-    , @NamedQuery(name = "EstadoGuia.findByEstadoGuiaId", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaId = :estadoGuiaId")
-    , @NamedQuery(name = "EstadoGuia.findByEstadoGuiaIdCuenta", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaIdCuenta = :estadoGuiaIdCuenta")
-    , @NamedQuery(name = "EstadoGuia.findByEstadoGuiaNombre", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaNombre = :estadoGuiaNombre")
-    , @NamedQuery(name = "EstadoGuia.findByEstadoGuiaActivo", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaActivo = :estadoGuiaActivo")
-    , @NamedQuery(name = "EstadoGuia.findByEstadoGuiaFechaIngreso", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaFechaIngreso = :estadoGuiaFechaIngreso")})
+    @NamedQuery(name = "EstadoGuia.findAll", query = "SELECT e FROM EstadoGuia e"),
+    @NamedQuery(name = "EstadoGuia.findByEstadoGuiaId", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaId = :estadoGuiaId"),
+    @NamedQuery(name = "EstadoGuia.findByEstadoGuiaIdCuenta", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaIdCuenta = :estadoGuiaIdCuenta"),
+    @NamedQuery(name = "EstadoGuia.findAllByCuentaInspector", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaIdCuenta = :estadoGuiaIdCuenta AND e.estadoGuiaInspector = true"),
+    @NamedQuery(name = "EstadoGuia.findAllByCuentaRecaudador", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaIdCuenta = :estadoGuiaIdCuenta AND e.estadoGuiaRecaudacion = true"),
+    @NamedQuery(name = "EstadoGuia.findByEstadoGuiaNombre", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaNombre = :estadoGuiaNombre"),
+    @NamedQuery(name = "EstadoGuia.findByEstadoGuiaActivo", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaActivo = :estadoGuiaActivo"),
+    @NamedQuery(name = "EstadoGuia.findByEstadoGuiaFechaIngreso", query = "SELECT e FROM EstadoGuia e WHERE e.estadoGuiaFechaIngreso = :estadoGuiaFechaIngreso")})
 public class EstadoGuia implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,6 +61,18 @@ public class EstadoGuia implements Serializable {
     @NotNull
     @Column(name = "estado_guia_activo")
     private boolean estadoGuiaActivo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado_guia_recaudacion")
+    private boolean estadoGuiaRecaudacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado_guia_inspector")
+    private boolean estadoGuiaInspector;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estado_guia_permitir_operacion")
+    private boolean estadoGuiaPermitirOperacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "estado_guia_fecha_ingreso")
@@ -106,6 +120,30 @@ public class EstadoGuia implements Serializable {
 
     public void setEstadoGuiaActivo(boolean estadoGuiaActivo) {
         this.estadoGuiaActivo = estadoGuiaActivo;
+    }
+
+    public boolean getEstadoGuiaRecaudacion() {
+        return estadoGuiaRecaudacion;
+    }
+
+    public void setEstadoGuiaRecaudacion(boolean estadoGuiaRecaudacion) {
+        this.estadoGuiaRecaudacion = estadoGuiaRecaudacion;
+    }
+
+    public boolean getEstadoGuiaInspector() {
+        return estadoGuiaInspector;
+    }
+
+    public void setEstadoGuiaInspector(boolean estadoGuiaInspector) {
+        this.estadoGuiaInspector = estadoGuiaInspector;
+    }
+
+    public boolean getEstadoGuiaPermitirOperacion() {
+        return estadoGuiaPermitirOperacion;
+    }
+
+    public void setEstadoGuiaPermitirOperacion(boolean estadoGuiaPermitirOperacion) {
+        this.estadoGuiaPermitirOperacion = estadoGuiaPermitirOperacion;
     }
 
     public Date getEstadoGuiaFechaIngreso() {

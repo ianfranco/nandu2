@@ -13,9 +13,9 @@
         </f:facet>
 
         <h:form id="selector">
-            <p:panelGrid columns="9" style="width: 100%;margin-bottom: 10px;">
+            <p:panelGrid columns="11" style="width: 100%;margin-bottom: 10px;">
                 <p:outputLabel value="Fecha"/>
-                <p:calendar id="fecha" value="#{guiaGrupalController.fecha}" mindate="#{guiaGrupalController.fechaMin}" maxdate="#{guiaGrupalController.fechaMax}" />
+                <p:calendar id="fecha" pattern="dd/MM/yy" value="#{guiaGrupalController.fecha}" mindate="#{guiaGrupalController.fechaMin}" maxdate="#{guiaGrupalController.fechaMax}" />
 
                 <p:outputLabel value="Folio Inicial"/>
                 <p:inputNumber id="folioInicial" decimalPlaces="0" value="#{guiaGrupalController.folioInicio}" required="true" requiredMessage="Debe ingresar el Folio"/>
@@ -30,17 +30,19 @@
                                    />
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Copiar Anterior" />
+                <p:outputLabel value="Datos previos" />
                 <h:panelGroup>
                     <p:panelGrid columns="4">
                         <p:outputLabel value="Conductor" />
-                        <p:selectBooleanCheckbox value="#{guiaGrupalController.mantenerEstado}"/>
+                        <p:selectBooleanCheckbox value="#{guiaGrupalController.mantenerConductor}"/>
 
                         <p:outputLabel value="Estado" />
                         <p:selectBooleanCheckbox value="#{guiaGrupalController.mantenerEstado}"/>
                     </p:panelGrid>
                 </h:panelGroup>
-
+                
+                <p:outputLabel value="Deshabilitar Folio" for="deshabilitarFolio"/>
+                <p:selectBooleanCheckbox id="deshabilitarFolio" value="#{guiaGrupalController.deshabilitarFolio}" />
 
 
                 <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton" style="width:120px" actionListener="#{guiaGrupalController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
@@ -50,11 +52,12 @@
         <h:form id="GuiaListForm" class="form-height">
 
             <p:dataTable id="datalist"
-                         value="#{guiaGrupalController.items}"
+                         value="#{guiaGrupalController.model}"
                          widgetVar="datalist"
                          var="item"
                          rowKey="#{item.guiaId}"
-                         selection="#{guiaGrupalController.selected}"                        
+                         selection="#{guiaGrupalController.selected}" 
+                         selectionMode="single"
                          emptyMessage="No se han encontrado registros"
                          rowIndexVar="rowIndex">
 
@@ -101,7 +104,7 @@
                     <f:facet name="header">
                         <h:outputText value="Folio"/>
                     </f:facet>
-                    <p:inputNumber value="#{item.guiaFolio}" decimalPlaces="0" size="15"/>
+                    <p:inputNumber value="#{item.guiaFolio}" decimalPlaces="0" size="15" disabled="#{guiaGrupalController.deshabilitarFolio}" />
                 </p:column>
 
                 <p:column sortBy="#{item.guiaIdTrabajador.trabajadorCodigo}" filterBy="#{item.guiaIdTrabajador.trabajadorCodigo}">

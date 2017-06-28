@@ -64,6 +64,34 @@
                 <h:outputLabel value="#{item.estadoGuiaNombre}"/>
             </p:column>
 
+            <p:column sortBy="#{item.estadoGuiaRecaudacion}" filterBy="#{item.estadoGuiaRecaudacion}">
+                <f:facet name="header">
+                    <h:outputText value="Recaudación"/>
+                </f:facet>
+                <p:selectBooleanCheckbox value="#{item.estadoGuiaRecaudacion}" disabled="false"/>
+            </p:column>
+            
+            <p:column sortBy="#{item.estadoGuiaInspector}" filterBy="#{item.estadoGuiaInspector}">
+                <f:facet name="header">
+                    <h:outputText value="Inspector"/>
+                </f:facet>
+                <p:selectBooleanCheckbox value="#{item.estadoGuiaInspector}" disabled="false"/>
+            </p:column>
+            
+            <p:column sortBy="#{item.estadoGuiaPermitirOperacion}" filterBy="#{item.estadoGuiaPermitirOperacion}">
+                <f:facet name="header">
+                    <h:outputText value="Operativo"/>
+                </f:facet>
+                <p:selectBooleanCheckbox value="#{item.estadoGuiaPermitirOperacion}" disabled="false"/>
+            </p:column>
+            
+            <p:column sortBy="#{item.estadoGuiaActivo}" filterBy="#{item.estadoGuiaActivo}">
+                <f:facet name="header">
+                    <h:outputText value="Activo"/>
+                </f:facet>
+                <p:selectBooleanCheckbox value="#{item.estadoGuiaActivo}" disabled="false"/>
+            </p:column>
+            
             <p:column sortBy="#{item.estadoGuiaFechaIngreso}" filterBy="#{item.estadoGuiaFechaIngreso}">
                 <f:facet name="header">
                     <h:outputText value="F.Ingreso"/>

@@ -37,10 +37,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "VentaBoleto.findAll", query = "SELECT v FROM VentaBoleto v"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdBus", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdBusEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus = :ventaBoletoIdBus AND v.ventaBoletoUtilizado = 0"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultBus", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdBus.busId = 1"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoFecha  = :ventaBoletoFecha ORDER BY v.ventaBoletoIdBus.busNumero ASC"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = :ventaBoletoIdGuia"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = :ventaBoletoIdGuia AND v.ventaBoletoUtilizado = 0"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = 1"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoFecha  = :ventaBoletoFecha ORDER BY v.ventaBoletoIdGuia.guiaIdBus.busNumero ASC"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoValorVentaBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValorVentaBoleto = :ventaBoletoValorVentaBoleto"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoRecaudado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoRecaudado = :ventaBoletoRecaudado"),
@@ -80,9 +80,9 @@ public class VentaBoleto implements Serializable {
     private Date ventaBoletoFechaIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serieBoletoGuiaIdVentaBoleto")
     private List<SerieBoletoGuia> serieBoletoGuiaList;
-    @JoinColumn(name = "venta_boleto_id_bus", referencedColumnName = "bus_id")
+    @JoinColumn(name = "venta_boleto_id_guia", referencedColumnName = "guia_id")
     @ManyToOne(optional = false)
-    private Bus ventaBoletoIdBus;
+    private Guia ventaBoletoIdGuia;
     @JoinColumn(name = "venta_boleto_id_inventario_caja", referencedColumnName = "inventario_caja_id")
     @ManyToOne(optional = false)
     private InventarioCaja ventaBoletoIdInventarioCaja;
@@ -168,12 +168,12 @@ public class VentaBoleto implements Serializable {
         this.serieBoletoGuiaList = serieBoletoGuiaList;
     }
 
-    public Bus getVentaBoletoIdBus() {
-        return ventaBoletoIdBus;
+    public Guia getVentaBoletoIdGuia() {
+        return ventaBoletoIdGuia;
     }
 
-    public void setVentaBoletoIdBus(Bus ventaBoletoIdBus) {
-        this.ventaBoletoIdBus = ventaBoletoIdBus;
+    public void setVentaBoletoIdGuia(Guia ventaBoletoIdGuia) {
+        this.ventaBoletoIdGuia = ventaBoletoIdGuia;
     }
 
     public InventarioCaja getVentaBoletoIdInventarioCaja() {

@@ -15,7 +15,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
     @Inject
     private VentaBoletoFacade ejbFacade;
     @Inject
-    private BusController ventaBoletoIdBusController;
+    private GuiaController ventaBoletoIdGuiaController;
     @Inject
     private InventarioCajaController ventaBoletoIdInventarioCajaController;
 
@@ -38,7 +38,7 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        ventaBoletoIdBusController.setSelected(null);
+        ventaBoletoIdGuiaController.setSelected(null);
         ventaBoletoIdInventarioCajaController.setSelected(null);
     }
 
@@ -48,9 +48,9 @@ public class VentaBoletoController extends AbstractController<VentaBoleto> {
      *
      * @param event Event object for the widget that triggered an action
      */
-    public void prepareVentaBoletoIdBus(ActionEvent event) {
-        if (this.getSelected() != null && ventaBoletoIdBusController.getSelected() == null) {
-            ventaBoletoIdBusController.setSelected(this.getSelected().getVentaBoletoIdBus());
+    public void prepareVentaBoletoIdGuia(ActionEvent event) {
+        if (this.getSelected() != null && ventaBoletoIdGuiaController.getSelected() == null) {
+            ventaBoletoIdGuiaController.setSelected(this.getSelected().getVentaBoletoIdGuia());
         }
     }
 

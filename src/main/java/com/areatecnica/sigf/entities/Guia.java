@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * 
+ *
  *
  * @author ianfr
  */
@@ -109,9 +109,11 @@ public class Guia implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date guiaFechaIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "serieBoletoGuiaIdGuia")
-    private List<SerieBoletoGuia> serieBoletoGuiaList;    
+    private List<SerieBoletoGuia> serieBoletoGuiaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaCombustibleIdGuia")
     private List<VentaCombustible> ventaCombustibleList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ventaBoletoIdGuia")
+    private List<VentaBoleto> ventaBoletoList;
     @JoinColumn(name = "guia_id_bus", referencedColumnName = "bus_id")
     @ManyToOne(optional = false)
     private Bus guiaIdBus;
@@ -266,6 +268,15 @@ public class Guia implements Serializable {
 
     public void setSerieBoletoGuiaList(List<SerieBoletoGuia> serieBoletoGuiaList) {
         this.serieBoletoGuiaList = serieBoletoGuiaList;
+    }
+
+    @XmlTransient
+    public List<VentaBoleto> getVentaBoletoList() {
+        return ventaBoletoList;
+    }
+
+    public void setVentaBoletoList(List<VentaBoleto> ventaBoletoList) {
+        this.ventaBoletoList = ventaBoletoList;
     }
 
     @XmlTransient

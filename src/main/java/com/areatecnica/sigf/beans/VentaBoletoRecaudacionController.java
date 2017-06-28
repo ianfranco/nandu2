@@ -38,7 +38,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     @Inject
     private VentaBoletoFacade ejbFacade;
     @Inject
-    private BusController ventaBoletoIdBusController;
+    private GuiaController ventaBoletoIdGuiaController;
     @Inject
     private InventarioCajaController ventaBoletoIdInventarioCajaController;
 
@@ -222,7 +222,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
-        ventaBoletoIdBusController.setSelected(null);
+        ventaBoletoIdGuiaController.setSelected(null);
         ventaBoletoIdInventarioCajaController.setSelected(null);
     }
 
@@ -233,8 +233,8 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
      * @param event Event object for the widget that triggered an action
      */
     public void prepareVentaBoletoIdGuia(ActionEvent event) {
-        if (this.getSelected() != null && ventaBoletoIdBusController.getSelected() == null) {
-            ventaBoletoIdBusController.setSelected(this.getSelected().getVentaBoletoIdBus());
+        if (this.getSelected() != null && ventaBoletoIdGuiaController.getSelected() == null) {
+            ventaBoletoIdGuiaController.setSelected(this.getSelected().getVentaBoletoIdGuia());
         }
     }
 
@@ -264,7 +264,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     public void saveNew(ActionEvent event) {
         this.ejbFacade.create(this.getSelected());
         this.items.add(this.getSelected());
-        JsfUtil.addSuccessMessage("Se ha registrado una venta de boleto (" + this.getSelected().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre() + ") al Bus N°: " + this.getSelected().getVentaBoletoIdBus().getBusNumero());
+        JsfUtil.addSuccessMessage("Se ha registrado una venta de boleto (" + this.getSelected().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre() + ") al Bus N°: " + this.getSelected().getVentaBoletoIdGuia().getGuiaIdBus().getBusNumero());
     }
 
     public void handleBoletoChange(ActionEvent event) {

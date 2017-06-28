@@ -55,4 +55,7 @@ public class EstadoGuiaController extends AbstractController<EstadoGuia> {
         return this.getSelected();
     }
 
+    public void resetParents() {
+
+    }
 }
