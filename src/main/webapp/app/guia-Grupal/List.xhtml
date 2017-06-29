@@ -145,11 +145,11 @@
 
                 <f:facet name="footer">
                     <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="Guardar" actionListener="#{guiaGrupalController.saveNew}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaGrupalController.grupoServicio}" update="datalist, growl">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                        <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar Guías?" icon="fa fa-warning"/>
                     </p:commandButton>                    
                     <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty guiaGrupalController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
                     <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaGrupalController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                        <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar guías?" icon="fa fa-warning"/>
                     </p:commandButton>
                 </f:facet>
 

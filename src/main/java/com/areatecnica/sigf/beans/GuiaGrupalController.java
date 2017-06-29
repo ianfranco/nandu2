@@ -527,6 +527,7 @@ public class GuiaGrupalController extends AbstractController<Guia> {
             }
             int tamaño = this.items.size();
             this.items = new ArrayList<>();
+            this.model = new GuiaGrupalDataModel(items);
 
             JsfUtil.addSuccessMessage("Se han creado " + tamaño + " Guías");
         } else {

@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoId", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoId = :ventaBoletoId"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = :ventaBoletoIdGuia"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = :ventaBoletoIdGuia AND v.ventaBoletoUtilizado = 0"),
-    @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = 1"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia.guiaId = 1"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoFecha  = :ventaBoletoFecha ORDER BY v.ventaBoletoIdGuia.guiaIdBus.busNumero ASC"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoValorVentaBoleto", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoValorVentaBoleto = :ventaBoletoValorVentaBoleto"),

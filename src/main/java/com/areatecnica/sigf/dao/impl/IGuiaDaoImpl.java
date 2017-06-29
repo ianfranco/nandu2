@@ -39,6 +39,15 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return null;
         }
     }
+    
+    @Override
+    public List<Guia> findByProcesoFechaGuia(ProcesoRecaudacion procesoRecaudacion, Date fechaGuia) {
+        try {
+            return this.entityManager.createNamedQuery("Guia.findByProcesoFechaGuia").setHint("org.hibernate.cacheMode", "IGNORE").setParameter("busIdProcesoRecaudacion", procesoRecaudacion).setParameter("guiaFecha", fechaGuia).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public Guia findByCuentaFolio(Cuenta cuenta, int folio) {

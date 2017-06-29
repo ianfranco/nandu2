@@ -13,18 +13,19 @@
             <h:form id="VentaBoletoCreateForm">
 
                 <h:panelGroup id="display" rendered="#{ventaBoletoRecaudacionController.selected != null}">
+                    <p:focus context="numeroBoleta"/>
                     <p:panelGrid columns="2" columnClasses="column">
 
                         <p:outputLabel value="N° Boleta" for="numeroBoleta" />
-                        <p:inputText id="numeroBoleta" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoNumeroBoleta}" title="#{bundle.CreateVentaBoletoTitle_ventaBoletoValorVentaBoleto}" required="true" requiredMessage="Debe ingresar el N° de Boleta"/>
-                        
+                        <p:inputNumber id="numeroBoleta" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoNumeroBoleta}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar el N° de Boleta" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
                         <p:outputLabel value="N° Bus" for="ventaBoletoIdGuia" />
-                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdBus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{ventaBoletoRecaudacionController.busesList}"
+                            <f:selectItems value="#{ventaBoletoRecaudacionController.guiaList}"
                                            var="busItem"
                                            itemValue="#{busItem}"
-                                           itemLabel="#{busItem.busNumero}"
+                                           itemLabel="#{busItem.guiaIdBus.busNumero}"
                                            />
 
                         </p:selectOneMenu>
@@ -51,8 +52,7 @@
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Valor" for="ventaBoletoValorVentaBoleto" />
-                        <p:inputText id="ventaBoletoValorVentaBoleto" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoValorVentaBoleto}" title="#{bundle.CreateVentaBoletoTitle_ventaBoletoValorVentaBoleto}" required="true" requiredMessage="#{bundle.CreateVentaBoletoRequiredMessage_ventaBoletoValorVentaBoleto}"/>
-
+                        <p:inputNumber id="ventaBoletoValorVentaBoleto" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoValorVentaBoleto}"  required="true" requiredMessage="Debe ingresar el Valor" onfocus="this.setSelectionRange(0, this.value.length)" maxValue="15000" minValue="1"/>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{ventaBoletoRecaudacionController.saveNew}" value="#{bundle.Save}" update="display,:VentaBoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaBoletoCreateDialog'));">

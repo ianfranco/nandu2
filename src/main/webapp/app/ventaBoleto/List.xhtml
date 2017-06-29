@@ -26,7 +26,7 @@
                          rowKey="#{item.ventaBoletoId}"
                          selection="#{ventaBoletoRecaudacionController.selected}"
                          var="item"                         
-                         >
+                         emptyMessage="No se han encontrado registros">
 
                 <p:ajax event="colResize" listener="#{ventaBoletoRecaudacionController.onResize}"/>
 

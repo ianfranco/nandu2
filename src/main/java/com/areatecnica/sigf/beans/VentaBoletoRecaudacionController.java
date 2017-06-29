@@ -8,21 +8,21 @@ import com.areatecnica.sigf.dao.ICajaRecaudacionDao;
 import com.areatecnica.sigf.dao.IGuiaDao;
 import com.areatecnica.sigf.dao.IInventarioCajaDao;
 import com.areatecnica.sigf.dao.IVentaBoletoDao;
-import com.areatecnica.sigf.dao.impl.IBusDaoImpl;
 import com.areatecnica.sigf.dao.impl.ICajaRecaudacionDaoImpl;
+import com.areatecnica.sigf.dao.impl.IGuiaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IInventarioCajaDaoImpl;
 import com.areatecnica.sigf.dao.impl.IVentaBoletoDaoImpl;
 import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.CajaProceso;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
+import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Named;
@@ -47,6 +47,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     private List<InventarioCaja> inventarioCajaList;
     private List<CajaRecaudacion> cajaRecaudacionList;
     private List<Bus> busesList;
+    private List<Guia> guiaList;
     private Map<Integer, ProcesoRecaudacion> procesosMap;
     private IInventarioCajaDao inventarioCajaDao;
     private ICajaRecaudacionDao cajaRecaudacionDao;
@@ -66,7 +67,12 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     public void init() {
         super.setFacade(ejbFacade);
         this.inventarioCajaDao = new IInventarioCajaDaoImpl();
-
+        
+        this.ventaBoletoDao = new IVentaBoletoDaoImpl();
+        this.setItems(this.ventaBoletoDao.findAll());
+        
+        
+        
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.setCajaRecaudacionList((List<CajaRecaudacion>) this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser()));
         this.setFechaVentaBoleto(new Date());
@@ -80,9 +86,13 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         }
         this.setBusesList(new ArrayList<>());
 
+        this.guiaDao = new IGuiaDaoImpl();
+        this.guiaList = new ArrayList<>();
         for (Map.Entry<Integer, ProcesoRecaudacion> entry : getProcesosMap().entrySet()) {
             ProcesoRecaudacion proceso = (ProcesoRecaudacion) entry.getValue();
-            this.getBusesList().addAll(proceso.getBusList());
+            List<Guia> auxListGuia = this.guiaDao.findByProcesoFechaGuia(proceso, fechaVentaBoleto);
+
+            this.guiaList.addAll(auxListGuia);
         }
 
     }
@@ -132,6 +142,20 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
      */
     public void setItems(List<VentaBoleto> items) {
         this.items = items;
+    }
+
+    /**
+     * @return the guiaList
+     */
+    public List<Guia> getGuiaList() {
+        return guiaList;
+    }
+
+    /**
+     * @param guiaList the items to set
+     */
+    public void setGuiaList(List<Guia> guiaList) {
+        this.guiaList = guiaList;
     }
 
     /**
@@ -256,7 +280,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         this.getSelected().setVentaBoletoFechaIngreso(new Date());
         this.getSelected().setVentaBoletoFecha(new Date());
         this.getSelected().setVentaBoletoUtilizado(Boolean.FALSE);
-
+        
         return this.getSelected();
     }
 
@@ -265,6 +289,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         this.ejbFacade.create(this.getSelected());
         this.items.add(this.getSelected());
         JsfUtil.addSuccessMessage("Se ha registrado una venta de boleto (" + this.getSelected().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto().getBoletoNombre() + ") al Bus N°: " + this.getSelected().getVentaBoletoIdGuia().getGuiaIdBus().getBusNumero());
+        this.setSelected(prepareCreate(event));
     }
 
     public void handleBoletoChange(ActionEvent event) {
