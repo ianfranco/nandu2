@@ -9,6 +9,14 @@
 
     <h:form id="GuiaListForm" class="form-height">
 
+        <p:contextMenu id="GuiaDataTableContextMenu" for="datalist">  
+            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('GuiaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('GuiaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('GuiaListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('GuiaListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:separator/>
+        </p:contextMenu>
+
         <p:panel>
             <f:facet name="header">
                 Registro de Guías
@@ -29,13 +37,19 @@
             </p:panelGrid>
 
             <p:dataTable id="datalist"
-                         value="#{guiaFirstController.items}"
+                         selection="#{guiaFirstController.selected}"                         
+                         scrollHeight="500" 
+                         scrollable="false"                         
+                         value="#{guiaFirstController.guiaModel}"
                          widgetVar="datalist"
                          var="item"
-                         rowKey="#{item.guiaId}"
-                         selection="#{guiaFirstController.selected}"                        
-                         emptyMessage="No se han encontrado registros"
-                         rowIndexVar="rowIndex">
+                         rowKey="#{item.guiaId}"                         
+                         selectionMode="single"
+                         rowIndexVar="rowIndex"
+                         emptyMessage="No se han encontrado registros">
+
+                <p:ajax event="rowSelect"   update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{guiaFirstController.loadGuia}" global="false"/>
+                <p:ajax event="rowUnselect" update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{guiaFirstController.resetParents}" global="false"/>  
 
                 <f:facet name="header">
                     Guías a la Fecha: #{guiaFirstController.formatFecha}
@@ -116,9 +130,10 @@
                 </p:column>
 
                 <f:facet name="footer">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{guiaFirstController.prepareCreate}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaFirstController.grupoServicio}"/>
-                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty guiaFirstController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaFirstController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                    <p:commandButton id="createButton"  styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{guiaFirstController.prepareCreate}" disabled="#{empty guiaFirstController.grupoServicio}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="editButton"    styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":GuiaEditForm" oncomplete="PF('GuiaEditDialog').show()" disabled="#{empty guiaFirstController.auxGuia2}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty guiaFirstController.auxGuia2}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
+                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{guiaController.delete}" update=":growl,datalist" disabled="#{empty guiaFirstController.auxGuia2}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
                     </p:commandButton>
                 </f:facet>

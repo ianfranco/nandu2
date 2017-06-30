@@ -57,9 +57,6 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
         }
     }
 
-    @Override
-    public List<VentaBoleto> findByProceso() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

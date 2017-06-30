@@ -25,6 +25,7 @@ import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.SerieBoletoGuia;
 import com.areatecnica.sigf.entities.TarifaGrupoServicio;
 import com.areatecnica.sigf.entities.VentaBoleto;
+import com.areatecnica.sigf.models.GuiaBoletoDataModel;
 import com.areatecnica.sigf.models.SerieBoletoGuiaDataModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
     private List<VentaBoleto> ventaBoletoBusList;
     private Map defaultVentaBoletoMap;
     private Map valorTarifasMap;
+    private GuiaBoletoDataModel guiaModel;
     private SerieBoletoGuiaDataModel model;
     private IGuiaDao guiaDao;
     private IBusDao busDao;
@@ -75,6 +77,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
     private IVentaBoletoDao ventaBoletoDao;
     private Guia selected;
     private Guia auxGuia;
+    private Guia auxGuia2;
     private GrupoServicio grupoServicio;
     private Date fecha;
     private String formatFecha;
@@ -232,6 +235,20 @@ public class GuiaFirstController extends AbstractController<Guia> {
     }
 
     /**
+     * @return the guiaModel
+     */
+    public GuiaBoletoDataModel getGuiaModel() {
+        return guiaModel;
+    }
+
+    /**
+     * @param guiaModel the model to set
+     */
+    public void setGuiaModel(GuiaBoletoDataModel guiaModel) {
+        this.guiaModel = guiaModel;
+    }
+
+    /**
      * @return the model
      */
     public SerieBoletoGuiaDataModel getModel() {
@@ -302,6 +319,20 @@ public class GuiaFirstController extends AbstractController<Guia> {
     }
 
     /**
+     * @return the auxGuia
+     */
+    public Guia getAuxGuia2() {
+        return auxGuia2;
+    }
+
+    /**
+     * @param auxGuia the auxGuia to set
+     */
+    public void setAuxGuia2(Guia auxGuia2) {
+        this.auxGuia2 = auxGuia2;
+    }
+
+    /**
      * Resets the "selected" attribute of any parent Entity controllers.
      */
     public void resetParents() {
@@ -309,6 +340,8 @@ public class GuiaFirstController extends AbstractController<Guia> {
         guiaIdEstadoController.setSelected(null);
         guiaIdCajaTerminalController.setSelected(null);
         guiaIdTrabajadorController.setSelected(null);
+        this.auxGuia2 = null;
+        this.selected = null;
     }
 
     /**
@@ -405,21 +438,22 @@ public class GuiaFirstController extends AbstractController<Guia> {
 
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.estadoGuiaDao = new IEstadoGuiaDaoImpl();
-        this.selected = new Guia();
-        this.selected.setGuiaFecha(fecha);
+        this.auxGuia2 = new Guia();
+        this.auxGuia2.setGuiaFecha(fecha);
         this.boletoGuiaList = new ArrayList<>();
-        this.getSelected().setGuiaIdCuenta(this.getUserCount());
-        this.getSelected().setGuiaFechaIngreso(new Date());
-        this.getSelected().setGuiaTotalIngresos(0);
-        this.getSelected().setGuiaTotalEgresos(0);
-        this.getSelected().setGuiaSaldo(0);
-        this.getSelected().setGuiaIdCajaTerminal(this.cajaRecaudacionDao.findById(1));
-        this.getSelected().setGuiaIdEstado(this.estadoGuiaDao.findById(1));
-        this.getSelected().setGuiaRecaudada(Boolean.TRUE);
-        this.getSelected().setGuiaNumeroVueltas(0);
-        this.getSelected().setGuiaTurno(0);
+        this.auxGuia2.setGuiaIdCuenta(this.getUserCount());
+        this.auxGuia2.setGuiaFechaIngreso(new Date());
+        this.auxGuia2.setGuiaTotalIngresos(0);
+        this.auxGuia2.setGuiaTotalEgresos(0);
+        this.auxGuia2.setGuiaSaldo(0);
+        this.auxGuia2.setGuiaIdCajaTerminal(this.cajaRecaudacionDao.findById(1));
+        this.auxGuia2.setGuiaIdEstado(this.estadoGuiaDao.findById(1));
+        this.auxGuia2.setGuiaRecaudada(Boolean.FALSE);
+        this.auxGuia2.setGuiaNumeroVueltas(0);
+        this.auxGuia2.setGuiaTurno(0);
 
-        return this.getSelected();
+        this.setSelected(null);
+        return this.auxGuia2;
     }
 
     @Override
@@ -435,6 +469,24 @@ public class GuiaFirstController extends AbstractController<Guia> {
 
     }
 
+    @Override
+    public void save(ActionEvent event) {
+        if (this.auxGuia2 != null) {
+            //this.auxGuia2.setSerieBoletoGuiaList(this.boletoGuiaList);
+            this.ejbFacade.edit(this.getSelected());
+
+            for (SerieBoletoGuia sb : this.boletoGuiaList) {
+                sb.setSerieBoletoGuiaNumeroVuelta(sb.getSerieBoletoGuiaNumeroVuelta()+1);
+                this.serieBoletoGuiaFacade.edit(sb);
+            }
+
+        }
+        this.items.add(this.getSelected());
+        this.boletoGuiaList = null;
+        JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.getSelected().getGuiaIdBus().getBusNumero() + " " + this.getSelected().getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
+        this.setSelected(prepareCreate(event));
+    }
+
     public void load() {
         this.guiaDao = new IGuiaDaoImpl();
         this.setItems((List<Guia>) this.guiaDao.findByFechaGrupoServicio(this.grupoServicio, this.getFecha()));
@@ -442,6 +494,18 @@ public class GuiaFirstController extends AbstractController<Guia> {
         this.tarifaGrupoServicioDao = new ITarifaGrupoServicioDaoImpl();
         this.busDao = new IBusDaoImpl();
         this.busesList = this.busDao.findByGrupoServicio(this.grupoServicio);
+
+        this.guiaModel = new GuiaBoletoDataModel(items);
+    }
+
+    public void loadGuia() {
+        if (this.getSelected() != null) {
+            System.err.println("NO ES NULA LA GUIA ");
+            this.auxGuia2 = this.getSelected();
+
+            this.boletoGuiaList = this.auxGuia2.getSerieBoletoGuiaList();
+            this.setSelected(null);
+        }
     }
 
     public void findFolio() {
@@ -490,7 +554,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                     }
                 } else {
                     JsfUtil.addExclamationMessage("No se han encontrado series de boletos, debe completar la información");
-                    
+
                     List<TarifaGrupoServicio> auxList = this.tarifaGrupoServicioDao.findAllByCuenta();
 
                     this.boletoGuiaList = new ArrayList<>();

@@ -67,32 +67,44 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     public void init() {
         super.setFacade(ejbFacade);
         this.inventarioCajaDao = new IInventarioCajaDaoImpl();
-        
-        this.ventaBoletoDao = new IVentaBoletoDaoImpl();
-        this.setItems(this.ventaBoletoDao.findAll());
-        
-        
-        
+
+        /*this.ventaBoletoDao = new IVentaBoletoDaoImpl();
+        this.setItems(this.ventaBoletoDao.findAll());*/
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.setCajaRecaudacionList((List<CajaRecaudacion>) this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser()));
         this.setFechaVentaBoleto(new Date());
 
-        List<CajaRecaudacion> cajaList = this.getCurrentUser().getCajaRecaudacionList();
-        this.setProcesosMap((Map<Integer, ProcesoRecaudacion>) new HashMap());
-        for (CajaRecaudacion c : cajaList) {
-            for (CajaProceso caja : c.getCajaProcesoList()) {
-                this.getProcesosMap().put(caja.getCajaProcesoIdProceso().getProcesoRecaudacionId(), caja.getCajaProcesoIdProceso());
-            }
-        }
-        this.setBusesList(new ArrayList<>());
-
         this.guiaDao = new IGuiaDaoImpl();
         this.guiaList = new ArrayList<>();
-        for (Map.Entry<Integer, ProcesoRecaudacion> entry : getProcesosMap().entrySet()) {
-            ProcesoRecaudacion proceso = (ProcesoRecaudacion) entry.getValue();
-            List<Guia> auxListGuia = this.guiaDao.findByProcesoFechaGuia(proceso, fechaVentaBoleto);
+        this.setBusesList(new ArrayList<>());
 
-            this.guiaList.addAll(auxListGuia);
+        List<CajaRecaudacion> cajaList = this.getCurrentUser().getCajaRecaudacionList();
+        if (cajaList.size() > 1) {
+            this.setProcesosMap((Map<Integer, ProcesoRecaudacion>) new HashMap());
+            for (CajaRecaudacion c : cajaList) {
+                for (CajaProceso caja : c.getCajaProcesoList()) {
+                    this.getProcesosMap().put(caja.getCajaProcesoIdProceso().getProcesoRecaudacionId(), caja.getCajaProcesoIdProceso());
+                }
+            }
+
+            for (Map.Entry<Integer, ProcesoRecaudacion> entry : getProcesosMap().entrySet()) {
+                ProcesoRecaudacion proceso = (ProcesoRecaudacion) entry.getValue();
+                List<Guia> auxListGuia = this.guiaDao.findByProcesoFechaGuia(proceso, fechaVentaBoleto);
+
+                this.guiaList.addAll(auxListGuia);
+            }
+        } else {
+            this.setProcesosMap((Map<Integer, ProcesoRecaudacion>) new HashMap());
+            this.cajaRecaudacion = cajaList.get(0);
+            for (CajaProceso caja : this.cajaRecaudacion.getCajaProcesoList()) {
+                this.getProcesosMap().put(caja.getCajaProcesoIdProceso().getProcesoRecaudacionId(), caja.getCajaProcesoIdProceso());
+            }
+            for (Map.Entry<Integer, ProcesoRecaudacion> entry : getProcesosMap().entrySet()) {
+                ProcesoRecaudacion proceso = (ProcesoRecaudacion) entry.getValue();
+                List<Guia> auxListGuia = this.guiaDao.findByProcesoFechaGuia(proceso, fechaVentaBoleto);
+
+                this.guiaList.addAll(auxListGuia);
+            }
         }
 
     }
@@ -280,7 +292,7 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
         this.getSelected().setVentaBoletoFechaIngreso(new Date());
         this.getSelected().setVentaBoletoFecha(new Date());
         this.getSelected().setVentaBoletoUtilizado(Boolean.FALSE);
-        
+
         return this.getSelected();
     }
 

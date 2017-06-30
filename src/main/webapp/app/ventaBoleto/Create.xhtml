@@ -14,10 +14,13 @@
 
                 <h:panelGroup id="display" rendered="#{ventaBoletoRecaudacionController.selected != null}">
                     <p:focus context="numeroBoleta"/>
-                    <p:panelGrid columns="2" columnClasses="column">
+                    <p:panelGrid columns="4" columnClasses="column">
 
                         <p:outputLabel value="N° Boleta" for="numeroBoleta" />
                         <p:inputNumber id="numeroBoleta" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoNumeroBoleta}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar el N° de Boleta" onfocus="this.setSelectionRange(0, this.value.length)"/>
+
+                        <p:outputLabel/>
+                        <p:outputLabel/>
 
                         <p:outputLabel value="N° Bus" for="ventaBoletoIdGuia" />
                         <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
@@ -26,9 +29,13 @@
                                            var="busItem"
                                            itemValue="#{busItem}"
                                            itemLabel="#{busItem.guiaIdBus.busNumero}"
-                                           />
 
+                                           />
+                            <p:ajax update="ppu, conductor" event="valueChange"/>
                         </p:selectOneMenu>
+
+                        <p:outputLabel value="PPU"/>
+                        <p:outputLabel id="ppu" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdBus.busPatente}"/>
 
                         <p:outputLabel value="Boleto" for="ventaBoletoIdInventarioCaja" />
                         <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{ventaBoletoRecaudacionController.boletoItem}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
@@ -40,6 +47,11 @@
                                            />
                             <p:ajax event="valueChange" listener="#{ventaBoletoRecaudacionController.handleBoletoChange(event)}" update="ventaBoletoIdInventarioCaja"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Conductor"/>
+                        <p:outputLabel id="conductor" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorApellidoPaterno} #{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorApellidoMaterno} #{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorNombres}"/>
+                        
+                        
 
                         <p:outputLabel value="Inventario" for="ventaBoletoIdInventarioCaja" />
                         <p:selectOneMenu id="ventaBoletoIdInventarioCaja" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdInventarioCaja}" required="true" requiredMessage="#{bundle.CreateVentaBoletoRequiredMessage_ventaBoletoIdInventarioCaja}" converter="omnifaces.SelectItemsConverter">

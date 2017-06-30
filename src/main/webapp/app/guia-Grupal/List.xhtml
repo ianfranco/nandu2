@@ -142,6 +142,13 @@
                                        />
                     </p:selectOneMenu>
                 </p:column>
+                
+                <p:column sortBy="#{item.guiaObservacion}" filterBy="#{item.guiaObservacion}">
+                    <f:facet name="header">
+                        <h:outputText value="Observación"/>
+                    </f:facet>
+                    <h:outputLabel id="guiaObservacion" value="#{item.guiaObservacion}"/>
+                </p:column>
 
                 <f:facet name="footer">
                     <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="Guardar" actionListener="#{guiaGrupalController.saveNew}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()" disabled="#{empty guiaGrupalController.grupoServicio}" update="datalist, growl">

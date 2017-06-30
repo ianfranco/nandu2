@@ -8,10 +8,10 @@
 
     <ui:composition>
 
-        <p:dialog id="GuiaCreateDlg" widgetVar="GuiaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
+        <p:dialog id="GuiaCreateDlg" widgetVar="GuiaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true" closable="false">
 
             <h:form id="GuiaCreateForm">
-                <h:panelGroup id="display" rendered="#{guiaFirstController.selected != null}">
+                <h:panelGroup id="display" rendered="#{guiaFirstController.auxGuia2 != null}">
                     <p:panelGrid style="width: 600px;">
 
                         <!-- PRIMERA FILA -->
@@ -20,30 +20,30 @@
 
                             <p:column style="font-weight: bold;">Folio:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:inputNumber id="guiaFolio" value="#{guiaFirstController.selected.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:inputNumber id="guiaFolio" value="#{guiaFirstController.auxGuia2.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)">
                                     <p:ajax event="valueChange" listener="#{guiaFirstController.findFolio}" update="growl, guiaFolio"/>
                                 </p:inputNumber>                                
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;">Empresario:</p:column>
-                            <p:column rowspan="1" style="font-weight: bold;width: 250px;"><p:outputLabel value="#{guiaFirstController.selected.guiaIdBus.busIdEmpresa.empresaNombre}" id="guiaIdBusEmpresario" /></p:column>
+                            <p:column rowspan="1" style="font-weight: bold;width: 250px;"><p:outputLabel value="#{guiaFirstController.auxGuia2.guiaIdBus.busIdEmpresa.empresaNombre}" id="guiaIdBusEmpresario" /></p:column>
                         </p:row>
 
                         <!-- PRIMERA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;">Fecha:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:outputLabel value="#{guiaFirstController.selected.guiaFecha}">
+                                <p:outputLabel value="#{guiaFirstController.auxGuia2.guiaFecha}">
                                     <f:convertDateTime pattern="dd/MM/yy"/>
                                 </p:outputLabel>
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;">Flota:</p:column>
-                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.selected.guiaIdBus.busIdFlota.flotaNombre}" id="guiaIdBusFlota" /></p:column>
+                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.auxGuia2.guiaIdBus.busIdFlota.flotaNombre}" id="guiaIdBusFlota" /></p:column>
                         </p:row>
 
                         <!-- SEGUNDA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;">N° Bus:</p:column>
-                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{guiaFirstController.selected.guiaIdBus}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaIdBus}" converter="omnifaces.SelectItemsConverter">
+                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{guiaFirstController.auxGuia2.guiaIdBus}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaIdBus}" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{guiaFirstController.busesList}"
                                                    var="guiaIdBusItem"
@@ -54,13 +54,13 @@
                                 </p:selectOneMenu>
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;">PPU:</p:column>
-                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.selected.guiaIdBus.busPatente}" id="guiaIdBusPatente" /></p:column>
+                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.auxGuia2.guiaIdBus.busPatente}" id="guiaIdBusPatente" /></p:column>
                         </p:row>
 
                         <p:row>
                             <p:column style="font-weight: bold;">N° Conductor</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:selectOneMenu id="guiaIdTrabajador" value="#{guiaFirstController.selected.guiaIdTrabajador}"  converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="guiaIdTrabajador" value="#{guiaFirstController.auxGuia2.guiaIdTrabajador}"  converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{trabajadorController.items}"
                                                    var="guiaIdTrabajadorItem"
@@ -72,16 +72,16 @@
                             </p:column>
 
                             <p:column style="font-weight: bold;" rowspan="1">Conductor:</p:column>
-                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.selected.guiaIdTrabajador.trabajadorNombres} #{guiaFirstController.selected.guiaIdTrabajador.trabajadorApellidoPaterno} #{guiaFirstController.selected.guiaIdTrabajador.trabajadorApellidoMaterno}" id="guiaIdTrabajadorNombre" /></p:column>
+                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.auxGuia2.guiaIdTrabajador.trabajadorNombres} #{guiaFirstController.auxGuia2.guiaIdTrabajador.trabajadorApellidoPaterno} #{guiaFirstController.auxGuia2.guiaIdTrabajador.trabajadorApellidoMaterno}" id="guiaIdTrabajadorNombre" /></p:column>
                         </p:row>
                         <!-- CUARTA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;">Turno</p:column>
                             <p:column>
-                                <p:inputNumber id="guiaTurno" value="#{guiaFirstController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
+                                <p:inputNumber id="guiaTurno" value="#{guiaFirstController.auxGuia2.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;" rowspan="1">Rut:</p:column>
-                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.selected.guiaIdTrabajador.trabajadorRut}" id="guiaIdTrabajadorRut" /></p:column>
+                            <p:column rowspan="1"><p:outputLabel value="#{guiaFirstController.auxGuia2.guiaIdTrabajador.trabajadorRut}" id="guiaIdTrabajadorRut" /></p:column>
                         </p:row>                                                                      
                         <!-- QUINTA FILA -->
                         <p:row>
@@ -155,7 +155,7 @@
                             <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl, GuiaCreateDlg" styleClass="btn btn-primary" resetValues="true" style="width: 25%">
                                 <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
                             </p:commandButton>
-                            <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary" style="width: 25%"/>
+                            <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display, :GuiaListForm:datalist" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary" style="width: 25%"/>
                         </h:panelGroup>
                     </p:panelGrid>
                 </h:panelGroup>
