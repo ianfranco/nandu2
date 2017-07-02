@@ -12,6 +12,7 @@ import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+import com.areatecnica.sigf.entities.Terminal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -39,7 +40,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return null;
         }
     }
-    
+
     @Override
     public List<Guia> findByProcesoFechaGuia(ProcesoRecaudacion procesoRecaudacion, Date fechaGuia) {
         try {
@@ -79,7 +80,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     @Override
     public Guia findLastGuiaByBusFecha(Bus bus, Date fecha) {
         try {
-            return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setHint("org.hibernate.cacheMode", "IGNORE").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
+            return (Guia) this.entityManager.createNamedQuery("Guia.findLastGuiaByBusFecha").setParameter("guiaIdBus", bus).setParameter("guiaFecha", fecha).setMaxResults(1).getSingleResult();
         } catch (NoResultException ne) {
             return null;
         }
@@ -95,7 +96,20 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     }
 
     @Override
-    public void delete(Guia guia){
-        
+    public void delete(Guia guia) {
+
+    }
+
+    @Override
+    public int findLastFolio(Terminal terminal) {
+        try {
+
+            return (int) entityManager.createQuery("SELECT MAX(g.guiaFolio) FROM  Guia g where g.guiaIdBus.busIdTerminal = :busIdTerminal")
+                    .setParameter("busIdTerminal", terminal)
+                    .getSingleResult()+1;
+
+        } catch (NoResultException ne) {
+            return 1;
+        }
     }
 }

@@ -33,7 +33,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public List<VentaBoleto> findByBus(Bus bus) {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuia").setParameter("ventaBoletoIdGuia", bus).getResultList();
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBus").setParameter("ventaBoletoIdBus", bus).getResultList();
         } catch (NoResultException ne) {            
             return null;
         }
@@ -42,7 +42,7 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     @Override
     public List<VentaBoleto> findByBusEstado(Bus bus) {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaEstado").setParameter("ventaBoletoIdGuia", bus).getResultList();
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBus").setParameter("ventaBoletoIdBus", bus).getResultList();
         } catch (NoResultException ne) {            
             return null;
         }

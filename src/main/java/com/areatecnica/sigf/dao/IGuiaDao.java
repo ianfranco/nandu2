@@ -11,6 +11,7 @@ import com.areatecnica.sigf.entities.Cuenta;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+import com.areatecnica.sigf.entities.Terminal;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface IGuiaDao<T> extends IGenericDAO<T> {
     public Guia findByCuentaFolio(Cuenta cuenta, int folio);
     
     public Guia findLastGuiaByBusFecha(Bus bus, Date fecha);
+    
+    public int findLastFolio(Terminal terminal);
     
     public List<Guia> findByCajaRecaudacionProcesoBus(CajaRecaudacion cajaRecaudacion, ProcesoRecaudacion procesoRecaudacion);
     

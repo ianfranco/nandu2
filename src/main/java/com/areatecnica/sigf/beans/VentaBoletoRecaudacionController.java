@@ -19,6 +19,7 @@ import com.areatecnica.sigf.entities.CajaRecaudacion;
 import com.areatecnica.sigf.entities.Guia;
 import com.areatecnica.sigf.entities.InventarioCaja;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+import com.areatecnica.sigf.entities.SerieBoletoGuia;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
 import java.util.ArrayList;
 import java.util.Date;
@@ -305,6 +306,9 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
     }
 
     public void handleBoletoChange(ActionEvent event) {
+        
+        for (SerieBoletoGuia sbg:)
+        
         //POR MODIFICAR
         this.setInventarioCajaList((List<InventarioCaja>) this.inventarioCajaDao.findByBoletoEstado(this.cajaRecaudacion, this.getBoletoItem(), Boolean.FALSE));
     }

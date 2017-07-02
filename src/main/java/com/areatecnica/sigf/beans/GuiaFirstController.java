@@ -78,6 +78,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
     private Guia selected;
     private Guia auxGuia;
     private Guia auxGuia2;
+    private int maxFolio;
     private GrupoServicio grupoServicio;
     private Date fecha;
     private String formatFecha;
@@ -107,7 +108,8 @@ public class GuiaFirstController extends AbstractController<Guia> {
             this.getDefaultVentaBoletoMap().put(vb.getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto(), vb);
         });
 
-        //this.guiaDao = new IGuiaDaoImpl();
+        
+        
         //this.setItems((List<Guia>) this.guiaDao.findByCuentaFecha(this.getUserCount(), this.getFecha()));
         this.grupoServicioDao = new IGrupoServicioDaoImpl();
         this.setGrupoServicioList((List<GrupoServicio>) this.grupoServicioDao.findByTerminal(this.getCurrentUser().getUsuarioIdTerminal()));
@@ -458,13 +460,13 @@ public class GuiaFirstController extends AbstractController<Guia> {
 
     @Override
     public void saveNew(ActionEvent event) {
-        if (this.getSelected() != null) {
-            this.getSelected().setSerieBoletoGuiaList(this.boletoGuiaList);
-            this.ejbFacade.create(this.getSelected());
+        if (this.auxGuia2 != null) {
+            this.auxGuia2.setSerieBoletoGuiaList(this.boletoGuiaList);
+            this.ejbFacade.create(this.auxGuia2);
         }
-        this.items.add(this.getSelected());
+        this.items.add(this.auxGuia2);
         this.boletoGuiaList = null;
-        JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.getSelected().getGuiaIdBus().getBusNumero() + " " + this.getSelected().getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
+        JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.auxGuia2.getGuiaIdBus().getBusNumero() + " " + this.auxGuia2.getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
         this.setSelected(prepareCreate(event));
 
     }
@@ -473,7 +475,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
     public void save(ActionEvent event) {
         if (this.auxGuia2 != null) {
             //this.auxGuia2.setSerieBoletoGuiaList(this.boletoGuiaList);
-            this.ejbFacade.edit(this.getSelected());
+            this.ejbFacade.edit(this.auxGuia2);
 
             for (SerieBoletoGuia sb : this.boletoGuiaList) {
                 sb.setSerieBoletoGuiaNumeroVuelta(sb.getSerieBoletoGuiaNumeroVuelta()+1);
@@ -481,10 +483,11 @@ public class GuiaFirstController extends AbstractController<Guia> {
             }
 
         }
-        this.items.add(this.getSelected());
+        
         this.boletoGuiaList = null;
         JsfUtil.addSuccessMessage("Se ha ingresado la Nueva Guía al Bus N°: " + this.getSelected().getGuiaIdBus().getBusNumero() + " " + this.getSelected().getGuiaIdBus().getBusIdUnidadNegocio().getUnidadNegocioNumero());
-        this.setSelected(prepareCreate(event));
+        this.setSelected(null);
+        this.auxGuia2 = null;
     }
 
     public void load() {
@@ -509,34 +512,34 @@ public class GuiaFirstController extends AbstractController<Guia> {
     }
 
     public void findFolio() {
-        if (this.getSelected() != null) {
-            Guia auxGuiaFolio = this.guiaDao.findByCuentaFolio(this.getUserCount(), this.getSelected().getGuiaFolio());
+        if (this.auxGuia2 != null) {
+            Guia auxGuiaFolio = this.guiaDao.findByCuentaFolio(this.getUserCount(), this.auxGuia2.getGuiaFolio());
 
             if (auxGuiaFolio != null) {
                 JsfUtil.addErrorMessage("La Guía se encuentra ingresada");
                 JsfUtil.isValidationFailed();
-                this.getSelected().setGuiaFolio(0);
+                this.auxGuia2.setGuiaFolio(0);
             }
         }
     }
 
     public void handleBusChange(ActionEvent event) {
-        if (this.getSelected().getGuiaIdBus() != null) {
+        if (this.auxGuia2.getGuiaIdBus() != null) {
 
             DateTime dateTime = new DateTime(this.fecha);
 
-            setAuxGuia(this.guiaDao.findLastGuiaByBusFecha(this.getSelected().getGuiaIdBus(), dateTime.plusDays(1).toDate()));
+            setAuxGuia(this.guiaDao.findLastGuiaByBusFecha(this.auxGuia2.getGuiaIdBus(), dateTime.plusDays(1).toDate()));
 
             if (getAuxGuia() != null) {
                 DateTime d1 = new DateTime(getAuxGuia().getGuiaFecha());
                 DateTime d2 = new DateTime(this.fecha);
                 if (d1.toLocalDate().isEqual(d2.toLocalDate())) {
-                    this.getSelected().setGuiaTurno(getAuxGuia().getGuiaTurno() + 1);
-                    JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha \nSe actualizó el N° de Turno a " + this.getSelected().getGuiaTurno());
+                    this.auxGuia2.setGuiaTurno(getAuxGuia().getGuiaTurno() + 1);
+                    JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha \nSe actualizó el N° de Turno a " + this.auxGuia2.getGuiaTurno());
                 }
 
                 this.ventaBoletoDao = new IVentaBoletoDaoImpl();
-                this.setVentaBoletoBusList((List<VentaBoleto>) this.ventaBoletoDao.findByBusEstado(this.getSelected().getGuiaIdBus()));
+                this.setVentaBoletoBusList((List<VentaBoleto>) this.ventaBoletoDao.findByBusEstado(this.auxGuia2.getGuiaIdBus()));
 
                 this.boletoGuiaList = new ArrayList<>();
 
@@ -544,7 +547,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                     for (SerieBoletoGuia s : getAuxGuia().getSerieBoletoGuiaList()) {
                         SerieBoletoGuia newSerie = new SerieBoletoGuia();
                         newSerie.setSerieBoletoGuiaFechaIngreso(new Date());
-                        newSerie.setSerieBoletoGuiaIdGuia(this.getSelected());
+                        newSerie.setSerieBoletoGuiaIdGuia(this.auxGuia2);
                         newSerie.setSerieBoletoGuiaInicio(s.getSerieBoletoGuiaTermino());
                         newSerie.setSerieBoletoGuiaTotal(0);
                         newSerie.setSerieBoletoGuiaValor((int) this.getValorTarifasMap().get(s.getSerieBoletoGuiaIdVentaBoleto().getVentaBoletoIdInventarioCaja().getInventarioCajaIdInventarioInterno().getInventarioInternoIdBoleto()));
@@ -562,7 +565,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                     for (TarifaGrupoServicio t : auxList) {
                         SerieBoletoGuia s = new SerieBoletoGuia();
                         s.setSerieBoletoGuiaFechaIngreso(new Date());
-                        s.setSerieBoletoGuiaIdGuia(this.getSelected());
+                        s.setSerieBoletoGuiaIdGuia(this.auxGuia2);
                         s.setSerieBoletoGuiaInicio(1);
                         s.setSerieBoletoGuiaEsNuevo(Boolean.TRUE);
                         s.setSerieBoletoGuiaIdVentaBoleto((VentaBoleto) getDefaultVentaBoletoMap().get(t.getTarifaGrupoServicioIdBoleto()));
@@ -576,7 +579,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                 }
 
             } else {
-                this.getSelected().setGuiaTurno(1);
+                this.auxGuia2.setGuiaTurno(1);
                 JsfUtil.addExclamationMessage("No se han encontrado Guías para el Bus seleccionado, debe completar la información de los boletos");
 
                 List<TarifaGrupoServicio> auxList = this.tarifaGrupoServicioDao.findAllByCuenta();
@@ -587,7 +590,7 @@ public class GuiaFirstController extends AbstractController<Guia> {
                 for (TarifaGrupoServicio t : auxList) {
                     SerieBoletoGuia s = new SerieBoletoGuia();
                     s.setSerieBoletoGuiaFechaIngreso(new Date());
-                    s.setSerieBoletoGuiaIdGuia(this.getSelected());
+                    s.setSerieBoletoGuiaIdGuia(this.auxGuia2);
                     s.setSerieBoletoGuiaInicio(1);
                     s.setSerieBoletoGuiaEsNuevo(Boolean.TRUE);
                     s.setSerieBoletoGuiaIdVentaBoleto((VentaBoleto) getDefaultVentaBoletoMap().get(t.getTarifaGrupoServicioIdBoleto()));

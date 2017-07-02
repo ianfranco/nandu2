@@ -20,7 +20,7 @@
 
                             <p:column style="font-weight: bold;">Folio:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:inputNumber id="guiaFolio" value="#{guiaFirstController.auxGuia2.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)">
+                                <p:inputNumber id="guiaFolio" value="#{guiaFirstController.auxGuia2.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="Debe ingresar el Folio de la Guía" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)">
                                     <p:ajax event="valueChange" listener="#{guiaFirstController.findFolio}" update="growl, guiaFolio"/>
                                 </p:inputNumber>                                
                             </p:column>
@@ -155,7 +155,7 @@
                             <p:commandButton actionListener="#{guiaFirstController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl, GuiaCreateDlg" styleClass="btn btn-primary" resetValues="true" style="width: 25%">
                                 <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
                             </p:commandButton>
-                            <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display, :GuiaListForm:datalist" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary" style="width: 25%"/>
+                            <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display, :GuiaListForm:datalist" actionListener="#{guiaFirstController.resetParents}" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary" style="width: 25%"/>
                         </h:panelGroup>
                     </p:panelGrid>
                 </h:panelGroup>
