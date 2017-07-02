@@ -64,9 +64,13 @@
             .fc-event, .fc-title, .ui-widget .fc-event .event1 {
                 font-size: 18px;
                 text-align: center;
-                
+
             }
-            
+
+            .errorColor{
+                background: #FF0000;
+            }
+
         </style>
 
         <h:outputScript library="scripts" name="pfcrud.js"/>
@@ -598,7 +602,7 @@
                                                                 <p:commandLink action="#{menuController.setPage(subMenu.menuLink,subMenu.menuName)}" update="myPanel,myDashBoard"  onstart="start()" onsuccess="finish()">
                                                                     <i class="#{subMenu.icon}"></i>
                                                                     #{subMenu.menuName}
-                                                                    
+
                                                                 </p:commandLink>
                                                             </li>      
 

@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia = :ventaBoletoIdGuia"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBus", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia.guiaIdBus = :ventaBoletoIdBus"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBusEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia.guiaIdBus = :ventaBoletoIdBus AND v.ventaBoletoUtilizado = 0"),
+    @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdGuiaBusBoletoEstado", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia.guiaIdBus = :ventaBoletoIdBus AND v.ventaBoletoIdInventarioCaja.inventarioCajaIdInventarioInterno.inventarioInternoIdBoleto = :inventarioInternoIdBoleto AND v.ventaBoletoUtilizado = false ORDER BY v.ventaBoletoFechaIngreso DESC"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoDefaultIdGuia", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdGuia.guiaId = 1"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoIdCajaDate", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoIdInventarioCaja.inventarioCajaIdCaja = :inventarioCajaIdCaja AND v.ventaBoletoFecha  = :ventaBoletoFecha ORDER BY v.ventaBoletoIdGuia.guiaIdBus.busNumero ASC"),
     @NamedQuery(name = "VentaBoleto.findByVentaBoletoNumeroBoleta", query = "SELECT v FROM VentaBoleto v WHERE v.ventaBoletoNumeroBoleta = :ventaBoletoNumeroBoleta"),

@@ -22,7 +22,7 @@
             </p:panelGrid>
             
             <p:dataTable id="datalist"
-                         value="#{ventaBoletoRecaudacionController.lazyList}"
+                         value="#{ventaBoletoRecaudacionController.items}"
                          rowKey="#{item.ventaBoletoId}"
                          selection="#{ventaBoletoRecaudacionController.selected}"
                          var="item"                         
@@ -31,7 +31,7 @@
                 <p:ajax event="colResize" listener="#{ventaBoletoRecaudacionController.onResize}"/>
 
                 <f:facet name="header">
-                    <h:outputText value="Ventas a la Fecha : 29/04/2017"/>                    
+                    <h:outputText value="Ventas a la Fecha : #{ventaBoletoRecaudacionController.formatFechaVentaBoleto}" />
                 </f:facet>
 
                 <p:column>
@@ -68,11 +68,11 @@
                 </p:column>
 
 
-                <p:column sortBy="#{item.ventaBoletoIdBus.busNumero}" filterBy="#{item.ventaBoletoIdBus.busNumero}">
+                <p:column sortBy="#{item.ventaBoletoIdGuia.guiaIdBus.busNumero}" filterBy="#{item.ventaBoletoIdGuia.guiaIdBus.busNumero}">
                     <f:facet name="header">
                         <h:outputText value="N° Bus"/>
                     </f:facet>
-                    <h:outputLabel value="#{item.ventaBoletoIdBus.busNumero}"/>
+                    <h:outputLabel value="#{item.ventaBoletoIdGuia.guiaIdBus.busNumero}"/>
                 </p:column>
 
 

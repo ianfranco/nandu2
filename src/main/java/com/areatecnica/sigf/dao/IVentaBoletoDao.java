@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.dao;
 
+import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
@@ -24,4 +25,6 @@ public interface IVentaBoletoDao<T> extends IGenericDAO<T> {
     public List<VentaBoleto> findByBusEstado(Bus bus);
     
     public List<VentaBoleto> findByDefaultBus();
+    
+    public VentaBoleto findByBusBoletoEstado(Bus bus, Boleto boleto);
 }

@@ -6,6 +6,7 @@
 package com.areatecnica.sigf.dao.impl;
 
 import com.areatecnica.sigf.dao.IVentaBoletoDao;
+import com.areatecnica.sigf.entities.Boleto;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.VentaBoleto;
 import com.areatecnica.sigf.entities.CajaRecaudacion;
@@ -23,9 +24,9 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     public List<VentaBoleto> findByCajaDate(CajaRecaudacion cajaRecaudacion, Date fechaVenta) {
         try {
             return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdCajaDate").
-                    setParameter("cajaProcesoIdCaja", cajaRecaudacion).
+                    setParameter("inventarioCajaIdCaja", cajaRecaudacion).
                     setParameter("ventaBoletoFecha", fechaVenta).getResultList();
-        } catch (NoResultException ne) {            
+        } catch (NoResultException ne) {
             return null;
         }
     }
@@ -34,16 +35,16 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     public List<VentaBoleto> findByBus(Bus bus) {
         try {
             return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBus").setParameter("ventaBoletoIdBus", bus).getResultList();
-        } catch (NoResultException ne) {            
+        } catch (NoResultException ne) {
             return null;
         }
     }
-    
+
     @Override
     public List<VentaBoleto> findByBusEstado(Bus bus) {
         try {
-            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBus").setParameter("ventaBoletoIdBus", bus).getResultList();
-        } catch (NoResultException ne) {            
+            return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBusEstado").setParameter("ventaBoletoIdBus", bus).getResultList();
+        } catch (NoResultException ne) {
             return null;
         }
     }
@@ -52,11 +53,22 @@ public class IVentaBoletoDaoImpl extends GenericDAOImpl<VentaBoleto> implements 
     public List<VentaBoleto> findByDefaultBus() {
         try {
             return this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoDefaultIdGuia").getResultList();
-        } catch (NoResultException ne) {            
+        } catch (NoResultException ne) {
             return null;
         }
     }
 
-    
+    @Override
+    public VentaBoleto findByBusBoletoEstado(Bus bus, Boleto boleto) {
+        try {
+            return (VentaBoleto) this.entityManager.createNamedQuery("VentaBoleto.findByVentaBoletoIdGuiaBusBoletoEstado").
+                    setParameter("ventaBoletoIdBus", bus).
+                    setParameter("inventarioInternoIdBoleto", boleto).
+                    setMaxResults(1).
+                    getSingleResult();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
 }

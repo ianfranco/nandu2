@@ -14,7 +14,7 @@
 
                 <h:panelGroup id="display" rendered="#{ventaBoletoRecaudacionController.selected != null}">
                     <p:focus context="numeroBoleta"/>
-                    <p:panelGrid columns="4" columnClasses="column">
+                    <p:panelGrid columns="4" columnClasses="column" style="width: 650px;">
 
                         <p:outputLabel value="N° Boleta" for="numeroBoleta" />
                         <p:inputNumber id="numeroBoleta" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoNumeroBoleta}" decimalPlaces="0" required="true" requiredMessage="Debe ingresar el N° de Boleta" onfocus="this.setSelectionRange(0, this.value.length)"/>
@@ -23,49 +23,96 @@
                         <p:outputLabel/>
 
                         <p:outputLabel value="N° Bus" for="ventaBoletoIdGuia" />
-                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                        <p:selectOneMenu id="ventaBoletoIdGuia" value="#{ventaBoletoRecaudacionController.busGuiaItem}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter" style="width: 50px;">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{ventaBoletoRecaudacionController.guiaList}"
                                            var="busItem"
                                            itemValue="#{busItem}"
                                            itemLabel="#{busItem.guiaIdBus.busNumero}"
                                            />
-                            <p:ajax update="ppu, conductor" event="valueChange"/>
+                            <p:ajax update="ppu, conductor, datalist" event="valueChange" listener="#{ventaBoletoRecaudacionController.handleBusChange(event)}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="PPU"/>
-                        <p:outputLabel id="ppu" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdBus.busPatente}"/>
+                        <p:outputLabel id="ppu" value="#{ventaBoletoRecaudacionController.busGuiaItem.guiaIdBus.busPatente}" style="width: 100px;"/>
 
-                        <p:outputLabel value="Boleto" for="ventaBoletoIdInventarioCaja" />
-                        <p:selectOneMenu style="margin-right: 5px; margin-bottom: -2px;" id="idBoleto" value="#{ventaBoletoRecaudacionController.boletoItem}" requiredMessage="Debe seleccionar el tipo de boleto" required="true" converter="omnifaces.SelectItemsConverter" >
-                            <f:selectItem itemLabel="Seleccionar"/>                                
-                            <f:selectItems value="#{boletoController.items}"
-                                           var="boletoItem"
-                                           itemValue="#{boletoItem}"
-                                           itemLabel="#{boletoItem.boletoNombre}"
-                                           />
-                            <p:ajax event="valueChange" listener="#{ventaBoletoRecaudacionController.handleBoletoChange(event)}" update="ventaBoletoIdInventarioCaja"/>
-                        </p:selectOneMenu>
-                        
                         <p:outputLabel value="Conductor"/>
-                        <p:outputLabel id="conductor" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorApellidoPaterno} #{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorApellidoMaterno} #{ventaBoletoRecaudacionController.selected.ventaBoletoIdGuia.guiaIdTrabajador.trabajadorNombres}"/>
-                        
-                        
+                        <p:outputLabel id="conductor" value="#{ventaBoletoRecaudacionController.busGuiaItem.guiaIdTrabajador.trabajadorApellidoPaterno} #{ventaBoletoRecaudacionController.busGuiaItem.guiaIdTrabajador.trabajadorApellidoMaterno} #{ventaBoletoRecaudacionController.busGuiaItem.guiaIdTrabajador.trabajadorNombres}"/>
 
-                        <p:outputLabel value="Inventario" for="ventaBoletoIdInventarioCaja" />
-                        <p:selectOneMenu id="ventaBoletoIdInventarioCaja" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoIdInventarioCaja}" required="true" requiredMessage="#{bundle.CreateVentaBoletoRequiredMessage_ventaBoletoIdInventarioCaja}" converter="omnifaces.SelectItemsConverter">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{ventaBoletoRecaudacionController.inventarioCajaList}"
-                                           var="ventaBoletoIdInventarioCajaItem"
-                                           itemValue="#{ventaBoletoIdInventarioCajaItem}"
-                                           itemLabel="#{ventaBoletoIdInventarioCajaItem.inventarioCajaIdentificador} #{ventaBoletoIdInventarioCajaItem.inventarioCajaSerie}"
-                                           />
-                        </p:selectOneMenu>
+                        <p:outputLabel value=""/>
+                        <p:outputLabel value=""/>
 
-                        <p:outputLabel value="Valor" for="ventaBoletoValorVentaBoleto" />
-                        <p:inputNumber id="ventaBoletoValorVentaBoleto" value="#{ventaBoletoRecaudacionController.selected.ventaBoletoValorVentaBoleto}"  required="true" requiredMessage="Debe ingresar el Valor" onfocus="this.setSelectionRange(0, this.value.length)" maxValue="15000" minValue="1"/>
+
 
                     </p:panelGrid>
+
+                    <p:dataTable id="datalist"
+                                 value="#{ventaBoletoRecaudacionController.ventaBoletosList}"
+                                 rowKey="#{item.id}"
+                                 rowIndexVar="rowIndex"
+                                 var="item"                         
+                                 emptyMessage="No se han encontrado registros"
+                                 tableStyle="table-layout: auto" 
+                                 style="width: 650px;margin-top: 10px;"
+                                 rowStyleClass="#{item.error? 'errorColor' : null}">
+
+                        <f:facet name="header">
+                            Información de Boletos
+                        </f:facet>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#"/>
+                            </f:facet>
+                            <h:outputLabel value="#{rowIndex+1}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Tipo"/>
+                            </f:facet>
+                            <h:outputLabel value="#{item.boleto.boletoNombre}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Última Compra"/>
+                            </f:facet>
+                            <h:outputLabel value="#{item.fechaCompra}">
+                                <f:convertDateTime pattern="dd/MM/yy"/>
+                            </h:outputLabel>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="N° Boletos Restantes "/>
+                            </f:facet>
+                            <h:outputLabel value="#{item.cantidad}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Inventario"/>
+                            </f:facet>
+                            <p:selectOneMenu id="ventaBoletoIdInventarioCaja" value="#{item.inventarioCaja}" converter="omnifaces.SelectItemsConverter" disabled="#{not item.porVender or item.error}">
+                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{item.inventarioCajaList}"
+                                               var="ventaBoletoIdInventarioCajaItem"
+                                               itemValue="#{ventaBoletoIdInventarioCajaItem}"
+                                               itemLabel="#{ventaBoletoIdInventarioCajaItem.inventarioCajaIdentificador} #{ventaBoletoIdInventarioCajaItem.inventarioCajaSerie}"
+                                               />
+                            </p:selectOneMenu>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Valor"/>
+                            </f:facet>
+                            <p:inputNumber value="#{item.valor}" decimalPlaces="0" disabled="#{not item.porVender or item.error}" onfocus="this.setSelectionRange(0, this.value.length)" size="10" />
+                        </p:column>
+
+                    </p:dataTable>
+
                     <p:commandButton actionListener="#{ventaBoletoRecaudacionController.saveNew}" value="#{bundle.Save}" update="display,:VentaBoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaBoletoCreateDialog'));">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
