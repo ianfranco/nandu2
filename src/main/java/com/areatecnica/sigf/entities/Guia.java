@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Guia.findByGuiaId", query = "SELECT g FROM Guia g WHERE g.guiaId = :guiaId"),
     @NamedQuery(name = "Guia.findByCajaRecaudacionProcesoBus", query = "SELECT g FROM Guia g WHERE g.guiaIdCajaTerminal = :guiaIdCajaTerminal AND g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion"),
     @NamedQuery(name = "Guia.findByProcesoFechaRecaudacion", query = "SELECT g FROM Guia g WHERE g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND g.guiaRecaudacion = :guiaRecaudacion ORDER BY g.guiaIdBus.busNumero ASC, g.guiaFecha ASC"),
-    @NamedQuery(name = "Guia.findByProcesoFechaGuia", query = "SELECT g FROM Guia g WHERE g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND g.guiaFecha = :guiaFecha ORDER BY g.guiaIdBus.busNumero ASC"),
+    @NamedQuery(name = "Guia.findByProcesoFechaGuia", query = "SELECT g FROM Guia g WHERE g.guiaIdBus.busIdProcesoRecaudacion = :busIdProcesoRecaudacion AND g.guiaFecha = :guiaFecha ORDER BY g.guiaIdBus.busNumero ASC, g.guiaTurno ASC"),
     @NamedQuery(name = "Guia.findByBusFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdBus = :guiaIdBus AND g.guiaFecha = :guiaFecha  ORDER BY g.guiaTurno DESC"),
     @NamedQuery(name = "Guia.findByCuentaFolio", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFolio = :guiaFolio"),
     @NamedQuery(name = "Guia.findByCuentaFecha", query = "SELECT g FROM Guia g WHERE g.guiaIdCuenta = :guiaIdCuenta AND g.guiaFecha = :guiaFecha"),

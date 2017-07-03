@@ -23,10 +23,17 @@ import com.areatecnica.sigf.entities.SerieBoletoGuia;
 import com.areatecnica.sigf.models.VentaBoletoRecaudacionDataModel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -109,6 +116,24 @@ public class VentaBoletoRecaudacionController extends AbstractController<VentaBo
 
                 this.guiaList.addAll(auxListGuia);
             }
+
+            Collection<Guia> guiasSin2Turnos = this.guiaList.stream()
+                    .<Map<Integer, Guia>>collect(HashMap::new, (m, e) -> m.put(e.getGuiaIdBus().getBusId(), e), Map::putAll)
+                    .values();
+
+            this.guiaList = new ArrayList<>(guiasSin2Turnos);
+
+            Collections.sort(this.guiaList, new Comparator<Guia>() {
+                @Override
+                public int compare(Guia o1, Guia o2) {
+                    if (o1.getGuiaIdBus().getBusNumero() == o2.getGuiaIdBus().getBusNumero()) {
+                        return 0;
+                    } else if (o1.getGuiaIdBus().getBusNumero() < o2.getGuiaIdBus().getBusNumero()) {
+                        return -1;
+                    }
+                    return 1;
+                }
+            });
         }
 
         this.ventaBoletoDao = new IVentaBoletoDaoImpl();

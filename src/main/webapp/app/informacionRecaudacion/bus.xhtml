@@ -10,10 +10,7 @@
     <h:form id="BusListForm" class="form-height">
 
         <p:contextMenu id="BusDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('BusListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{bundle.View}" onclick="document.getElementById('BusListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('BusListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('BusListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
 
@@ -22,9 +19,8 @@
                         rowKey="#{item.busId}"
                         selection="#{busController.selected}"
                         filtered="#{busController.filtered}"
-                        rowselect=":BusListForm:datalist:datalist:createButton,:BusListForm:datalist:datalist:viewButton,:BusListForm:datalist:datalist:editButton,:BusListForm:datalist:datalist:deleteButton,:BusListForm:BusDataTableContextMenu"
-                        rowDblselect="document.getElementById('BusListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":BusListForm:datalist:datalist:createButton :BusListForm:datalist:datalist:viewButton :BusListForm:datalist:datalist:editButton :BusListForm:datalist:datalist:deleteButton"
+                        rowselect=":BusListForm:datalist:datalist:viewButton,:BusListForm:BusDataTableContextMenu"                        
+                        contextMenu=":BusListForm:datalist:datalist:viewButton"
                         selectListener="#{busController.resetParents()}"
                         emptyMessage="No se han encontrado registros">
 
@@ -43,8 +39,7 @@
                             <p:columnToggler datasource="datalist" trigger="toggler">
                                 <p:ajax event="toggle" listener="#{busController.onToggle}" />
                             </p:columnToggler>
-                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>
-                            <p:commandButton value="#{bundle.Save}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>     
+                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>                            
                         </div>
                     </div>
                 </div>
@@ -110,12 +105,7 @@
 
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{busController.prepareCreate}" update=":BusCreateForm" oncomplete="PF('BusCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":BusViewForm" oncomplete="PF('BusViewDialog').show()" disabled="#{empty busController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":BusEditForm" oncomplete="PF('BusEditDialog').show()" disabled="#{empty busController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{busController.delete}" update=":growl,datalist" disabled="#{empty busController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":BusViewForm" oncomplete="PF('BusViewDialog').show()" disabled="#{empty busController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                  
                 </div>
             </f:facet>
 
@@ -123,5 +113,84 @@
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
+
+    <p:dialog id="BusViewDlg" widgetVar="BusViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Ficha Bus" closeOnEscape="true">
+
+        <h:form id="BusViewForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="4" columnClasses="column, , column, " >
+                    <h:outputText value="#"/>
+                    <h:outputText value="#{busController.selected.busId}" title="#{bundle.ViewBusTitle_busId}"/>
+
+                    <h:outputText value=""/>
+                    <h:outputText value=""/>
+
+                    <h:outputText value="N°"/>
+                    <h:outputText value="#{busController.selected.busNumero}" title="#{bundle.ViewBusTitle_busNumero}"/>
+
+                    <h:outputText value="Unidad"/>
+                    <h:outputText value="#{busController.selected.busIdUnidadNegocio.unidadNegocioNumero}"/>
+
+                    <h:outputText value="PPU"/>
+                    <h:outputText value="#{busController.selected.busPatente}" title="#{bundle.ViewBusTitle_busPatente}"/>
+
+                    <h:outputText value="Año"/>
+                    <h:outputText value="#{busController.selected.busAnio}" title="#{bundle.ViewBusTitle_busAnio}"/>
+
+                    <h:outputText value="Empresa"/>
+                    <h:outputText value="#{busController.selected.busIdEmpresa.empresaNombre}"/>
+
+                    <h:outputText value="Flota"/>
+                    <h:outputText value="#{busController.selected.busIdFlota.flotaNombre}"/>
+
+                    <h:outputText value="Administrador"/>
+                    <h:outputText value="#{busController.selected.busAdministrador}" title="#{bundle.ViewBusTitle_busAdministrador}"/>
+
+                    <h:outputText value="Terminal"/>
+                    <h:outputText value="#{busController.selected.busIdTerminal.terminalNombre}"/>
+
+                    <h:outputText value="Grupo/Servicio"/>
+                    <h:outputText value="#{busController.selected.busIdGrupoServicio.grupoServicioIdentificador}"/>
+
+                    <h:outputText value="Proceso Recaudación"/>
+                    <h:outputText value="#{busController.selected.busIdProcesoRecaudacion.procesoRecaudacionNombre}"/>
+
+                    <h:outputText value="Modelo"/>
+                    <h:outputText value="#{busController.selected.busIdModelo.modeloMarcaBusNombre}"/>
+
+                    <h:outputText value="N° Motor"/>
+                    <h:outputText value="#{busController.selected.busNumeroMotor}" title="#{bundle.ViewBusTitle_busNumeroMotor}"/>
+
+                    <h:outputText value="N° Chasis"/>
+                    <h:outputText value="#{busController.selected.busNumeroChasis}" title="#{bundle.ViewBusTitle_busNumeroChasis}"/>
+
+                    <h:outputText value="Carrocería"/>
+                    <h:outputText value="#{busController.selected.busCarroceria}" title="#{bundle.ViewBusTitle_busCarroceria}"/>
+
+                    <h:outputText value="R.Técnica"/>
+                    <h:outputText value="#{busController.selected.busFechaRevisionTecnica}" title="#{bundle.ViewBusTitle_busFechaRevisionTecnica}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+
+                    <h:outputText value="Activo"/>
+                    <h:selectBooleanCheckbox id="busActivo" value="#{busController.selected.busActivo}" title="#{bundle.EditBusTitle_busActivo}"  disabled="true"/>
+
+                    <h:outputText value="Estado"/>
+                    <h:outputText value="#{busController.selected.busIdEstadoBus.estadoBusNombre}"/>
+
+                    <h:outputText value="F.Ingreso"/>
+                    <h:outputText value="#{busController.selected.busFechaIngreso}" title="#{bundle.ViewBusTitle_busFechaIngreso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+
+                </p:panelGrid>
+
+                <p:commandButton value="#{bundle.Close}" onclick="PF('BusViewDialog').hide()"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
 
 </ui:composition>

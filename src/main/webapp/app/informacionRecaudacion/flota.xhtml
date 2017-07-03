@@ -10,10 +10,7 @@
     <h:form id="FlotaListForm" class="form-height">
 
         <p:contextMenu id="FlotaDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('FlotaListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{bundle.View}" onclick="document.getElementById('FlotaListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('FlotaListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('FlotaListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
 
@@ -22,9 +19,8 @@
                         rowKey="#{item.flotaId}"
                         selection="#{flotaController.selected}"
                         filtered="#{flotaController.filtered}"
-                        rowselect=":FlotaListForm:datalist:datalist:createButton,:FlotaListForm:datalist:datalist:viewButton,:FlotaListForm:datalist:datalist:editButton,:FlotaListForm:datalist:datalist:deleteButton,:FlotaListForm:FlotaDataTableContextMenu"
-                        rowDblselect="document.getElementById('FlotaListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":FlotaListForm:datalist:datalist:createButton :FlotaListForm:datalist:datalist:viewButton :FlotaListForm:datalist:datalist:editButton :FlotaListForm:datalist:datalist:deleteButton"
+                        rowselect=":FlotaListForm:datalist:datalist:viewButton,:FlotaListForm:FlotaDataTableContextMenu"
+                        contextMenu=":FlotaListForm:datalist:datalist:viewButton"
                         selectListener="#{flotaController.resetParents()}"
                         >
 
@@ -43,8 +39,7 @@
                             <p:columnToggler datasource="datalist" trigger="toggler">
                                 <p:ajax event="toggle" listener="#{flotaController.onToggle}" />
                             </p:columnToggler>
-                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>
-                            <p:commandButton value="#{bundle.Save}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>     
+                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>                            
                         </div>
                     </div>
                 </div>
@@ -77,12 +72,7 @@
 
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{flotaController.prepareCreate}" update=":FlotaCreateForm" oncomplete="PF('FlotaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                     <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":FlotaViewForm" oncomplete="PF('FlotaViewDialog').show()" disabled="#{empty flotaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":FlotaEditForm" oncomplete="PF('FlotaEditDialog').show()" disabled="#{empty flotaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{flotaController.delete}" update=":growl,datalist" disabled="#{empty flotaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
                 </div>
             </f:facet>
 
@@ -90,5 +80,30 @@
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
+    
+    <p:dialog id="FlotaViewDlg" widgetVar="FlotaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Ficha Flota" closeOnEscape="true">
+
+            <h:form id="FlotaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{flotaController.selected != null}">
+
+                        <h:outputText value="#"/>
+                        <h:outputText value="#{flotaController.selected.flotaId}" title="#{bundle.ViewFlotaTitle_flotaId}"/>
+
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{flotaController.selected.flotaNombre}" title="#{bundle.ViewFlotaTitle_flotaNombre}"/>
+
+                        <h:outputText value="F.Ingreso"/>
+                        <h:outputText value="#{flotaController.selected.flotaFechaIngreso}" title="#{bundle.ViewFlotaTitle_flotaFechaIngreso}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PF('FlotaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
 
 </ui:composition>

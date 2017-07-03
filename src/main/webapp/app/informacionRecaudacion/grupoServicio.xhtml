@@ -10,10 +10,7 @@
     <h:form id="GrupoServicioListForm" class="form-height">
 
         <p:contextMenu id="GrupoServicioDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('GrupoServicioListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{bundle.View}" onclick="document.getElementById('GrupoServicioListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('GrupoServicioListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('GrupoServicioListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
 
@@ -22,9 +19,8 @@
                         rowKey="#{item.grupoServicioId}"
                         selection="#{grupoServicioController.selected}"
                         filtered="#{grupoServicioController.filtered}"
-                        rowselect=":GrupoServicioListForm:datalist:datalist:createButton,:GrupoServicioListForm:datalist:datalist:viewButton,:GrupoServicioListForm:datalist:datalist:editButton,:GrupoServicioListForm:datalist:datalist:deleteButton,:GrupoServicioListForm:GrupoServicioDataTableContextMenu"
-                        rowDblselect="document.getElementById('GrupoServicioListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":GrupoServicioListForm:datalist:datalist:createButton :GrupoServicioListForm:datalist:datalist:viewButton :GrupoServicioListForm:datalist:datalist:editButton :GrupoServicioListForm:datalist:datalist:deleteButton"
+                        rowselect=":GrupoServicioListForm:datalist:datalist:viewButton,:GrupoServicioListForm:GrupoServicioDataTableContextMenu"
+                        contextMenu=":GrupoServicioListForm:datalist:datalist:viewButton"
                         selectListener="#{grupoServicioController.resetParents()}"
                         >
 
@@ -43,8 +39,7 @@
                             <p:columnToggler datasource="datalist" trigger="toggler">
                                 <p:ajax event="toggle" listener="#{grupoServicioController.onToggle}" />
                             </p:columnToggler>
-                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>
-                            <p:commandButton value="#{bundle.Save}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>     
+                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>                            
                         </div>
                     </div>
                 </div>
@@ -76,13 +71,8 @@
             </p:column>
 
             <f:facet name="{buttons}">
-                <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{grupoServicioController.prepareCreate}" update=":GrupoServicioCreateForm" oncomplete="PF('GrupoServicioCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GrupoServicioViewForm" oncomplete="PF('GrupoServicioViewDialog').show()" disabled="#{empty grupoServicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":GrupoServicioEditForm" oncomplete="PF('GrupoServicioEditDialog').show()" disabled="#{empty grupoServicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{grupoServicioController.delete}" update=":growl,datalist" disabled="#{empty grupoServicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
+                <div class="footer-left">                    
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GrupoServicioViewForm" oncomplete="PF('GrupoServicioViewDialog').show()" disabled="#{empty grupoServicioController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
                 </div>
             </f:facet>
 
@@ -90,5 +80,33 @@
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
+
+    <p:dialog id="GrupoServicioViewDlg" widgetVar="GrupoServicioViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{bundle.ViewGrupoServicioTitle}" closeOnEscape="true">
+
+        <h:form id="GrupoServicioViewForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" columnClasses="column" rendered="#{grupoServicioController.selected != null}">
+
+                    <h:outputText value="#"/>
+                    <h:outputText value="#{grupoServicioController.selected.grupoServicioId}" title="#{bundle.ViewGrupoServicioTitle_grupoServicioId}"/>
+
+                    <h:outputText value="Identificador"/>
+                    <h:outputText value="#{grupoServicioController.selected.grupoServicioIdentificador}" title="#{bundle.ViewGrupoServicioTitle_grupoServicioIdentificador}"/>
+
+                    <h:outputText value="F.Ingreso"/>
+                    <h:outputText value="#{grupoServicioController.selected.grupoServicioFechaIngreso}" title="#{bundle.ViewGrupoServicioTitle_grupoServicioFechaIngreso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+
+                    <h:outputText value="#{bundle.ViewGrupoServicioLabel_grupoServicioIdCuenta}"/>
+                    <h:outputText value="#{grupoServicioController.selected.grupoServicioIdCuenta.cuentaId}"/>
+                </p:panelGrid>
+                <p:commandButton value="#{bundle.Close}" onclick="PF('GrupoServicioViewDialog').hide()"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
 
 </ui:composition>

@@ -10,10 +10,7 @@
     <h:form id="EmpresaListForm" class="form-height">
 
         <p:contextMenu id="EmpresaDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('EmpresaListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
-            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('EmpresaListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('EmpresaListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('EmpresaListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('EmpresaListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>            
             <p:separator/>
         </p:contextMenu>
 
@@ -22,9 +19,8 @@
                         rowKey="#{item.empresaId}"
                         selection="#{empresaController.selected}"
                         filtered="#{empresaController.filtered}"
-                        rowselect=":EmpresaListForm:datalist:datalist:createButton,:EmpresaListForm:datalist:datalist:viewButton,:EmpresaListForm:datalist:datalist:editButton,:EmpresaListForm:datalist:datalist:deleteButton,:EmpresaListForm:EmpresaDataTableContextMenu"
-                        rowDblselect="document.getElementById('EmpresaListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":EmpresaListForm:datalist:datalist:createButton :EmpresaListForm:datalist:datalist:viewButton :EmpresaListForm:datalist:datalist:editButton :EmpresaListForm:datalist:datalist:deleteButton"
+                        rowselect=":EmpresaListForm:datalist:datalist:viewButton,:EmpresaListForm:EmpresaDataTableContextMenu"                        
+                        contextMenu=":EmpresaListForm:datalist:datalist:viewButton"
                         selectListener="#{empresaController.resetParents()}"
                         >
 
@@ -43,14 +39,13 @@
                             <p:columnToggler datasource="datalist" trigger="toggler">
                                 <p:ajax event="toggle" listener="#{empresaController.onToggle}" />
                             </p:columnToggler>
-                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>
-                            <p:commandButton value="#{bundle.Save}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>     
+                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>                            
                         </div>
                     </div>
                 </div>
             </f:facet>
 
-            <p:column sortBy="#{item.empresaId}" filterBy="#{item.empresaId}" style="text-align: center;">
+            <p:column sortBy="#{item.empresaId}" filterBy="#{item.empresaId}">
                 <f:facet name="header">
                     <h:outputText value="#"/>
                 </f:facet>
@@ -101,12 +96,7 @@
 
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{empresaController.prepareCreate}" update=":EmpresaCreateForm" oncomplete="PF('EmpresaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                     <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":EmpresaViewForm" oncomplete="PF('EmpresaViewDialog').show()" disabled="#{empty empresaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":EmpresaEditForm" oncomplete="PF('EmpresaEditDialog').show()" disabled="#{empty empresaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{empresaController.delete}" update=":growl,datalist" disabled="#{empty empresaController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
                 </div>
             </f:facet>
 
@@ -114,5 +104,58 @@
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
+
+    <p:dialog id="EmpresaViewDlg" widgetVar="EmpresaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="Ficha Empresa" closeOnEscape="true">
+
+        <h:form id="EmpresaViewForm">
+
+            <h:panelGroup id="display">
+                <p:panelGrid columns="2" columnClasses="column" rendered="#{empresaController.selected != null}">
+
+                    <h:outputText value="#"/>
+                    <h:outputText value="#{empresaController.selected.empresaId}" title="#{bundle.ViewEmpresaTitle_empresaId}"/>
+
+                    <h:outputText value="Nombre"/>
+                    <h:outputText value="#{empresaController.selected.empresaNombre}" title="#{bundle.ViewEmpresaTitle_empresaNombre}"/>
+
+                    <h:outputText value="Rut"/>
+                    <h:outputText value="#{empresaController.selected.empresaRut}" title="#{bundle.ViewEmpresaTitle_empresaRut}"/>
+
+                    <h:outputText value="Giro"/>
+                    <h:outputText value="#{empresaController.selected.empresaGiro}" title="#{bundle.ViewEmpresaTitle_empresaGiro}"/>
+
+                    <h:outputText value="Dirección"/>
+                    <h:outputText value="#{empresaController.selected.empresaDireccion}" title="#{bundle.ViewEmpresaTitle_empresaDireccion}"/>
+
+                    <h:outputText value="Teléfono"/>
+                    <h:outputText value="#{empresaController.selected.empresaTelefono}" title="#{bundle.ViewEmpresaTitle_empresaTelefono}"/>
+
+                    <h:outputText value="Celular"/>
+                    <h:outputText value="#{empresaController.selected.empresaCelular}" title="#{bundle.ViewEmpresaTitle_empresaCelular}"/>
+
+                    <h:outputText value="Email"/>
+                    <h:outputText value="#{empresaController.selected.empresaEmail}" title="#{bundle.ViewEmpresaTitle_empresaEmail}"/>
+
+                    <h:outputText value="C.Compensación"/>
+                    <h:outputText value="#{empresaController.selected.empresaIdCajaCompensacion.cajaCompensacionNombre}"/>
+
+                    <h:outputText value="Mutual"/>
+                    <h:outputText value="#{empresaController.selected.empresaIdMutual.mutualNombre}"/>
+
+                    <h:outputText value="% Mutual"/>
+                    <h:outputText value="#{empresaController.selected.empresaPorcentajeMutual}" title="#{bundle.ViewEmpresaTitle_empresaPorcentajeMutual}"/>
+
+                    <h:outputText value="F. ingreso"/>
+                    <h:outputText value="#{empresaController.selected.empresaFechaIngreso}" title="#{bundle.ViewEmpresaTitle_empresaFechaIngreso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+
+                </p:panelGrid>
+                <p:commandButton value="#{bundle.Close}" onclick="PF('EmpresaViewDialog').hide()"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
 
 </ui:composition>

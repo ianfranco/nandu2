@@ -10,10 +10,7 @@
     <h:form id="TrabajadorListForm" class="form-height">
 
         <p:contextMenu id="TrabajadorDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{bundle.View}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
 
@@ -22,9 +19,9 @@
                         rowKey="#{item.trabajadorId}"
                         selection="#{trabajadorController.selected}"
                         filtered="#{trabajadorController.filtered}"
-                        rowselect=":TrabajadorListForm:datalist:datalist:createButton,:TrabajadorListForm:datalist:datalist:viewButton,:TrabajadorListForm:datalist:datalist:editButton,:TrabajadorListForm:datalist:datalist:deleteButton,:TrabajadorListForm:TrabajadorDataTableContextMenu"
-                        rowDblselect="document.getElementById('TrabajadorListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":TrabajadorListForm:datalist:datalist:createButton :TrabajadorListForm:datalist:datalist:viewButton :TrabajadorListForm:datalist:datalist:editButton :TrabajadorListForm:datalist:datalist:deleteButton"
+                        rowselect=":TrabajadorListForm:datalist:datalist:viewButton,:TrabajadorListForm:TrabajadorDataTableContextMenu"
+                        rowDblselect="document.getElementById('TrabajadorListForm:datalist:datalist:viewButton').click()"
+                        contextMenu=":TrabajadorListForm:datalist:datalist:viewButton"
                         selectListener="#{trabajadorController.resetParents()}"
                         >
 
@@ -43,8 +40,7 @@
                             <p:columnToggler datasource="datalist" trigger="toggler">
                                 <p:ajax event="toggle" listener="#{trabajadorController.onToggle}" />
                             </p:columnToggler>
-                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>
-                            <p:commandButton value="#{bundle.Save}" styleClass="btn-success" icon="fa fa-edit" update=":growl,@this"/>     
+                            <p:commandButton id="toggler" type="button" value="#{bundle.Columns}" class="btn-primary" icon="fa fa-list"/>                            
                         </div>
                     </div>
                 </div>
@@ -330,12 +326,7 @@
 
             <f:facet name="{buttons}">
                 <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{trabajadorController.prepareCreate}" update=":TrabajadorCreateForm" oncomplete="PF('TrabajadorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":TrabajadorEditForm" oncomplete="PF('TrabajadorEditDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{trabajadorController.delete}" update=":growl,datalist" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
+                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>                    
                 </div>
             </f:facet>
 
@@ -343,5 +334,147 @@
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
+
+    <p:dialog id="TrabajadorViewDlg" widgetVar="TrabajadorViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{bundle.ViewTrabajadorTitle}" closeOnEscape="true">
+
+        <h:form id="TrabajadorViewForm">
+
+            <h:panelGroup id="display" rendered="#{trabajadorController.selected!=null}">
+                <p:accordionPanel style="width: 830px">
+                    <p:tab title="General">
+                        <p:panelGrid columns="4" columnClasses="column, , column, " style="width: 800px">
+                            <p:outputLabel value="Código" for="trabajadorCodigo" />
+                            <p:outputLabel id="trabajadorCodigo" value="#{trabajadorController.selected.trabajadorCodigo}" title="#{bundle.CreateTrabajadorTitle_trabajadorCodigo}"/>
+
+                            <p:outputLabel value="Rut" for="trabajadorRut" />
+                            <p:outputLabel id="trabajadorRut" value="#{trabajadorController.selected.trabajadorRut}" title="#{bundle.CreateTrabajadorTitle_trabajadorRut}"/>
+
+                            <p:outputLabel value="Nombres" for="trabajadorNombres" />
+                            <p:outputLabel id="trabajadorNombres" value="#{trabajadorController.selected.trabajadorNombres}" title="#{bundle.CreateTrabajadorTitle_trabajadorNombres}"/>
+
+                            <p:outputLabel value="Ap.Paterno" for="trabajadorApellidoPaterno" />
+                            <p:outputLabel id="trabajadorApellidoPaterno" value="#{trabajadorController.selected.trabajadorApellidoPaterno}" />
+
+                            <p:outputLabel value="Ap.Materno" for="trabajadorApellidoMaterno" />
+                            <p:outputLabel id="trabajadorApellidoMaterno" value="#{trabajadorController.selected.trabajadorApellidoMaterno}" title="#{bundle.CreateTrabajadorTitle_trabajadorApellidoMaterno}"/>
+
+                            <p:outputLabel value="F.Nacimiento" for="trabajadorFechaNacimiento" />
+                            <p:outputLabel id="trabajadorFechaNacimiento" value="#{trabajadorController.selected.trabajadorFechaNacimiento}"/>
+
+                            <p:outputLabel value="Nacionalidad" for="trabajadorNacionalidad" />
+                            <h:panelGroup>
+                                <p:selectOneButton id="trabajadorNacionalidad" value="#{trabajadorController.selected.trabajadorNacionalidad}" disabled="true">
+                                    <f:selectItem itemLabel="Chileno" itemValue="#{true}"  />
+                                    <f:selectItem itemLabel="Extranjero" itemValue="#{false}" />
+                                </p:selectOneButton>
+                            </h:panelGroup>                                
+
+                            <p:outputLabel value="Sexo" for="trabajadorSexo" />
+                            <p:selectOneButton id="trabajadorSexo" value="#{trabajadorController.selected.trabajadorSexo}" disabled="true" >
+                                <f:selectItem itemLabel="Hombre" itemValue="#{true}"/>
+                                <f:selectItem itemLabel="Mujer" itemValue="#{false}"/>
+                            </p:selectOneButton>
+
+                            <p:outputLabel value="Estado Civil" for="trabajadorIdEstadoCivil" />
+                            <p:outputLabel id="trabajadorIdEstadoCivil" value="#{trabajadorController.selected.trabajadorIdEstadoCivil.estadoCivilNombre}"/>
+
+                            <p:outputLabel value="Comuna" for="trabajadorIdComuna" />
+                            <p:outputLabel id="trabajadorIdComuna" value="#{trabajadorController.selected.trabajadorIdComuna.comunaNombre}"/>
+
+                            <p:outputLabel value="Dirección" for="trabajadorNumeroDireccion" />
+                            <p:outputLabel id="trabajadorNumeroDireccion" value="#{trabajadorController.selected.trabajadorNumeroDireccion}" />
+
+                            <p:outputLabel value="Calle" for="trabajadorCalle" />
+                            <p:outputLabel id="trabajadorCalle" value="#{trabajadorController.selected.trabajadorCalle}" />
+
+                            <p:outputLabel value="Teléfono N° 1" for="trabajadorTelefonoFijo" />
+                            <p:outputLabel id="trabajadorTelefonoFijo" value="#{trabajadorController.selected.trabajadorTelefonoFijo}" />
+
+                            <p:outputLabel value="Teléfono N° 2" for="trabajadorCelular" />
+                            <p:outputLabel id="trabajadorCelular" value="#{trabajadorController.selected.trabajadorCelular}" />
+
+                            <p:outputLabel value="Email" for="trabajadorEmail" />
+                            <p:outputLabel id="trabajadorEmail" value="#{trabajadorController.selected.trabajadorEmail}" />
+
+                            <p:outputLabel value="Cesantía" for="trabajadorCesantia" />
+                            <p:selectBooleanCheckbox id="trabajadorCesantia" value="#{trabajadorController.selected.trabajadorCesantia}" disabled="true" />
+
+                            <p:outputLabel value="Regimen Previsional" for="trabajadorRegimen" />
+                            <p:selectOneButton id="trabajadorRegimen" value="#{trabajadorController.regimenPrevisional}"  disabled="true" >
+                                <f:selectItem itemLabel="Afp" itemValue="#{0}"  />
+                                <f:selectItem itemLabel="IPS" itemValue="#{1}"  />
+                                <f:selectItem itemLabel="Jubilado" itemValue="#{2}"  />                                    
+                            </p:selectOneButton>
+
+                            <p:outputLabel value="Previsión" for="trabajadorIdInstitucionPrevision" />
+                            <p:outputLabel id="trabajadorIdInstitucionPrevision" value="#{trabajadorController.selected.trabajadorIdInstitucionPrevision.institucionPrevisionNombre}" />
+
+
+                            <p:outputLabel value="Fonasa?:" for="trabajadorFonasa"/>
+                            <p:selectBooleanCheckbox id="trabajadorFonasa" value="#{trabajadorController.selected.trabajadorFonasa}" disabled="true"/>
+
+                            <p:outputLabel value="Sindicato" for="trabajadorIdSindicato" />
+                            <p:outputLabel id="trabajadorIdSindicato" value="#{trabajadorController.selected.trabajadorIdSindicato.sindicatoNombre}" />
+
+                            <p:outputLabel value="Terminal" for="trabajadorIdTerminal" />
+                            <p:outputLabel id="trabajadorIdTerminal" value="#{trabajadorController.selected.trabajadorIdTerminal.terminalNombre}" />
+
+                            <p:outputLabel value="Centro de Costo" for="trabajadorIdCentroCosto" />
+                            <p:outputLabel id="trabajadorIdCentroCosto" value="#{trabajadorController.selected.trabajadorIdCentroCosto.centroCostoNombre}"/>
+
+                            <p:outputLabel value="Forma de Pago" for="trabajadorIdFormaPago" />
+                            <p:outputLabel id="trabajadorIdFormaPago" value="#{trabajadorController.selected.trabajadorIdFormaPago.formaPagoNombre}" />
+
+                            <p:outputLabel value="Estado" for="trabajadorContratado" />
+                            <p:selectBooleanCheckbox id="trabajadorContratado" value="#{trabajadorController.selected.trabajadorContratado}" disabled="true"/>
+
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Ahorro Voluntario">
+                        <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                            <p:outputLabel value="¿Posee APV?" for="poseeAhorro"/>
+                            <p:selectBooleanCheckbox id="poseeAhorro" value="#{trabajadorController.selected.trabajadorPoseeApv}" disabled="true"/>
+
+                            <p:outputLabel value="Institución Apv" for="trabajadorIdInstitucionApv" />
+                            <p:outputLabel id="trabajadorIdInstitucionApv" value="#{trabajadorController.selected.trabajadorIdInstitucionApv}" />
+
+                            <p:outputLabel value="Pago" for="trabajadorFormaPagoApv" />
+                            <p:selectOneButton id="trabajadorFormaPagoApv" value="#{trabajadorController.selected.trabajadorFormaPagoApv}" disabled="true">
+                                <f:selectItem itemLabel="Directo" itemValue="#{true}"  />
+                                <f:selectItem itemLabel="Indirecto" itemValue="#{false}"  />
+                            </p:selectOneButton>
+
+                            <p:outputLabel value="Monto Apv" for="trabajadorMontoApv" />
+                            <p:outputLabel id="trabajadorMontoApv" value="#{trabajadorController.selected.trabajadorMontoApv}" />
+                        </p:panelGrid>
+
+                    </p:tab>
+                    <p:tab title="Isapre">
+                        <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                            <p:outputLabel value="Salud" for="trabajadorIdInstitucionSalud" />
+                            <p:outputLabel id="trabajadorIdInstitucionSalud" value="#{trabajadorController.selected.trabajadorIdInstitucionSalud.institucionSaludNombre}" />
+                        </p:panelGrid>
+
+                    </p:tab>
+                    <p:tab title="Cargas Familiares">
+                        <p:panelGrid columns="4" columnClasses="column, " style="width: 800px">
+                            <p:outputLabel value="N° Cargas" for="trabajadorNumeroCargas" />
+                            <p:outputLabel id="trabajadorNumeroCargas" value="#{trabajadorController.selected.trabajadorNumeroCargas}" title="#{bundle.CreateTrabajadorTitle_trabajadorNumeroCargas}"/>
+
+                            <p:outputLabel value="Asignación Familiar" for="trabajadorIdAsignacionFamiliar" />
+                            <p:outputLabel id="trabajadorIdAsignacionFamiliar" value="#{trabajadorController.selected.trabajadorIdAsignacionFamiliar.asignacionFamiliarTramo}"/>
+
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Banco">
+
+                    </p:tab>
+                </p:accordionPanel>
+                <p:commandButton value="#{bundle.Close}" onclick="PF('TrabajadorViewDialog').hide()"/>
+            </h:panelGroup>
+
+        </h:form>
+
+    </p:dialog>
 
 </ui:composition>

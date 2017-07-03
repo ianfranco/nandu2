@@ -141,7 +141,7 @@ public final class CountPage implements java.io.Serializable {
     private int sindicatoCount;
     private int sueldoBaseCount;
     private int surtidorCount;
-    private int tarifaServicioCount;
+    private int tarifaGrupoServicioCount;
     private int terminalCount;
     private int tipoAbonoCount;
     private int tipoCargaFamiliarCount;
@@ -1899,17 +1899,17 @@ public final class CountPage implements java.io.Serializable {
     }
 
     /**
-     * @return the tarifaServicioCount
+     * @return the tarifaGrupoServicioCount
      */
-    public int getTarifaServicioCount() {
-        return tarifaServicioCount;
+    public int getTarifaGrupoServicioCount() {
+        return tarifaGrupoServicioCount;
     }
 
     /**
-     * @param tarifaServicioCount the tarifaServicioCount to set
+     * @param tarifaGrupoServicioCount the tarifaServicioCount to set
      */
-    public void setTarifaServicioCount(int tarifaServicioCount) {
-        this.tarifaServicioCount = tarifaServicioCount;
+    public void setTarifaServicioCount(int tarifaGrupoServicioCount) {
+        this.tarifaGrupoServicioCount = tarifaGrupoServicioCount;
     }
 
     /**

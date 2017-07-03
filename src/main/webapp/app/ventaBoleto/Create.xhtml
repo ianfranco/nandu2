@@ -28,7 +28,7 @@
                             <f:selectItems value="#{ventaBoletoRecaudacionController.guiaList}"
                                            var="busItem"
                                            itemValue="#{busItem}"
-                                           itemLabel="#{busItem.guiaIdBus.busNumero}"
+                                           itemLabel="#{busItem.guiaIdBus.busNumero} (#{busItem.guiaTurno})"
                                            />
                             <p:ajax update="ppu, conductor, datalist" event="valueChange" listener="#{ventaBoletoRecaudacionController.handleBusChange(event)}"/>
                         </p:selectOneMenu>
@@ -101,6 +101,7 @@
                                                itemValue="#{ventaBoletoIdInventarioCajaItem}"
                                                itemLabel="#{ventaBoletoIdInventarioCajaItem.inventarioCajaIdentificador} #{ventaBoletoIdInventarioCajaItem.inventarioCajaSerie}"
                                                />
+                                <p:ajax onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                             </p:selectOneMenu>
                         </p:column>
 
@@ -113,7 +114,7 @@
 
                     </p:dataTable>
 
-                    <p:commandButton actionListener="#{ventaBoletoRecaudacionController.saveNew}" value="#{bundle.Save}" update="display,:VentaBoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaBoletoCreateDialog'));">
+                    <p:commandButton actionListener="#{ventaBoletoRecaudacionController.saveNew}" value="#{bundle.Save}" update="display,:VentaBoletoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaBoletoCreateDialog'));" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
 
