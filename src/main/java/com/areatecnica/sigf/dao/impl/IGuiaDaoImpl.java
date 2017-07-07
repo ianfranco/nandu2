@@ -112,4 +112,13 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return 1;
         }
     }
+
+    @Override
+    public List<Guia> findByBusPendientes(Bus bus) {
+        try {
+            return this.entityManager.createNamedQuery("Guia.findByBusFechaPendiente").setParameter("guiaIdBus", bus).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 }

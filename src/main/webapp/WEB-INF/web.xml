@@ -58,7 +58,7 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            300
         </session-timeout>
     </session-config>
     <welcome-file-list>
@@ -117,10 +117,10 @@
     <!-- Error Page -->
     <error-page>
         <error-code>404</error-code>
-        <location>/errorPage/404.xhtml</location>
+        <location>errorPage/404.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>javax.faces.application.ViewExpiredException</exception-type>
-        <location>/errorPage/404.xhtml</location>
+        <location>errorPage/404.xhtml</location>
     </error-page>
 </web-app>

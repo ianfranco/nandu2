@@ -43,9 +43,9 @@ import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-@Named(value = "digitacionGuiaController")
+@Named(value = "recaudacionGuiaController")
 @ViewScoped
-public class DigitacionGuiaController extends AbstractController<Guia> {
+public class RecaudacionGuiaController extends AbstractController<Guia> {
 
     @Inject
     private GuiaFacade ejbFacade;
@@ -80,6 +80,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     private ResumenRecaudacion resumenRecaudacion;
     private CajaRecaudacion cajaRecaudacion;
     private EstadoGuia estadoGuia;
+    private Bus bus;
     private Date fechaRecaudacion;
     private Boolean permitirEgresoFlota;
     private Boolean permitirEgresoBus;
@@ -108,8 +109,30 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     @Override
     public void init() {
         super.setFacade(ejbFacade);
+
+        this.fechaRecaudacion = new Date();
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.cajaRecaudacionList = this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser());
+
+        if (this.cajaRecaudacionList.size() == 1) {
+            this.cajaRecaudacion = this.cajaRecaudacionList.get(0);
+        }
+
+        if (this.cajaRecaudacion != null) {
+            this.procesoRecaudacionList = new ArrayList<ProcesoRecaudacion>();
+
+            List<CajaProceso> cajaProcesoList = this.cajaRecaudacion.getCajaProcesoList();
+
+            for (CajaProceso cp : cajaProcesoList) {
+                if (cp.getCajaProcesoActivo()) {
+                    this.procesoRecaudacionList.add(cp.getCajaProcesoIdProceso());
+                }
+            }
+            if (this.procesoRecaudacionList.size() == 1) {
+                this.procesoRecaudacion = this.procesoRecaudacionList.get(0);
+            }
+        }
+
         this.estadoGuiaDao = new IEstadoGuiaDaoImpl();
         this.setEstadoGuia(this.estadoGuiaDao.findById(1));
 
@@ -121,10 +144,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         this.estadoProceso = Boolean.FALSE;
     }
 
-    public DigitacionGuiaController() {
+    public RecaudacionGuiaController() {
         // Inform the Abstract parent controller of the concrete Guia Entity
         super(Guia.class);
-        this.fechaRecaudacion = new Date();
+
     }
 
     /**
@@ -251,6 +274,20 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
      */
     public void setProcesoRecaudacionList(List<ProcesoRecaudacion> procesoRecaudacionList) {
         this.procesoRecaudacionList = procesoRecaudacionList;
+    }
+
+    /**
+     * @return the bus
+     */
+    public Bus getBus() {
+        return bus;
+    }
+
+    /**
+     * @param bus
+     */
+    public void setBus(Bus bus) {
+        this.bus = bus;
     }
 
     /**
@@ -808,19 +845,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     }
 
     public void handleBusChange(ActionEvent event) {
-        if (this.getSelected().getGuiaIdBus() != null) {
-
-            List<Guia> auxGuiaTurno = this.guiaDao.findByBusFecha(this.getSelected().getGuiaIdBus(), this.getSelected().getGuiaFecha());
-
-            if (!auxGuiaTurno.isEmpty()) {
-                if (auxGuiaTurno.size() == 1) {
-                    this.getSelected().setGuiaTurno(2);
-                } else {
-                    this.getSelected().setGuiaTurno(auxGuiaTurno.get(0).getGuiaTurno() + 1);
-                }
-                JsfUtil.addExclamationMessage("Existen Guías registradas a la fecha (" + auxGuiaTurno.size() + ")\nSe actualizó el N° de Turno a " + this.getSelected().getGuiaTurno());
-            } else {
-                this.getSelected().setGuiaTurno(1);
+        if (this.getBus() != null) {
+            this.list = this.guiaDao.findByBusPendientes(this.getBus());
+            if (list.isEmpty()) {
+                JsfUtil.addExclamationMessage("No existen guías pendientes para el Bus");
             }
         }
     }

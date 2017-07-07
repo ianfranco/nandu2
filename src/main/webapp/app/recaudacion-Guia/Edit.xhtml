@@ -8,9 +8,9 @@
 
     <ui:composition>
 
-        <p:dialog id="GuiaCreateDlg" widgetVar="GuiaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
+        <p:dialog id="GuiaEditDlg" widgetVar="GuiaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
 
-            <h:form id="GuiaCreateForm" onkeypress="return event.keyCode != 13">
+            <h:form id="GuiaEditForm" onkeypress="return event.keyCode != 13">
                 <h:panelGroup id="display" rendered="#{digitacionGuiaController.selected != null}">
                     <p:panelGrid>
 
@@ -20,7 +20,7 @@
 
                             <p:column style="font-weight: bold;">Folio:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:inputNumber id="guiaFolio" value="#{digitacionGuiaController.selected.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" minValue="1">
+                                <p:inputNumber id="guiaFolio" value="#{digitacionGuiaController.selected.guiaFolio}" title="#{bundle.EditGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.EditGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)">
                                     <p:ajax event="valueChange" listener="#{digitacionGuiaController.findFolio}" update="growl, guiaFolio"/>
                                 </p:inputNumber>                                
                             </p:column>
@@ -32,7 +32,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Fecha:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:calendar id="guiaFecha" pattern="dd/MM/yyyy" value="#{digitacionGuiaController.selected.guiaFecha}" title="#{bundle.CreateGuiaTitle_guiaFecha}" required="true" requiredMessage="Debe ingresar la Fecha de la Guía"  locale="es" onfocus="this.setSelectionRange(0, 2)">
+                                <p:calendar id="guiaFecha" pattern="dd/MM/yyyy" value="#{digitacionGuiaController.selected.guiaFecha}" title="#{bundle.EditGuiaTitle_guiaFecha}" required="true" requiredMessage="#{bundle.EditGuiaRequiredMessage_guiaFecha}"  locale="es" onfocus="this.setSelectionRange(0, 2)">
                                     <p:ajax event="valueChange" listener="#{digitacionGuiaController.handleBusChange(event)}" update="guiaTurno, growl"/>
                                 </p:calendar>
                             </p:column>
@@ -43,7 +43,7 @@
                         <!-- SEGUNDA FILA -->
                         <p:row>
                             <p:column style="font-weight: bold;">N° Bus:</p:column>
-                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{digitacionGuiaController.selected.guiaIdBus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
+                            <p:column><p:selectOneMenu id="guiaIdBus" value="#{digitacionGuiaController.selected.guiaIdBus}" required="true" requiredMessage="#{bundle.EditGuiaRequiredMessage_guiaIdBus}" converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{digitacionGuiaController.busesList}"
                                                    var="guiaIdBusItem"
@@ -60,7 +60,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">N° Conductor</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:selectOneMenu id="guiaIdTrabajador" value="#{digitacionGuiaController.selected.guiaIdTrabajador}" required="true" requiredMessage="Debe seleccionar al Conductor" converter="omnifaces.SelectItemsConverter">
+                                <p:selectOneMenu id="guiaIdTrabajador" value="#{digitacionGuiaController.selected.guiaIdTrabajador}"  converter="omnifaces.SelectItemsConverter">
                                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                                     <f:selectItems value="#{trabajadorController.items}"
                                                    var="guiaIdTrabajadorItem"
@@ -78,7 +78,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">N° Vueltas</p:column>
                             <p:column>
-                                <p:inputNumber id="guiaNumeroVueltas" value="#{digitacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" minValue="0"/>
+                                <p:inputNumber id="guiaNumeroVueltas" value="#{digitacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.EditGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;" rowspan="1">Rut:</p:column>
                             <p:column rowspan="1"><p:outputLabel value="#{digitacionGuiaController.selected.guiaIdTrabajador.trabajadorRut}" id="guiaIdTrabajadorRut" /></p:column>
@@ -87,7 +87,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Turno</p:column>
                             <p:column>
-                                <p:inputNumber minValue="0" id="guiaTurno" value="#{digitacionGuiaController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
+                                <p:inputNumber id="guiaTurno" value="#{digitacionGuiaController.selected.guiaTurno}" title="#{bundle.EditGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;"/>
                             <p:column style="font-weight: bold;"/>
@@ -98,7 +98,7 @@
                                 Total Ingresos: 
                             </p:column>
                             <p:column  colspan="4" style="background: #e5e5e5">
-                                <p:inputNumber minValue="0" id="guiaIngresos" value="#{digitacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                <p:inputNumber id="guiaIngresos" value="#{digitacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                     <p:ajax event="blur" update="growl, @(.clase), @(.clase2)" listener="#{digitacionGuiaController.setEgresosVariables}" global="false"/>
                                 </p:inputNumber>
                             </p:column>
@@ -114,7 +114,7 @@
                                 <p:column style="font-weight: bold;" colspan="2"/>
                                 <p:column style="font-weight: bold;" >#{egreso.egresoGuiaIdEgreso.egresoNombreEgreso}</p:column>
                                 <p:column style="font-weight: bold;" >
-                                    <p:inputNumber minValue="0" styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                    <p:inputNumber styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                         <p:ajax event="valueChange" update="growl, @(.clase2)" listener="#{digitacionGuiaController.setTotal}" global="false"></p:ajax>
                                     </p:inputNumber>
                                 </p:column>
@@ -126,7 +126,7 @@
                                 Total Egresos
                             </p:column>
                             <p:column colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaEgresos" value="#{digitacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber styleClass="clase2" id="guiaEgresos" value="#{digitacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 
@@ -135,7 +135,7 @@
                                 Saldo 
                             </p:column>
                             <p:column  colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaSaldo" value="#{digitacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber styleClass="clase2" id="guiaSaldo" value="#{digitacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 
@@ -144,10 +144,10 @@
 
                             </p:column>
                             <p:column  style="background: #e5e5e5;">
-                                <p:commandButton actionListener="#{digitacionGuiaController.saveNew}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist,:growl" styleClass="btn btn-primary">
-                                    <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Ingresar nueva Guía?" icon="ui-icon-alert"/>
+                                <p:commandButton actionListener="#{digitacionGuiaController.save}" value="#{bundle.Save}" update="display,:GuiaListForm:datalist, :growl" styleClass="btn btn-primary" oncomplete="handleSubmit(xhr,status,args,PF('GuiaEditDialog'));">
+                                    <p:confirm header="#{bundle.ConfirmationHeader}" message="¿Editar Guía?" icon="ui-icon-alert"/>
                                 </p:commandButton>
-                                <p:commandButton value="Cerrar" oncomplete="PF('GuiaCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary"/>
+                                <p:commandButton value="Cerrar" oncomplete="PF('GuiaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true" styleClass="btn btn-primary"/>
                             </p:column>
                         </p:row>
 
