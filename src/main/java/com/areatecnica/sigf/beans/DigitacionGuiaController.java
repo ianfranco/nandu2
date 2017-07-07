@@ -704,11 +704,23 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                 this.resumenRecaudacionFacade.edit(resumenRecaudacion);
             }
 
-            this.list.remove(this.getSelected());
-            JsfUtil.addSuccessMessage("Se ha eliminado la Guia N°:" + auxGuia.getGuiaFolio());
+            if (this.list.size() == 1) {
+                LinkedHashMap auxLink = new LinkedHashMap();
 
-            //LinkedHashMap auxLink = new LinkedHashMap();
-            /*for (EgresoGuia eg : this.getEgresoGuiaList()) {
+                for (Egreso eg : this.egresosList) {
+                    this.totals.put(eg.getEgresoNombreEgreso(), 0);
+                    this.resultsTotals.add("0");
+                    this.resultsHeader.add(eg.getEgresoNombreEgreso());
+                    auxLink.put(eg.getEgresoNombreEgreso(), 0);
+                }
+
+                this.listOfMaps.add(auxLink);
+            } else {
+                this.list.remove(this.getSelected());
+                JsfUtil.addSuccessMessage("Se ha eliminado la Guia N°:" + auxGuia.getGuiaFolio());
+
+                //LinkedHashMap auxLink = new LinkedHashMap();
+                /*for (EgresoGuia eg : this.getEgresoGuiaList()) {
 
                 String key = eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso();
 
@@ -722,18 +734,19 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
                     //auxLink.put(eg.getEgresoGuiaIdEgreso().getEgresoNombreEgreso(), eg.getEgresoGuiaMonto());
                 }
             }*/
-            this.listOfMaps.remove(this.listOfMaps.indexOf(guiaLink));
-            this.setSelected(null);
+                this.listOfMaps.remove(this.listOfMaps.indexOf(guiaLink));
+                this.setSelected(null);
 
-            this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
+                this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
 
-            /*for (EgresoRecaudacion eg : this.egresosResumenList) {
+                /*for (EgresoRecaudacion eg : this.egresosResumenList) {
                 eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
                 //this.resultsTotals.set(this.resultsTotals.indexOf(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()), decimalFormat.format(eg.getEgresoRecaudacionTotalEgreso()));
             }*/
-            this.resultsTotals.clear();
-            for (Object i : totals.values()) {
-                this.resultsTotals.add(decimalFormat.format((int) i));
+                this.resultsTotals.clear();
+                for (Object i : totals.values()) {
+                    this.resultsTotals.add(decimalFormat.format((int) i));
+                }
             }
 
             /*this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
@@ -1019,7 +1032,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
             if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
                 int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
                 er.setEgresoRecaudacionTotalEgreso(val);
-                System.err.println("valor x egreso:"+val);
+                System.err.println("valor x egreso:" + val);
             } else {
                 System.err.println("no hay VALOR POR EGRESO: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
             }
@@ -1028,9 +1041,9 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         //this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
-        
+
         this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
-        
+
         this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);
     }
 

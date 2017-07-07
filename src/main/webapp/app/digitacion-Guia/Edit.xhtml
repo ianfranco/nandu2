@@ -10,7 +10,7 @@
 
         <p:dialog id="GuiaEditDlg" widgetVar="GuiaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Guía" closeOnEscape="true">
 
-            <h:form id="GuiaEditForm">
+            <h:form id="GuiaEditForm" onkeypress="return event.keyCode != 13">
                 <h:panelGroup id="display" rendered="#{digitacionGuiaController.selected != null}">
                     <p:panelGrid>
 
