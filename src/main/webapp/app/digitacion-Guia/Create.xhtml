@@ -20,7 +20,7 @@
 
                             <p:column style="font-weight: bold;">Folio:</p:column>
                             <p:column style="font-weight: bold;">
-                                <p:inputNumber id="guiaFolio" value="#{digitacionGuiaController.selected.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="#{bundle.CreateGuiaRequiredMessage_guiaFolio}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" minValue="1">
+                                <p:inputNumber emptyValue="zero" id="guiaFolio" value="#{digitacionGuiaController.selected.guiaFolio}" title="#{bundle.CreateGuiaTitle_guiaFolio}" required="true" requiredMessage="Debe ingresar el folio" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" minValue="1">
                                     <p:ajax event="valueChange" listener="#{digitacionGuiaController.findFolio}" update="growl, guiaFolio"/>
                                 </p:inputNumber>                                
                             </p:column>
@@ -78,7 +78,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">N° Vueltas</p:column>
                             <p:column>
-                                <p:inputNumber id="guiaNumeroVueltas" value="#{digitacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" minValue="0"/>
+                                <p:inputNumber emptyValue="zero" id="guiaNumeroVueltas" value="#{digitacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" minValue="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;" rowspan="1">Rut:</p:column>
                             <p:column rowspan="1"><p:outputLabel value="#{digitacionGuiaController.selected.guiaIdTrabajador.trabajadorRut}" id="guiaIdTrabajadorRut" /></p:column>
@@ -87,7 +87,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Turno</p:column>
                             <p:column>
-                                <p:inputNumber minValue="0" id="guiaTurno" value="#{digitacionGuiaController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
+                                <p:inputNumber emptyValue="zero" minValue="0" id="guiaTurno" value="#{digitacionGuiaController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;"/>
                             <p:column style="font-weight: bold;"/>
@@ -98,7 +98,7 @@
                                 Total Ingresos: 
                             </p:column>
                             <p:column  colspan="4" style="background: #e5e5e5">
-                                <p:inputNumber minValue="0" id="guiaIngresos" value="#{digitacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                <p:inputNumber emptyValue="zero" minValue="0" id="guiaIngresos" value="#{digitacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                     <p:ajax event="blur" update="growl, @(.clase), @(.clase2)" listener="#{digitacionGuiaController.setEgresosVariables}" global="false"/>
                                 </p:inputNumber>
                             </p:column>
@@ -114,7 +114,7 @@
                                 <p:column style="font-weight: bold;" colspan="2"/>
                                 <p:column style="font-weight: bold;" >#{egreso.egresoGuiaIdEgreso.egresoNombreEgreso}</p:column>
                                 <p:column style="font-weight: bold;" >
-                                    <p:inputNumber minValue="0" styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                    <p:inputNumber emptyValue="zero" minValue="0" styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                         <p:ajax event="valueChange" update="growl, @(.clase2)" listener="#{digitacionGuiaController.setTotal}" global="false"></p:ajax>
                                     </p:inputNumber>
                                 </p:column>
@@ -126,7 +126,7 @@
                                 Total Egresos
                             </p:column>
                             <p:column colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaEgresos" value="#{digitacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber emptyValue="zero" minValue="0" styleClass="clase2" id="guiaEgresos" value="#{digitacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 
@@ -135,7 +135,7 @@
                                 Saldo 
                             </p:column>
                             <p:column  colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaSaldo" value="#{digitacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber emptyValue="zero" minValue="0" styleClass="clase2" id="guiaSaldo" value="#{digitacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 

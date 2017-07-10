@@ -5,6 +5,7 @@
  */
 package com.areatecnica.sigf.entities;
 
+import com.areatecnica.sigf.audit.AuditListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -13,6 +14,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;

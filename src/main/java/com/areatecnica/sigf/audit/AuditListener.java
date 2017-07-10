@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
 import org.eclipse.persistence.config.DescriptorCustomizer;
 import org.eclipse.persistence.config.SessionCustomizer;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
@@ -43,19 +46,25 @@ public class AuditListener extends DescriptorEventAdapter implements SessionCust
     public void customize(ClassDescriptor cd) throws Exception {
         cd.getEventManager().addListener(this);
     }
-
+    
+    @PostPersist
     @Override
     public void aboutToInsert(DescriptorEvent event) {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
-        processEvent(event, AuditOperation.INSERT);
+        System.err.println("iT wORKS:");
+        //processEvent(event, AuditOperation.INSERT);
     }
-
+    
+    @PostUpdate
     @Override
     public void aboutToUpdate(DescriptorEvent event) {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
+        System.err.println("iT wORKS:");
         processEvent(event, AuditOperation.UPDATE);
     }
-
+    
+    
+    @PostRemove
     @Override
     public void aboutToDelete(DescriptorEvent event) {
         usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");

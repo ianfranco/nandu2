@@ -73,7 +73,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Mínutos x Recibir:</p:column>
                             <p:column>
-                                <p:inputNumber minValue="0" id="guiaNumeroVueltas" value="#{recaudacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
+                                <p:inputNumber emptyValue="zero" minValue="0" id="guiaNumeroVueltas" value="#{recaudacionGuiaController.selected.guiaNumeroVueltas}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column rowspan="1" style="font-weight: bold;"/>
                             <p:column rowspan="1" style="font-weight: bold;"/>
@@ -82,7 +82,7 @@
                         <p:row>
                             <p:column style="font-weight: bold;">Minutos x Pagar:</p:column>
                             <p:column>
-                                <p:inputNumber minValue="0" id="guiaTurno" value="#{recaudacionGuiaController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
+                                <p:inputNumber emptyValue="zero" minValue="0" id="guiaTurno" value="#{recaudacionGuiaController.selected.guiaTurno}" title="#{bundle.CreateGuiaTitle_guiaNumeroVueltas}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0"/>
                             </p:column>
                             <p:column style="font-weight: bold;"/>
                             <p:column style="font-weight: bold;"/>
@@ -93,7 +93,7 @@
                                 Total Ingresos: 
                             </p:column>
                             <p:column  colspan="4" style="background: #e5e5e5">
-                                <p:inputNumber minValue="0" id="guiaIngresos" value="#{recaudacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                <p:inputNumber emptyValue="zero" minValue="0" id="guiaIngresos" value="#{recaudacionGuiaController.selected.guiaTotalIngresos}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                     <p:ajax event="blur" update="growl, @(.clase), @(.clase2)" listener="#{recaudacionGuiaController.setEgresosVariables}" global="false"/>
                                 </p:inputNumber>
                             </p:column>
@@ -109,7 +109,7 @@
                                 <p:column style="font-weight: bold;" colspan="2"/>
                                 <p:column style="font-weight: bold;" >#{egreso.egresoGuiaIdEgreso.egresoNombreEgreso}</p:column>
                                 <p:column style="font-weight: bold;" >
-                                    <p:inputNumber styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
+                                    <p:inputNumber emptyValue="zero" styleClass="clase" id="egresoGuiaMonto" value="#{egreso.egresoGuiaMonto}" decimalPlaces="0" onfocus="this.setSelectionRange(0, this.value.length)" symbol="$ ">
                                         <p:ajax event="valueChange" update="growl, @(.clase2)" listener="#{recaudacionGuiaController.setTotal}" global="false"></p:ajax>
                                     </p:inputNumber>
                                 </p:column>
@@ -121,7 +121,7 @@
                                 Total Egresos
                             </p:column>
                             <p:column colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaEgresos" value="#{recaudacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber emptyValue="zero" minValue="0" styleClass="clase2" id="guiaEgresos" value="#{recaudacionGuiaController.selected.guiaTotalEgresos}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 
@@ -130,7 +130,7 @@
                                 Saldo 
                             </p:column>
                             <p:column  colspan="4" style="text-align: left;background: #e5e5e5;">
-                                <p:inputNumber minValue="0" styleClass="clase2" id="guiaSaldo" value="#{recaudacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
+                                <p:inputNumber emptyValue="zero" minValue="0" styleClass="clase2" id="guiaSaldo" value="#{recaudacionGuiaController.selected.guiaSaldo}" onfocus="this.setSelectionRange(0, this.value.length)" decimalPlaces="0" symbol="$ "/>
                             </p:column>
                         </p:row>
 

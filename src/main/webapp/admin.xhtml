@@ -80,11 +80,20 @@
 
     <h:body class="hold-transition skin-blue sidebar-mini">
         <f:view>
-            <p:growl id="growl" life="3000"/>            
-            <p:idleMonitor timeout="6000000" >
-                <p:ajax event="idle" listener="#{loginController.logout()}" update="growl"/>                
-            </p:idleMonitor>
+            <p:growl id="growl" life="3000"/>
 
+            <p:socket onMessage="handleMessage" channel="/notify" >
+                <p:ajax event="message" update="growl"/>
+            </p:socket>
+
+            <script type="text/javascript">
+                function handleMessage(facesmessage) {
+                    facesmessage.severity = 'info';
+
+                    PF('growl').show([facesmessage]);
+                }
+            </script>
+            
             <p:dialog appendTo="@(body)" modal="true" resizable="false" closable="false" header="#{bundle.pleaseWait}" widgetVar="Loading" width="300">
                 <center>#{bundle.loading}
                     <p:graphicImage value="/resources/images/ajaxloadingbar.gif"/></center>
@@ -305,7 +314,7 @@
 
                                 <script type="text/javascript">
                                     function handleMessage(data) {
-                                        $('.push').html(data);
+                                        $('.display').html(data);
                                     }
                                 </script>
 

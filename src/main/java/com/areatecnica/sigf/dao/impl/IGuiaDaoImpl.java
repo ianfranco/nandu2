@@ -35,7 +35,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     @Override
     public List<Guia> findByProcesoFechaRecaudacion(ProcesoRecaudacion procesoRecaudacion, Date fechaRecaudacion) {
         try {
-            return this.entityManager.createNamedQuery("Guia.findByProcesoFechaRecaudacion").setHint("org.hibernate.cacheMode", "IGNORE").setParameter("busIdProcesoRecaudacion", procesoRecaudacion).setParameter("guiaRecaudacion", fechaRecaudacion).getResultList();
+            return this.entityManager.createNamedQuery("Guia.findByProcesoFechaRecaudacion").setParameter("busIdProcesoRecaudacion", procesoRecaudacion).setParameter("guiaRecaudacion", fechaRecaudacion).getResultList();
         } catch (NoResultException ne) {
             return null;
         }
@@ -44,7 +44,7 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
     @Override
     public List<Guia> findByProcesoFechaGuia(ProcesoRecaudacion procesoRecaudacion, Date fechaGuia) {
         try {
-            return this.entityManager.createNamedQuery("Guia.findByProcesoFechaGuia").setHint("org.hibernate.cacheMode", "IGNORE").setParameter("busIdProcesoRecaudacion", procesoRecaudacion).setParameter("guiaFecha", fechaGuia).getResultList();
+            return this.entityManager.createNamedQuery("Guia.findByProcesoFechaGuia").setParameter("busIdProcesoRecaudacion", procesoRecaudacion).setParameter("guiaFecha", fechaGuia).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

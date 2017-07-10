@@ -28,6 +28,7 @@ import com.areatecnica.sigf.entities.EstadoGuia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ResumenRecaudacion;
 import com.areatecnica.sigf.models.DigitacionGuiaDataModel;
+import com.areatecnica.sigf.sockets.NotificationController;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -41,7 +42,11 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.primefaces.push.EventBus;
+import org.primefaces.push.EventBusFactory;
 
 @Named(value = "digitacionGuiaController")
 @ViewScoped
@@ -61,6 +66,8 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     private TrabajadorController guiaIdTrabajadorController;
     @Inject
     private ResumenRecaudacionFacade resumenRecaudacionFacade;
+    @Inject 
+    private NotificationController notificationController;
 
     private List<Guia> list;
     private List<Egreso> egresosList;
@@ -632,15 +639,23 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
         this.resumenRecaudacionFacade.edit(resumenRecaudacion);*/
         this.list.add(this.getSelected());
-        JsfUtil.addSuccessMessage("Se ha ingresado la Guia N°:" + this.getSelected().getGuiaFolio());
+
+        notificationController.pushNotify("/notify", "Se ha ingresado la Guia N°" + this.getSelected().getGuiaFolio());
 
         this.setSelected(prepareCreate(event));
         this.setResumenTotalFormat(decimalFormat.format(setResumenTotal()));
 
         /*this.resumenRecaudacion.setEgresoRecaudacionList(egresosResumenList);
         this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);*/
+ /**/
     }
 
+    /*public void send(String summary, String detail) {
+        String CHANNEL = "/notify";
+
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish(CHANNEL, new FacesMessage(StringEscapeUtils.escapeHtml(summary), StringEscapeUtils.escapeHtml(detail)));
+    }*/
     @Override
     public void save(ActionEvent event) {
         try {
