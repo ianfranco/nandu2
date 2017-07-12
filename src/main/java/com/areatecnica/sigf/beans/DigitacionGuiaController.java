@@ -28,10 +28,12 @@ import com.areatecnica.sigf.entities.EstadoGuia;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
 import com.areatecnica.sigf.entities.ResumenRecaudacion;
 import com.areatecnica.sigf.models.DigitacionGuiaDataModel;
+import com.areatecnica.sigf.reports.PdfReportController;
 import com.areatecnica.sigf.sockets.NotificationController;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -42,11 +44,7 @@ import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.primefaces.push.EventBus;
-import org.primefaces.push.EventBusFactory;
 
 @Named(value = "digitacionGuiaController")
 @ViewScoped
@@ -68,6 +66,8 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     private ResumenRecaudacionFacade resumenRecaudacionFacade;
     @Inject 
     private NotificationController notificationController;
+    @Inject 
+    private PdfReportController pdfReportController;
 
     private List<Guia> list;
     private List<Egreso> egresosList;
@@ -958,7 +958,7 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
             this.egresosResumenList.stream().forEach((EgresoRecaudacion eg) -> {
                 int val = (int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-                System.err.println("vañasdasd:" + val);
+                System.err.println(":" + val);
                 eg.setEgresoRecaudacionTotalEgreso(val);
             });
             this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
@@ -1034,34 +1034,46 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
     }
 
     public void printResumen() {
-        if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
-            JsfUtil.addSuccessMessage("Proceso Cerrado");
-            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.TRUE);
+        
+        
+        Collection<Map<String, ?>> map = new ArrayList<>();
+        
+        
+        for(LinkedHashMap g: this.listOfMaps){
+            map.addAll(g.values());
+        }
+        
+        pdfReportController.setMap(map);
+        
+        pdfReportController.init();
+        /*if (this.resumenRecaudacion.getResumenRecaudacionCerrado()) {
+        JsfUtil.addSuccessMessage("Proceso Cerrado");
+        this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.TRUE);
         } else {
-            JsfUtil.addSuccessMessage("Proceso Abierto");
-            this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
+        JsfUtil.addSuccessMessage("Proceso Abierto");
+        this.resumenRecaudacion.setResumenRecaudacionCerrado(Boolean.FALSE);
         }
-
+        
         System.err.println("TAMAÑO DE EGRESOS:" + this.egresosResumenList.size());
-
+        
         for (EgresoRecaudacion er : this.egresosResumenList) {
-            System.err.println("EGRESO EN RECAUDACION: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-            if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
-                int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-                er.setEgresoRecaudacionTotalEgreso(val);
-                System.err.println("valor x egreso:" + val);
-            } else {
-                System.err.println("no hay VALOR POR EGRESO: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
-            }
+        System.err.println("EGRESO EN RECAUDACION: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+        if (totals.containsKey(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
+        int val = (int) totals.get(er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
+        er.setEgresoRecaudacionTotalEgreso(val);
+        System.err.println("valor x egreso:" + val);
+        } else {
+        System.err.println("no hay VALOR POR EGRESO: " + er.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso());
         }
-
+        }
+        
         //this.resumenRecaudacion.setEgresoRecaudacionList(this.egresosResumenList);
         this.resumenRecaudacion.setResumenRecaudacionTotal(this.resumenTotal);
         this.resumenRecaudacion.setResumenRecaudacionFechaActualizacion(new Date());
-
+        
         this.resumenRecaudacionDao = new IResumenRecaudacionDaoImpl();
-
-        this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);
+        
+        this.resumenRecaudacionFacade.edit(this.resumenRecaudacion);*/
     }
 
     private class PorcentajeHelper {
