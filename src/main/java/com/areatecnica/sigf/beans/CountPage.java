@@ -210,7 +210,17 @@ public final class CountPage implements java.io.Serializable {
     public void init() {
         this.usuario = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("staff");
 
-        entityManager = emf.createEntityManager();
+        this.busCount = this.usuario.getUsuarioIdTerminal().getBusList().size();
+        this.servicioCount = this.usuario.getUsuarioIdTerminal().getServicioList().size();
+        this.trabajadorCount = this.usuario.getUsuarioIdTerminal().getTrabajadorList().size();
+        this.usuarioCount = this.usuario.getUsuarioIdTerminal().getUsuarioList().size();
+        this.cajaRecaudacionCount = this.usuario.getUsuarioIdCuenta().getCajaRecaudacionList().size();
+        this.terminalCount = this.usuario.getUsuarioIdCuenta().getTerminalList().size();
+        this.empresaCount = this.usuario.getUsuarioIdCuenta().getEmpresaList().size();
+        this.flotaCount = this.usuario.getUsuarioIdCuenta().getFlotaList().size();
+        
+        
+        /*entityManager = emf.createEntityManager();
 
         for (RolMenu r : this.usuario.getUsuarioIdRol().getRolMenuList()) {
             for (Privilegio p : r.getRolMenuIdMenu().getPrivilegioList()) {
@@ -227,7 +237,7 @@ public final class CountPage implements java.io.Serializable {
                     }
                 }
             }
-        }
+        }*/
 
     }
 

@@ -67,6 +67,15 @@ public class IGuiaDaoImpl extends GenericDAOImpl<Guia> implements IGuiaDao<Guia>
             return null;
         }
     }
+    
+    @Override
+    public List<Guia> findByBusBetweenFechaRecaudacion(Bus bus, Date inicio, Date termino) {
+        try {
+            return this.entityManager.createNamedQuery("Guia.findByBusBetweenFechaRecaudacion").setParameter("guiaIdBus", bus).setParameter("inicio", inicio).setParameter("termino", inicio).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
 
     @Override
     public List<Guia> findByCuentaFecha(Cuenta cuenta, Date fecha) {

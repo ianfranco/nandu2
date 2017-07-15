@@ -35,6 +35,8 @@ public interface IGuiaDao<T> extends IGenericDAO<T> {
     
     public List<Guia> findByBusFecha(Bus bus, Date fecha);
     
+    public List<Guia> findByBusBetweenFechaRecaudacion(Bus bus, Date inicio, Date termino);
+    
     public List<Guia> findByBusPendientes(Bus bus);
     
     public List<Guia> findByCuentaFecha(Cuenta cuenta, Date fecha);

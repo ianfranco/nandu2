@@ -10,60 +10,44 @@
 
     <h:form id="GuiaListForm" class="form-height">
 
-        <p:contextMenu id="GuiaDataTableContextMenu" for="datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('GuiaListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
-            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('GuiaListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('GuiaListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('GuiaListForm:datalist:deleteButton').click();" icon="ui-icon-trash"/>
-            <p:separator/>
-        </p:contextMenu>
-
         <p:panel>
             <f:facet name="header">
                 Registro de Guías
             </f:facet>
             <p:panelGrid columns="7" style="width: 100%;margin-bottom: 10px;">
-
-                <h:outputLabel value="F. Recaudación:" for="fechaRecaudacion" style="text-align: right;"/>
-                <p:calendar id="fechaRecaudacion" value="#{digitacionGuiaController.fechaRecaudacion}" locale="es" pattern="dd/MM/yyyy" required="true" requiredMessage="Debe seleccionar la fecha"/>
-
-                <h:outputLabel value="Caja Recaudación" for="cajaRecaudacionIdCaja" style="text-align: right;"/>
-                <p:selectOneMenu id="cajaRecaudacionIdCaja" value="#{digitacionGuiaController.cajaRecaudacion}" required="true" requiredMessage="Debe seleccionar la Caja de Recaudación" converter="omnifaces.SelectItemsConverter">
+                
+                <p:outputLabel value="N° Bus:"/>
+                <p:selectOneMenu id="guiaIdBus" value="#{reporteProduccionbusController.bus}" required="true" requiredMessage="Debe seleccionar el Bus" converter="omnifaces.SelectItemsConverter">
                     <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{digitacionGuiaController.cajaRecaudacionList}"
-                                   var="cajaId"
-                                   itemValue="#{cajaId}"
-                                   itemLabel="#{cajaId.cajaRecaudacionNombreCaja}"
-                                   />
-                    <p:ajax event="valueChange" update="procesoRecaudacion" listener="#{digitacionGuiaController.handleCajaRecaudacionChange(event)}"/>
+                    <f:selectItems value="#{reporteProduccionbusController.itemsBus}"
+                                   var="guiaIdBusItem"
+                                   itemValue="#{guiaIdBusItem}"
+                                   itemLabel="#{guiaIdBusItem.busNumero}"
+                                   />                    
                 </p:selectOneMenu>
 
-                <h:outputLabel value="Proceso:" for="procesoRecaudacion" style="text-align: right;"/>
-                <p:selectOneMenu id="procesoRecaudacion" value="#{digitacionGuiaController.procesoRecaudacion}" required="true" requiredMessage="Debe seleccionar el proceso" converter="omnifaces.SelectItemsConverter" >
-                    <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                    <f:selectItems value="#{digitacionGuiaController.procesoRecaudacionList}"
-                                   var="procesoItem"
-                                   itemValue="#{procesoItem}"
-                                   itemLabel="#{procesoItem.procesoRecaudacionNombre}"
-                                   />
+                <h:outputLabel for="mes" value="Seleccionar:" />
+                <p:selectOneMenu id="mes" value="#{reporteProduccionbusController.mes}" style="width:125px">
+                    <f:selectItem itemLabel="Enero" itemValue="1" />
+                    <f:selectItem itemLabel="Febrero" itemValue="2" />
+                    <f:selectItem itemLabel="Marzo" itemValue="3" />
+                    <f:selectItem itemLabel="Abril" itemValue="4" />
+                    <f:selectItem itemLabel="Mayo" itemValue="5" />
+                    <f:selectItem itemLabel="Junio" itemValue="6" />
+                    <f:selectItem itemLabel="Julio" itemValue="7" />
+                    <f:selectItem itemLabel="Agosto" itemValue="8" />
+                    <f:selectItem itemLabel="Septiembre" itemValue="9" />
+                    <f:selectItem itemLabel="Octubre" itemValue="10" />
+                    <f:selectItem itemLabel="Noviembre" itemValue="11" />
+                    <f:selectItem itemLabel="Diciembre" itemValue="12" />
                 </p:selectOneMenu>
-                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton" styleClass="btn btn-primary" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+
+                <h:outputLabel for="anio" value="Año:" />
+                <p:inputText id="anio" value="#{reporteProduccionbusController.anio}" size="5" />
+
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton" styleClass="btn btn-primary" style="width:120px" actionListener="#{reporteProduccionbusController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
 
-                <h:outputLabel value="Permitir Egresos x:" style="text-align: right;"/>
-                <p:panelGrid columns="6" style="text-align: right;" >
-                    <h:outputLabel value="Bus"/>
-                    <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoBus}"/>
-
-                    <h:outputLabel value="Flota" />
-                    <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoFlota}"/>
-
-                    <h:outputLabel value="Proceso"/>
-                    <p:selectBooleanCheckbox value="#{digitacionGuiaController.permitirEgresoProceso}"/>
-                </p:panelGrid>
-
-                <h:outputLabel value="N° de Vueltas x Defecto:" style="text-align: right;"/>
-                <p:inputNumber value="#{digitacionGuiaController.numeroVueltas}" decimalPlaces="0"/>
 
             </p:panelGrid>
 
@@ -71,15 +55,15 @@
                 <p:graphicImage name="excel.png" library="images" />
                 <p:dataExporter type="xls" target="datalist" fileName="Recaudacion" pageOnly="true"/>
             </h:commandLink>
-            <h:commandLink actionListener="#{digitacionGuiaController.exportPdf(actionEvent)}">
+            <h:commandLink actionListener="#{reporteProduccionbusController.exportPdf(actionEvent)}">
                 <p:graphicImage name="pdf.png" library="images" />                
             </h:commandLink>
 
             <p:dataTable id="datalist"
-                         selection="#{digitacionGuiaController.selected}"                         
+                         selection="#{reporteProduccionbusController.selected}"                         
                          scrollHeight="500" 
                          scrollable="false"                         
-                         value="#{digitacionGuiaController.model}"
+                         value="#{reporteProduccionbusController.items}"
                          widgetVar="datalist"
                          var="item"
                          rowKey="#{item.guiaId}"                         
@@ -87,17 +71,7 @@
                          rowIndexVar="rowIndex"
                          emptyMessage="No se han encontrado registros"                         
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
-
-                <p:ajax event="colResize" listener="#{digitacionGuiaController.onResize}"/>
-                <p:ajax event="rowSelect"   update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{digitacionGuiaController.loadGuia}" global="false"/>
-                <p:ajax event="rowUnselect" update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{egresoBusController.resetParents}" global="false"/>  
-
-                <f:facet name="header">
-                    Recaudación al: <h:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
-                        <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </h:outputLabel>
-                </f:facet>
-
+                
                 <f:facet name="{Exporters}">
                     <h:commandLink>
                         <p:graphicImage name="excel.png" library="images" width="24"/>
@@ -160,10 +134,10 @@
                 </p:column>
 
                 <p:columns styleClass="clase"
-                           value="#{digitacionGuiaController.listOfMaps.get(0).keySet().toArray()}" 
+                           value="#{reporteProduccionbusController.listOfMaps.get(0).keySet().toArray()}" 
                            var="key" 
-                           headerText="#{digitacionGuiaController.resultsHeader.get(col)}" 
-                           footerText="#{digitacionGuiaController.resultsTotals.get(col)}"                    
+                           headerText="#{reporteProduccionbusController.resultsHeader.get(col)}" 
+                           footerText="#{reporteProduccionbusController.resultsTotals.get(col)}"                    
                            columnIndexVar="col" 
                            filterBy="#{item.link[key]}"
                            style="text-align: center; font-weight: 900;">
@@ -246,22 +220,13 @@
 
                 <f:facet name="footer">
                     <div>
-                        <p:selectBooleanButton id="estadoProceso" value="#{digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" disabled="#{empty digitacionGuiaController.cajaRecaudacion}" onLabel="Cerrado" offLabel="En digitación" onIcon="ui-icon-check" offIcon="fa fa-download" >
-                            <p:ajax event="valueChange" listener="#{digitacionGuiaController.printResumen}" update="growl, createButton, editButton, viewButton, deleteButton"/>
-                        </p:selectBooleanButton>
-                        <p:commandButton id="createButton"  styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{digitacionGuiaController.prepareCreate}" disabled="#{empty digitacionGuiaController.cajaRecaudacion or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" update=":GuiaCreateForm" oncomplete="PF('GuiaCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        <p:commandButton id="viewButton"    styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":GuiaViewForm" oncomplete="PF('GuiaViewDialog').show()" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        <p:commandButton id="editButton"    styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":GuiaEditForm" oncomplete="PF('GuiaEditDialog').show()" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                        <p:commandButton id="deleteButton"  styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{digitacionGuiaController.delete}" update=":growl,datalist" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                            <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                        </p:commandButton>                        
                     </div>                    
                 </f:facet>
 
             </p:dataTable>
         </p:panel>
 
-        <ui:include src="/confirmation.xhtml"/>
+
     </h:form>
 
 </ui:composition>
