@@ -96,6 +96,12 @@ public class ResumenDinerosController extends AbstractController<ResumenRecaudac
 
         this.cajaRecaudacionDao = new ICajaRecaudacionDaoImpl();
         this.cajaRecaudacionList = this.cajaRecaudacionDao.findAllByUser(this.getCurrentUser());
+        
+        if (this.cajaRecaudacionList.size() == 1) {
+            this.cajaRecaudacion = this.cajaRecaudacionList.get(0);
+
+            handleCajaRecaudacionChange(null);
+        }
 
     }
 

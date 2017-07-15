@@ -47,7 +47,7 @@
                                    itemLabel="#{procesoItem.procesoRecaudacionNombre}"
                                    />
                 </p:selectOneMenu>
-                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton, :GuiaListForm:datalist:printButton" styleClass="btn btn-primary" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                <p:commandButton id="value2" ajax="true" icon="fa fa-database" value="Cargar Guías" update="@(.clase), GuiaListForm:datalist, growl, :GuiaListForm:datalist:createButton" styleClass="btn btn-primary" style="width:120px" actionListener="#{digitacionGuiaController.load}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                 </p:commandButton>
 
                 <h:outputLabel value="Permitir Egresos x:" style="text-align: right;"/>
@@ -67,6 +67,20 @@
 
             </p:panelGrid>
 
+            <h:commandLink>
+                <p:graphicImage name="excel.png" library="images" />
+                <p:dataExporter type="xls" target="datalist" fileName="Recaudacion" pageOnly="true"/>
+            </h:commandLink>
+            <h:commandLink actionListener="#{digitacionGuiaController.exportPdf(actionEvent)}">
+                <p:graphicImage name="pdf.png" library="images" />                
+            </h:commandLink>
+
+            <h:commandLink  actionListener="#{digitacionGuiaController.exportPdf(actionEvent)}" action="/app/report/index.xhtml" target="blank" >
+                <p:graphicImage name="pdf.png" library="images" />
+            </h:commandLink>
+
+
+
             <p:dataTable id="datalist"
                          selection="#{digitacionGuiaController.selected}"                         
                          scrollHeight="500" 
@@ -78,7 +92,7 @@
                          selectionMode="single"
                          rowIndexVar="rowIndex"
                          emptyMessage="No se han encontrado registros"                         
-                         >
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}">
 
                 <p:ajax event="colResize" listener="#{digitacionGuiaController.onResize}"/>
                 <p:ajax event="rowSelect"   update=":GuiaListForm:datalist:createButton,:GuiaListForm:datalist:viewButton,:GuiaListForm:datalist:editButton,:GuiaListForm:datalist:deleteButton" listener="#{digitacionGuiaController.loadGuia}" global="false"/>
@@ -88,6 +102,13 @@
                     Recaudación al: <h:outputLabel value="#{digitacionGuiaController.fechaRecaudacion}">
                         <f:convertDateTime pattern="dd-MM-yyyy"/>
                     </h:outputLabel>
+                </f:facet>
+
+                <f:facet name="{Exporters}">
+                    <h:commandLink>
+                        <p:graphicImage name="excel.png" library="images" width="24"/>
+                        <p:dataExporter type="xls" target="datalist" fileName="Recaudacion" />
+                    </h:commandLink>                    
                 </f:facet>
 
                 <p:column style="text-align: center; font-weight: 900;">
@@ -239,10 +260,7 @@
                         <p:commandButton id="editButton"    styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":GuiaEditForm" oncomplete="PF('GuiaEditDialog').show()" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
                         <p:commandButton id="deleteButton"  styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{digitacionGuiaController.delete}" update=":growl,datalist" disabled="#{empty digitacionGuiaController.selected or digitacionGuiaController.resumenRecaudacion.resumenRecaudacionCerrado}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
                             <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                        </p:commandButton>
-                        <p:commandButton id="printButton" value="Imprimir" type="button" icon="ui-icon-print" styleClass="btn btn-primary" disabled="#{empty digitacionGuiaController.cajaRecaudacion}">
-                            <p:printer target="datalist" />
-                        </p:commandButton>
+                        </p:commandButton>                        
                     </div>                    
                 </f:facet>
 
