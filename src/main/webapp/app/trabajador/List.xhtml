@@ -10,25 +10,30 @@
     <h:form id="TrabajadorListForm" class="form-height">
 
         <p:contextMenu id="TrabajadorDataTableContextMenu" for="datalist:datalist">  
-            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:createButton').click();" icon="ui-icon-plus"/>
-            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:viewButton').click();" icon="ui-icon-search"/>
-            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:editButton').click();" icon="ui-icon-pencil"/>
-            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('TrabajadorListForm:datalist:datalist:deleteButton').click();" icon="ui-icon-trash"/>
+            <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('TrabajadorListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
+            <p:menuitem value="#{bundle.View}" onclick="document.getElementById('TrabajadorListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
+            <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('TrabajadorListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
+            <p:menuitem value="#{bundle.Delete}" onclick="document.getElementById('TrabajadorListFormdatalist:deleteButton').click();" icon="ui-icon-trash"/>
             <p:separator/>
         </p:contextMenu>
 
-        <coco:datatable id="datalist"
-                        value="#{trabajadorController.items}"
-                        rowKey="#{item.trabajadorId}"
-                        selection="#{trabajadorController.selected}"
-                        filtered="#{trabajadorController.filtered}"
-                        rowselect=":TrabajadorListForm:datalist:datalist:createButton,:TrabajadorListForm:datalist:datalist:viewButton,:TrabajadorListForm:datalist:datalist:editButton,:TrabajadorListForm:datalist:datalist:deleteButton,:TrabajadorListForm:TrabajadorDataTableContextMenu"
-                        rowDblselect="document.getElementById('TrabajadorListForm:datalist:datalist:editButton').click()"
-                        contextMenu=":TrabajadorListForm:datalist:datalist:createButton :TrabajadorListForm:datalist:datalist:viewButton :TrabajadorListForm:datalist:datalist:editButton :TrabajadorListForm:datalist:datalist:deleteButton"
-                        selectListener="#{trabajadorController.resetParents()}"
-                        >
+        <p:dataTable id="datalist"
+                     value="#{trabajadorController.items}"                     
+                     selection="#{trabajadorController.selected}"
+                     var="item"
+                     paginator="true"
+                     rows="100"
+                     rowsPerPageTemplate="50,100,200"
+                     selectionMode="single"
+                     emptyMessage="No se han encontrado registros"
+                     rowKey="#{item.trabajadorIud}"
+                     tableStyle="table-layout: auto"
+                     >
 
             <p:ajax event="colResize" listener="#{trabajadorController.onResize}"/>
+            <p:ajax event="rowSelect"   update=":TrabajadorListForm:datalist:createButton,:TrabajadorListForm:datalist:viewButton,:TrabajadorListForm:datalist:editButton,:TrabajadorListForm:datalist:deleteButton, :TrabajadorListForm:TrabajadorDataTableContextMenu " listener="#{trabajadorController.resetParents}" global="false"/>
+            <p:ajax event="rowUnselect" update=":TrabajadorListForm:datalist:createButton,:TrabajadorListForm:datalist:viewButton,:TrabajadorListForm:datalist:editButton,:TrabajadorListForm:datalist:deleteButton, :TrabajadorListForm:TrabajadorDataTableContextMenu" listener="#{trabajadorController.resetParents}" global="false"/>
+
 
             <f:facet name="header">
                 <div class="row row-nomargin">
@@ -339,7 +344,7 @@
                 </div>
             </f:facet>
 
-        </coco:datatable>
+        </p:dataTable>
 
         <ui:include src="/confirmation.xhtml"/>
     </h:form>
