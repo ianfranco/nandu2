@@ -232,7 +232,7 @@
 
                         </p:tab>
                     </p:accordionPanel>
-                    <p:commandButton actionListener="#{trabajadorController.save}" value="#{bundle.Save}" update="display,:TrabajadorListForm:datalist:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TrabajadorEditDialog'));">
+                    <p:commandButton actionListener="#{trabajadorController.save}" value="#{bundle.Save}" update="display,:TrabajadorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('TrabajadorEditDialog'));">
                         <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('TrabajadorEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>

@@ -39,6 +39,7 @@ public class GenericDAOImpl<T> implements IGenericDAO<T> {
 
     @Override
     public T create(T t) {
+        System.err.println("DAO:CREATE");
         this.entityManager.persist(t);
         return t;
     }

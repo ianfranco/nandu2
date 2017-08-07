@@ -32,6 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PrecioCombustible.findAll", query = "SELECT p FROM PrecioCombustible p"),
+    @NamedQuery(name = "PrecioCombustible.findAllByCuenta", query = "SELECT p FROM PrecioCombustible p WHERE p.precioCombustibleIdCuenta =:precioCombustibleIdCuenta"),
+    @NamedQuery(name = "PrecioCombustible.findLastPrecio", query = "SELECT p FROM PrecioCombustible p WHERE p.precioCombustibleIdCuenta =:precioCombustibleIdCuenta ORDER BY p.precioCombustibleFechaPrecioCombustible DESC"),
     @NamedQuery(name = "PrecioCombustible.findByPrecioCombustibleId", query = "SELECT p FROM PrecioCombustible p WHERE p.precioCombustibleId = :precioCombustibleId"),
     @NamedQuery(name = "PrecioCombustible.findByPrecioCombustibleValor", query = "SELECT p FROM PrecioCombustible p WHERE p.precioCombustibleValor = :precioCombustibleValor"),
     @NamedQuery(name = "PrecioCombustible.findByPrecioCombustibleFechaPrecioCombustible", query = "SELECT p FROM PrecioCombustible p WHERE p.precioCombustibleFechaPrecioCombustible = :precioCombustibleFechaPrecioCombustible"),

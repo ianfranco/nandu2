@@ -9,6 +9,7 @@ import com.areatecnica.sigf.dao.IBusDao;
 import com.areatecnica.sigf.entities.Bus;
 import com.areatecnica.sigf.entities.GrupoServicio;
 import com.areatecnica.sigf.entities.ProcesoRecaudacion;
+import com.areatecnica.sigf.entities.Terminal;
 import com.areatecnica.sigf.entities.UnidadNegocio;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -51,6 +52,15 @@ public class IBusDaoImpl extends GenericDAOImpl<Bus> implements IBusDao<Bus> {
     public List<Bus> findByGrupoServicio(GrupoServicio grupoServicio) {
         try {
             return this.entityManager.createNamedQuery("Bus.findByGrupoServicio").setParameter("busIdGrupoServicio", grupoServicio).getResultList();
+        } catch (NoResultException ne) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Bus> findAllByTerminal(Terminal terminal) {
+        try {
+            return this.entityManager.createNamedQuery("Bus.findByTerminal").setParameter("busIdTerminal", terminal).getResultList();
         } catch (NoResultException ne) {
             return null;
         }

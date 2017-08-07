@@ -8,14 +8,24 @@
 
     <ui:composition>
 
-        <p:dialog id="VentaCombustibleCreateDlg" widgetVar="VentaCombustibleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Venta de Combustible" closeOnEscape="true">
+        <p:dialog id="VentaCombustibleCreateDlg" widgetVar="VentaCombustibleCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="Nueva Venta" closeOnEscape="true">
 
             <h:form id="VentaCombustibleCreateForm">
-
                 <h:panelGroup id="display" rendered="#{ventaCombustibleController.selected != null}">
-                    <p:panelGrid columns="2" columnClasses="column">
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="Surtidor" for="ventaCombustibleIdSurtidor" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+
+
+                    <p:panelGrid columns="2" columnClasses="column" style="width: 500px;">
+
+                        <p:outputLabel value="Valor x Litro:" for="ventaCombustibleValor" style="font-size:x-large;"/>
+                        <p:outputLabel id="ventaCombustibleValor" value="$ #{ventaCombustibleController.selected.ventaCombustibleValorCombustible}" title="#{bundle.CreateVentaCombustibleTitle_ventaCombustibleValor}" style="font-size:x-large;"/>
+
+                        <p:outputLabel value="Surtidor:" for="ventaCombustibleIdSurtidor" />
                         <p:selectOneMenu id="ventaCombustibleIdSurtidor" value="#{ventaCombustibleController.selected.ventaCombustibleIdSurtidor}" required="true" requiredMessage="#{bundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdSurtidor}" converter="surtidorConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{surtidorController.items}"
@@ -25,31 +35,50 @@
                                            />
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Guía" for="ventaCombustibleIdGuia" />
-                        <p:selectOneMenu id="ventaCombustibleIdGuia" value="#{ventaCombustibleController.selected.ventaCombustibleIdGuia}" required="true" requiredMessage="#{bundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdGuia}" converter="guiaConverter">
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{guiaController.items}"
-                                           var="ventaCombustibleIdGuiaItem"
-                                           itemValue="#{ventaCombustibleIdGuiaItem}"
-                                           itemLabel="#{ventaCombustibleIdGuiaItem.guiaId.toString()}"
+                        <p:outputLabel value="Operador"/>
+                        <p:selectOneMenu required="true" value="#{ventaCombustibleController.unidadSelected}">
+                            <f:selectItems value="#{ventaCombustibleController.unidadItems}"
+                                           var="unidad"
+                                           itemValue="#{unidad}"
+                                           itemLabel="#{unidad.unidadNegocioNumero} - #{unidad.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
                                            />
+                            <p:ajax event="valueChange" listener="#{ventaCombustibleController.handleTipoVentaChange}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel value="Valor x Litro" for="ventaCombustibleValor" />
-                        <p:inputText id="ventaCombustibleValor" value="#{ventaCombustibleController.selected.ventaCombustibleValor}" title="#{bundle.CreateVentaCombustibleTitle_ventaCombustibleValor}" required="true" requiredMessage="#{bundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleValor}"/>
+                        <p:outputLabel value="N° Bus" for="ventaCombustibleIdGuia" />
+                        <h:panelGroup>
+
+                            <p:selectOneMenu id="ventaCombustibleIdGuia" value="#{ventaCombustibleController.selected.ventaCombustibleIdGuia}" required="true" requiredMessage="#{bundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleIdGuia}" converter="omnifaces.SelectItemsConverter">
+                                <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{ventaCombustibleController.guiaItems}"
+                                               var="ventaCombustibleIdGuiaItem"
+                                               itemValue="#{ventaCombustibleIdGuiaItem}"
+                                               itemLabel="#{ventaCombustibleIdGuiaItem.guiaIdBus.busNumero}"
+                                               />
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+
+
+
+                        <p:outputLabel value="Total" for="ventaCombustibleValorCombustible" />
+                        <p:inputText id="ventaCombustibleValorCombustible" value="#{ventaCombustibleController.selected.ventaCombustibleValor}" required="true" requiredMessage="Debe ingresar el total de la venta"/>
 
                         <p:outputLabel value="N° de Litros" for="ventaCombustibleCantidad" />
                         <p:inputText id="ventaCombustibleCantidad" value="#{ventaCombustibleController.selected.ventaCombustibleCantidad}" title="#{bundle.CreateVentaCombustibleTitle_ventaCombustibleCantidad}" required="true" requiredMessage="#{bundle.CreateVentaCombustibleRequiredMessage_ventaCombustibleCantidad}"/>
 
-                        <p:outputLabel value="Total Venta" for="ventaCombustibleValorCombustible" />
-                        <p:inputText id="ventaCombustibleValorCombustible" value="#{ventaCombustibleController.selected.ventaCombustibleValorCombustible}" title="#{bundle.CreateVentaCombustibleTitle_ventaCombustibleValorCombustible}"/>
+                        <p:outputLabel value="N° Boleta" for="ventaCombustibleNumeroBoleta" />
+                        <p:inputText id="ventaCombustibleNumeroBoleta" value="#{ventaCombustibleController.selected.ventaCombustibleNumeroBoleta}" required="true" requiredMessage="Debe ingresar el N° de Boleta"/>
+
+                        <h:panelGroup>
+                            <p:commandButton actionListener="#{ventaCombustibleController.saveNew}" value="#{bundle.Save}" update="display,:VentaCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleCreateDialog'));">
+                                <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('VentaCombustibleCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                        </h:panelGroup>
 
                     </p:panelGrid>
-                    <p:commandButton actionListener="#{ventaCombustibleController.saveNew}" value="#{bundle.Save}" update="display,:VentaCombustibleListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('VentaCombustibleCreateDialog'));">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
-                    </p:commandButton>
 
-                    <p:commandButton value="#{bundle.Cancel}" oncomplete="PF('VentaCombustibleCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
                 </h:panelGroup>
 
             </h:form>

@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Bus.findByBusIdUnidadNegocio", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio"),
     @NamedQuery(name = "Bus.findByProcesoRecaudacion", query = "SELECT b FROM Bus b WHERE b.busIdProcesoRecaudacion = :busIdProcesoRecaudacion ORDER BY b.busNumero ASC"),
     @NamedQuery(name = "Bus.findByGrupoServicio", query = "SELECT b FROM Bus b WHERE b.busIdGrupoServicio = :busIdGrupoServicio ORDER BY b.busNumero ASC"),
+    @NamedQuery(name = "Bus.findByTerminal", query = "SELECT b FROM Bus b WHERE b.busIdTerminal = :busIdTerminal ORDER BY b.busNumero ASC"),
     @NamedQuery(name = "Bus.findByBusNumero", query = "SELECT b FROM Bus b WHERE b.busNumero = :busNumero"),
     @NamedQuery(name = "Bus.findMaxNumeroUnidad", query = "SELECT b FROM Bus b WHERE b.busIdUnidadNegocio = :busIdUnidadNegocio ORDER BY b.busNumero DESC"),
     @NamedQuery(name = "Bus.findByBusPatente", query = "SELECT b FROM Bus b WHERE b.busPatente = :busPatente"),

@@ -9,7 +9,7 @@
 
     <h:form id="TrabajadorListForm" class="form-height">
 
-        <p:contextMenu id="TrabajadorDataTableContextMenu" for="datalist:datalist">  
+        <p:contextMenu id="TrabajadorDataTableContextMenu" for="datalist">  
             <p:menuitem value="#{bundle.Create}" onclick="document.getElementById('TrabajadorListForm:datalist:createButton').click();" icon="ui-icon-plus"/>
             <p:menuitem value="#{bundle.View}" onclick="document.getElementById('TrabajadorListForm:datalist:viewButton').click();" icon="ui-icon-search"/>
             <p:menuitem value="#{bundle.Edit}" onclick="document.getElementById('TrabajadorListForm:datalist:editButton').click();" icon="ui-icon-pencil"/>
@@ -22,12 +22,12 @@
                      selection="#{trabajadorController.selected}"
                      var="item"
                      paginator="true"
+                     paginatorPosition="top"
                      rows="100"
                      rowsPerPageTemplate="50,100,200"
                      selectionMode="single"
                      emptyMessage="No se han encontrado registros"
-                     rowKey="#{item.trabajadorIud}"
-                     tableStyle="table-layout: auto"
+                     rowKey="#{item.trabajadorId}"                     
                      >
 
             <p:ajax event="colResize" listener="#{trabajadorController.onResize}"/>
@@ -333,15 +333,13 @@
                                 
             -->
 
-            <f:facet name="{buttons}">
-                <div class="footer-left">
-                    <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{trabajadorController.prepareCreate}" update=":TrabajadorCreateForm" oncomplete="PF('TrabajadorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":TrabajadorEditForm" oncomplete="PF('TrabajadorEditDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
-                    <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{trabajadorController.delete}" update=":growl,datalist" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
-                        <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
-                    </p:commandButton>
-                </div>
+            <f:facet name="footer">                
+                <p:commandButton id="createButton" styleClass="btn btn-primary" icon="fa fa-plus"   value="#{bundle.Create}" actionListener="#{trabajadorController.prepareCreate}" update=":TrabajadorCreateForm" oncomplete="PF('TrabajadorCreateDialog').show()" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                <p:commandButton id="viewButton"   styleClass="btn btn-primary" icon="fa fa-search" value="#{bundle.View}" update=":TrabajadorViewForm" oncomplete="PF('TrabajadorViewDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                <p:commandButton id="editButton"   styleClass="btn btn-primary" icon="fa fa-pencil" value="#{bundle.Edit}" update=":TrabajadorEditForm" oncomplete="PF('TrabajadorEditDialog').show()" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()"/>
+                <p:commandButton id="deleteButton" styleClass="btn btn-primary" icon="fa fa-trash"  value="#{bundle.Delete}" actionListener="#{trabajadorController.delete}" update=":growl,datalist" disabled="#{empty trabajadorController.selected}" onstart="PF('Loading').show()" onsuccess="PF('Loading').hide()">
+                    <p:confirm header="#{bundle.ConfirmationHeader}" message="#{bundle.ConfirmDeleteMessage}" icon="fa fa-warning"/>
+                </p:commandButton>                
             </f:facet>
 
         </p:dataTable>

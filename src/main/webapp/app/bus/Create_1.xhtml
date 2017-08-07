@@ -15,21 +15,21 @@
                 <h:panelGroup id="display" rendered="#{busController.selected != null}">
 
                     <p:panelGrid columns="4" columnClasses="column, , column, " >
-                        
+
                         <p:outputLabel value="Unidad" for="busIdUnidadNegocio" />
                         <p:selectOneMenu id="busIdUnidadNegocio" value="#{busController.selected.busIdUnidadNegocio}" required="true" requiredMessage="Debe seleccionar la Unidad de Negocio" converter="omnifaces.SelectItemsConverter">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{unidadNegocioController.items}"
                                            var="busIdUnidadNegocioItem"
                                            itemValue="#{busIdUnidadNegocioItem}"
-                                           itemLabel="#{busIdUnidadNegocioItem.unidadNegocioNumero}"
+                                           itemLabel="#{busIdUnidadNegocioItem.unidadNegocioNumero} - #{busIdUnidadNegocioItem.unidadNegocioIdOperadorTransporte.operadorTransporteNombre}"
                                            />
                             <p:ajax event="valueChange" listener="#{busController.findMaxByUnidad()}" update="busNumero"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel value="N°" for="busNumero" />
                         <p:inputNumber id="busNumero" decimalPlaces="0" value="#{busController.selected.busNumero}" title="#{bundle.CreateBusTitle_busNumero}" required="true" requiredMessage="Debe Ingresar el Número del Bus" size="20" onfocus="this.setSelectionRange(0, this.value.length)"/>
-                        
+
                         <p:outputLabel value="PPU" for="busPatente" />
                         <p:inputText id="busPatente" value="#{busController.selected.busPatente}" title="#{bundle.CreateBusTitle_busPatente}" required="true" requiredMessage="Debe Ingresar la Patente" size="20" maxlength="45" onfocus="this.setSelectionRange(0, this.value.length)">
                             <p:tooltip value="Placa Patente Única"/>

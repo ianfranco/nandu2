@@ -641,7 +641,9 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
 
         //dudas acá
         this.egresosResumenList.stream().forEach((eg) -> {
-            eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
+            if (totals.containsKey(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso())) {
+                eg.setEgresoRecaudacionTotalEgreso((int) totals.get(eg.getEgresoRecaudacionIdEgreso().getEgresoNombreEgreso()));
+            }
         });
 
         /*
@@ -1046,10 +1048,10 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         return this.getResumenTotal();
     }
 
-    public void exportPdf(ActionEvent event){
+    public void exportPdf(ActionEvent event) {
         this.pdfReportController.setProcesoRecaudacion(this.procesoRecaudacion);
         this.pdfReportController.setRecaudacion(this.fechaRecaudacion);
-        
+
         try {
             this.pdfReportController.PDF(event);
         } catch (JRException ex) {
@@ -1057,13 +1059,13 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         } catch (IOException ex) {
             Logger.getLogger(DigitacionGuiaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
-    public void exportDoc(ActionEvent event){
+
+    public void exportDoc(ActionEvent event) {
         this.pdfReportController.setProcesoRecaudacion(this.procesoRecaudacion);
         this.pdfReportController.setRecaudacion(this.fechaRecaudacion);
-        
+
         try {
             this.pdfReportController.DOCX(event);
         } catch (JRException ex) {
@@ -1071,9 +1073,9 @@ public class DigitacionGuiaController extends AbstractController<Guia> {
         } catch (IOException ex) {
             Logger.getLogger(DigitacionGuiaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     public void printResumen() {
 
         /*Collection<Map<String, ?>> map = new ArrayList<>();

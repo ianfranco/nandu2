@@ -2,8 +2,11 @@ package com.areatecnica.sigf.controllers.login;
 
 import com.areatecnica.sigf.beans.util.JsfUtil;
 import com.areatecnica.sigf.dao.ILoginDao;
+import com.areatecnica.sigf.dao.IUsuarioSessionDao;
 import com.areatecnica.sigf.dao.impl.ILoginDaoImpl;
+import com.areatecnica.sigf.dao.impl.IUsuarioSessionDaoImpl;
 import com.areatecnica.sigf.entities.Usuario;
+import com.areatecnica.sigf.entities.UsuarioSession;
 import com.areatecnica.sigf.util.CommonPage;
 import com.areatecnica.sigf.util.UserForm;
 import java.io.IOException;
@@ -30,6 +33,8 @@ import org.primefaces.push.EventBusFactory;
 @ManagedBean
 @SessionScoped
 public class LoginController implements java.io.Serializable {
+
+    private IUsuarioSessionDao iUsuarioSessionDao;
 
     private static final long serialVersionUID = 1553957937211717410L;
 
@@ -171,6 +176,15 @@ public class LoginController implements java.io.Serializable {
 
                 session.setAttribute("staff", usuario);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+
+                UsuarioSession usuarioSession = new UsuarioSession();
+                usuarioSession.setUsuarioSessionIdUsuario(usuario);
+                usuarioSession.setUsuarioSessionFechaIngreso(new Date());
+                usuarioSession.setUsuarioSessionIpAddress(ipAddress);
+
+                iUsuarioSessionDao = new IUsuarioSessionDaoImpl();
+                iUsuarioSessionDao.ingresar(usuarioSession);
+
             } else {
                 JsfUtil.addExclamationMessage(ResourceBundle.getBundle("/Bundle").getString("alertUsername"));
             }
@@ -187,15 +201,14 @@ public class LoginController implements java.io.Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         try {
             JsfUtil.addSuccessMessage("Su sessión ha expirado");
-            
+
             CommonPage.removeStaff(usuario);
             EventBus eventBus = EventBusFactory.getDefault().eventBus();
             eventBus.publish("/counter", String.valueOf(CommonPage.getUsuarioList().size()));
             loggedIn = false;
             usuario = null;
             FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-            
-            
+
         } catch (IOException ex) {
             ex.printStackTrace();
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
@@ -203,7 +216,7 @@ public class LoginController implements java.io.Serializable {
     }
 
     public void onIdle() {
-        JsfUtil.addExclamationMessage("Sin Actividad durante 5 minutos, su sesión expirará");        
+        JsfUtil.addExclamationMessage("Sin Actividad durante 5 minutos, su sesión expirará");
     }
 
     public void onActive() {

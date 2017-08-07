@@ -90,6 +90,8 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "usuario_id_cuenta", referencedColumnName = "cuenta_id")
     @ManyToOne(optional = false)
     private Cuenta usuarioIdCuenta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioSessionIdUsuario")
+    private List<UsuarioSession> usuarioSessionList;
     @JoinColumn(name = "usuario_id_rol", referencedColumnName = "rol_id")
     @ManyToOne(optional = false)
     private Rol usuarioIdRol;
@@ -194,6 +196,15 @@ public class Usuario implements Serializable {
 
     public void setDespachoList(List<Despacho> despachoList) {
         this.despachoList = despachoList;
+    }
+    
+    @XmlTransient
+    public List<UsuarioSession> getUsuarioSessionList() {
+        return usuarioSessionList;
+    }
+
+    public void setUsuarioSessionList(List<UsuarioSession> usuarioSessionList) {
+        this.usuarioSessionList = usuarioSessionList;
     }
 
     public Cuenta getUsuarioIdCuenta() {

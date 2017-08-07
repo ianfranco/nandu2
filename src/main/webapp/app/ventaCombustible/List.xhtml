@@ -36,7 +36,9 @@
                         <p:inputText id="globalFilter" onkeyup="PF('datalistWidget').filter()" class="pull-left" style="width: 100%" placeholder="#{bundle.enterKeyword}"/>
                     </div>
                     <div class="col-lg-6">
-                        <h:outputText value="Ventas a la Fecha : 22/04/2017"/>   
+                        <h:outputText value="Ventas a la Fecha :"/><p:outputLabel value="#{ventaCombustibleController.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yy"/>
+                        </p:outputLabel>
                     </div>
                     <div class="col-lg-3">
                         <div class="pull-right">

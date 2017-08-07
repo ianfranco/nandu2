@@ -32,6 +32,8 @@ public class PrecioCombustibleController extends AbstractController<PrecioCombus
     public PrecioCombustibleController() {
         // Inform the Abstract parent controller of the concrete PrecioCombustible Entity
         super(PrecioCombustible.class);
+        this.setLimitedByCuenta(Boolean.TRUE);
+        this.setNamedQuery("PrecioCombustible.findAllByCuenta");
     }
 
     /**
